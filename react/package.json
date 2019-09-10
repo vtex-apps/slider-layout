@@ -1,0 +1,27 @@
+{
+  "name": "vtex.slider-layout",
+  "version": "0.0.0",
+  "description": "A React Slider component that works well in SPA and SSR",
+  "files": [
+    "react"
+  ],
+  "scripts": {
+    "pretest": "yarn",
+    "lint": "tsc --noEmit && eslint --ext ts,tsx .",
+    "test": "vtex-test-tools test",
+    "test:watch": "vtex-test-tools test --watch"
+  },
+  "dependencies": {
+    "ramda": "^0.26.1",
+    "react": "^16.6.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.15",
+    "@vtex/test-tools": "^0.2.0",
+    "eslint": "^6.2.2",
+    "eslint-config-vtex": "^10.1.0",
+    "eslint-config-vtex-react": "^5.0.1",
+    "prettier": "^1.18.2",
+    "typescript": "3.5.2"
+  }
+}

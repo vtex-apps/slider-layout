@@ -1,0 +1,21 @@
+{
+  "name": "slider-layout",
+  "vendor": "vtex",
+  "version": "0.0.0",
+  "title": "VTEX Slider-Layout",
+  "description": "A React Slider component that works well in SPA and SSR",
+  "mustUpdateAt": "2020-01-30",
+  "scripts": {
+    "postreleasy": "vtex publish --verbose"
+  },
+  "dependencies": {
+    "vtex.device-detector": "0.x",
+    "vtex.store-icons": "0.x"
+  },
+  "builders": {
+    "react": "3.x",
+    "store": "0.x",
+    "docs": "0.x"
+  },
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}
