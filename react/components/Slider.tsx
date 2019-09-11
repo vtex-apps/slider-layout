@@ -14,7 +14,7 @@ interface Props {
   label?: string
   showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
   infinite: boolean
-  showPaginationDots: 'always' | 'never' | 'desktopOnly' | 'mobileOnly'
+  showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
   slideTransition?: {
     /** Transition speed in ms */
     speed: number
