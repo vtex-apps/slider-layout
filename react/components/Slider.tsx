@@ -1,42 +1,17 @@
-import React, { FC, useRef, Fragment } from 'react'
+import React, { FC, useRef, Fragment, useEffect } from 'react'
 import { useDevice } from 'vtex.device-detector'
 
 import { useScreenResize } from '../hooks/useScreenResize'
-import { useSliderState } from './SliderContext'
+import { useTouchHandlers } from '../hooks/useTouchHandlers'
+import { useSliderState, useSliderDispatch } from './SliderContext'
 import SliderTrack from './SliderTrack'
 import SlideList from './SlideList'
 import Arrow from './Arrow'
-import PaginationDots from './Dots'
+import PaginationDots from './PaginationDots'
 
 import sliderCSS from './slider.css'
 
-interface Props {
-  label?: string
-  showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-  infinite: boolean
-  showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-  slideTransition?: {
-    /** Transition speed in ms */
-    speed: number
-    /** Transition delay in ms */
-    delay: number
-    timing: string
-  }
-  autoplay?: {
-    /** Timeout duration in ms */
-    timeout: number
-    stopOnHover?: boolean
-  }
-  navigationStep: number | 'page'
-  usePagination: boolean
-  itemsPerPage: {
-    desktop: number
-    tablet: number
-    phone: number
-  }
-}
-
-const Slider: FC<Props> = ({
+const Slider: FC<SliderLayoutProps> = ({
   label = 'slider',
   children,
   showNavigationArrows = 'always',
@@ -56,13 +31,25 @@ const Slider: FC<Props> = ({
   },
 }) => {
   const { isMobile } = useDevice()
-  const sliderState = useSliderState()
+  const { slidesPerPage } = useSliderState()
+  const resolvedNavigationStep =
+    navigationStep === 'page' ? slidesPerPage : navigationStep
+  const dispatch = useSliderDispatch()
   const containerRef = useRef<HTMLDivElement>(null)
   const totalItems = React.Children.count(children)
   const controls = `${label
     .toLowerCase()
     .trim()
     .replace(/ /g, '-')}-items`
+
+  useEffect(() => {
+    dispatch({
+      type: 'setInitialStateFromProps',
+      payload: { totalItems, infinite, navigationStep: resolvedNavigationStep },
+    })
+  }, [resolvedNavigationStep])
+  useScreenResize(containerRef, infinite, itemsPerPage)
+  const { onTouchEnd, onTouchStart } = useTouchHandlers()
 
   const shouldShowArrows = !!(
     showNavigationArrows === 'always' ||
@@ -74,13 +61,11 @@ const Slider: FC<Props> = ({
     (showPaginationDots === 'mobileOnly' && isMobile) ||
     (showPaginationDots === 'desktopOnly' && !isMobile)
   )
-  const resolvedNavigationStep =
-    navigationStep === 'page' ? sliderState.slidesPerPage : navigationStep
-
-  useScreenResize(containerRef, infinite, itemsPerPage)
 
   return (
     <section
+      onTouchStart={e => onTouchStart(e)}
+      onTouchEnd={e => onTouchEnd(e)}
       aria-roledescription="carousel"
       aria-label={label}
       className={`w-100 flex items-center relative ${
@@ -89,32 +74,16 @@ const Slider: FC<Props> = ({
       ref={containerRef}
     >
       <SliderTrack slideTransition={slideTransition}>
-        <SlideList totalItems={totalItems}>{children}</SlideList>
+        <SlideList>{children}</SlideList>
       </SliderTrack>
       {shouldShowArrows && usePagination && (
         <Fragment>
-          <Arrow
-            orientation="left"
-            label={label}
-            infinite={infinite}
-            totalItems={totalItems}
-            navigationStep={resolvedNavigationStep}
-          />
-          <Arrow
-            orientation="right"
-            label={label}
-            infinite={infinite}
-            totalItems={totalItems}
-            navigationStep={resolvedNavigationStep}
-          />
+          <Arrow orientation="left" controls={controls} />
+          <Arrow orientation="right" controls={controls} />
         </Fragment>
       )}
       {shouldShowPaginationDots && usePagination && (
-        <PaginationDots
-          navigationStep={resolvedNavigationStep}
-          totalItems={totalItems}
-          controls={controls}
-        />
+        <PaginationDots controls={controls} />
       )}
     </section>
   )
