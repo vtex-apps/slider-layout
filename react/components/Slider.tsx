@@ -47,7 +47,7 @@ const Slider: FC<SliderLayoutProps> = ({
       type: 'setInitialStateFromProps',
       payload: { totalItems, infinite, navigationStep: resolvedNavigationStep },
     })
-  }, [resolvedNavigationStep])
+  }, [totalItems, infinite, resolvedNavigationStep])
   useScreenResize(containerRef, infinite, itemsPerPage)
   const { onTouchEnd, onTouchStart } = useTouchHandlers()
 
