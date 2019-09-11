@@ -24,6 +24,15 @@ interface SlideAction {
   }
 }
 
+interface SetInitialStateFromPropsAction {
+  type: 'setInitialStateFromProps'
+  payload: {
+    totalItems: number
+    infinite: boolean
+    navigationStep: number
+  }
+}
+
 interface State {
   /** Width of each item */
   slideWidth: number
@@ -39,9 +48,16 @@ interface State {
   deviceType?: string
   /** Current transform value */
   transform: number
+  totalItems: number
+  infinite: boolean
+  navigationStep: number
 }
 
-type Action = LoadAction | LoadCorrectAction | SlideAction
+type Action =
+  | LoadAction
+  | LoadCorrectAction
+  | SlideAction
+  | SetInitialStateFromPropsAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
@@ -72,6 +88,13 @@ function sliderContextReducer(state: State, action: Action) {
         ...state,
         ...action.payload,
       }
+    case 'setInitialStateFromProps':
+      return {
+        ...state,
+        totalItems: action.payload.totalItems,
+        infinite: action.payload.infinite,
+        navigationStep: action.payload.navigationStep,
+      }
     default:
       return state
   }
@@ -86,6 +109,9 @@ function SliderContextProvider({ children }: { children: ReactNode }) {
     isDOMLoaded: false,
     transform: 0,
     containerWidth: 0,
+    totalItems: 0,
+    infinite: false,
+    navigationStep: 0,
   })
 
   return (

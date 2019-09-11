@@ -7,17 +7,9 @@ import sliderCSS from './slider.css'
 const DOTS_DEFAULT_SIZE = 0.625
 
 interface Props {
-  totalItems: number
   controls: string
-  navigationStep: number
 }
 
-/**
- * Returns the dot that should be selected
- * @param passVisibleSlides
- * @param currentSlide
- * @param slidesToShow
- */
 const getSelectedDot = (
   passVisibleSlides: boolean,
   currentSlide: number,
@@ -31,15 +23,6 @@ const getSelectedDot = (
     : realCurrentSlide
 }
 
-/**
- * Return the array of indices for the dots
- * The array will be empty if there are not any0 slidesToShow
- * If all the visible slides should pass on a dot click, the array elements will be the sequence from 0 to ceil(totalItems/slidesToShow)
- * If not, the array elements will be the sequence from 0 to totalSlides
- * @param slidesToShow
- * @param passVisibleSlides
- * @param totalItems
- */
 const getSlideIndices = (
   slidesToShow: number,
   passVisibleSlides: boolean,
@@ -53,13 +36,15 @@ const getSlideIndices = (
       ]
     : []
 
-const PaginationDots: FC<Props> = ({
-  totalItems,
-  navigationStep,
-  controls,
-}) => {
+const PaginationDots: FC<Props> = ({ controls }) => {
   const dispatch = useSliderDispatch()
-  const { slideWidth, slidesPerPage, currentSlide } = useSliderState()
+  const {
+    slideWidth,
+    slidesPerPage,
+    currentSlide,
+    navigationStep,
+    totalItems,
+  } = useSliderState()
   const passVisibleSlides = navigationStep === slidesPerPage
 
   const slideIndexes = getSlideIndices(

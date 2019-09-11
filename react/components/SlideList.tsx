@@ -3,13 +3,6 @@ import React, { FC, Fragment } from 'react'
 import sliderCSS from './slider.css'
 import { useSliderState } from './SliderContext'
 
-interface Props {
-  totalItems: number
-}
-
-/**
- * Returns if the slide is visible or not
- */
 const isSlideVisibile = (
   index: number,
   currentSlide: number,
@@ -19,8 +12,13 @@ const isSlideVisibile = (
 }
 
 /** List of all slides */
-const SlideList: FC<Props> = ({ children, totalItems }) => {
-  const { currentSlide, slideWidth, slidesPerPage } = useSliderState()
+const SlideList: FC = ({ children }) => {
+  const {
+    currentSlide,
+    slideWidth,
+    slidesPerPage,
+    totalItems,
+  } = useSliderState()
 
   return (
     <Fragment>
