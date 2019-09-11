@@ -4,6 +4,7 @@ import { useSliderDispatch } from '../components/SliderContext'
 
 export const useScreenResize = (
   containerRef: RefObject<HTMLDivElement>,
+  infinite: boolean,
   itemsPerPage: {
     desktop: number
     tablet: number
@@ -41,7 +42,7 @@ export const useScreenResize = (
       }
     }
     const onResize = (value?: UIEvent): void => {
-      setNewState(!value)
+      setNewState(!value || infinite)
     }
     setNewState(false)
 
