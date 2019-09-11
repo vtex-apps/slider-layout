@@ -64,10 +64,11 @@ const Slider: FC<SliderLayoutProps> = ({
 
   return (
     <section
-      onTouchStart={e => onTouchStart(e)}
-      onTouchEnd={e => onTouchEnd(e)}
+      onTouchStart={e => (usePagination ? onTouchStart(e) : null)}
+      onTouchEnd={e => (usePagination ? onTouchEnd(e) : null)}
       aria-roledescription="carousel"
       aria-label={label}
+      style={{ WebkitOverflowScrolling: !usePagination ? 'touch' : undefined }}
       className={`w-100 flex items-center relative ${
         usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
       } ${sliderCSS.container || ''}`}
