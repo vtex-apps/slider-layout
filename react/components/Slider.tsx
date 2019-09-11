@@ -39,8 +39,8 @@ interface Props {
 const Slider: FC<Props> = ({
   label = 'slider',
   children,
-  showNavigationArrows,
-  showPaginationDots,
+  showNavigationArrows = 'always',
+  showPaginationDots = 'always',
   infinite,
   navigationStep,
   usePagination = true,
