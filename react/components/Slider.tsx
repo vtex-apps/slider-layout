@@ -14,7 +14,7 @@ interface Props {
   label?: string
   showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
   infinite: boolean
-  showPaginationDots: 'visible' | 'hidden' | 'desktopOnly' | 'mobileOnly'
+  showPaginationDots: 'always' | 'never' | 'desktopOnly' | 'mobileOnly'
   slideTransition?: {
     /** Transition speed in ms */
     speed: number
@@ -28,7 +28,7 @@ interface Props {
     stopOnHover?: boolean
   }
   navigationStep: number | 'page'
-  usePaginationOnDrag: boolean
+  usePagination: boolean
   itemsPerPage: {
     desktop: number
     tablet: number
@@ -43,6 +43,7 @@ const Slider: FC<Props> = ({
   showPaginationDots,
   infinite,
   navigationStep,
+  usePagination = true,
   slideTransition = {
     speed: 400,
     delay: 0,
@@ -69,27 +70,28 @@ const Slider: FC<Props> = ({
     (showNavigationArrows === 'desktopOnly' && !isMobile)
   )
   const shouldShowPaginationDots = !!(
-    showPaginationDots === 'visible' ||
+    showPaginationDots === 'always' ||
     (showPaginationDots === 'mobileOnly' && isMobile) ||
     (showPaginationDots === 'desktopOnly' && !isMobile)
   )
   const resolvedNavigationStep =
     navigationStep === 'page' ? sliderState.slidesPerPage : navigationStep
 
-  useScreenResize(containerRef, itemsPerPage)
+  useScreenResize(containerRef, infinite, itemsPerPage)
 
   return (
     <section
       aria-roledescription="carousel"
       aria-label={label}
-      className={`w-100 flex items-center relative overflow-hidden ${sliderCSS.container ||
-        ''}`}
+      className={`w-100 flex items-center relative ${
+        usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
+      } ${sliderCSS.container || ''}`}
       ref={containerRef}
     >
       <SliderTrack slideTransition={slideTransition}>
         <SlideList totalItems={totalItems}>{children}</SlideList>
       </SliderTrack>
-      {shouldShowArrows && (
+      {shouldShowArrows && usePagination && (
         <Fragment>
           <Arrow
             orientation="left"
@@ -107,7 +109,7 @@ const Slider: FC<Props> = ({
           />
         </Fragment>
       )}
-      {shouldShowPaginationDots && (
+      {shouldShowPaginationDots && usePagination && (
         <PaginationDots
           navigationStep={resolvedNavigationStep}
           totalItems={totalItems}
