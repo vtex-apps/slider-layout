@@ -1,9 +1,9 @@
 interface SliderLayoutProps {
-  label?: string
+  label: string
   showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
   infinite: boolean
   showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-  slideTransition?: {
+  slideTransition: {
     /** Transition speed in ms */
     speed: number
     /** Transition delay in ms */

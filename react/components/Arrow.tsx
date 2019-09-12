@@ -46,7 +46,7 @@ const Arrow: FC<Props> = ({ custom, orientation, controls }) => {
       infinite
     )
     dispatch({
-      type: 'slide',
+      type: 'SLIDE',
       payload: {
         transform: nextPosition || 0,
         currentSlide: nextSlides || 0,

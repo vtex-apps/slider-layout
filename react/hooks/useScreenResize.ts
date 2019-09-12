@@ -1,17 +1,17 @@
 import { useEffect, RefObject } from 'react'
-import { useDevice } from 'vtex.device-detector'
-import { useSliderDispatch } from '../components/SliderContext'
+
+import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
 export const useScreenResize = (
   containerRef: RefObject<HTMLDivElement>,
-  infinite: boolean,
-  itemsPerPage: {
-    desktop: number
-    tablet: number
-    phone: number
-  }
+  device: 'desktop' | 'tablet' | 'phone'
 ) => {
-  const { device } = useDevice()
+  const {
+    infinite,
+    navigationStep,
+    isPageNavigationStep,
+    itemsPerPage,
+  } = useSliderState()
   const dispatch = useSliderDispatch()
 
   useEffect(() => {
@@ -22,10 +22,13 @@ export const useScreenResize = (
           containerWidth / itemsPerPage[device]
         )
         dispatch({
-          type: 'loadAndCorrect',
+          type: 'LOADANDCORRECT',
           payload: {
             slidesPerPage: itemsPerPage[device],
             deviceType: device,
+            navigationStep: isPageNavigationStep
+              ? itemsPerPage[device]
+              : navigationStep,
             containerWidth,
             slideWidth,
             shouldCorrectItemPosition,
@@ -33,10 +36,13 @@ export const useScreenResize = (
         })
       } else {
         dispatch({
-          type: 'load',
+          type: 'LOAD',
           payload: {
             slidesToShow: itemsPerPage[device],
             deviceType: device,
+            navigationStep: isPageNavigationStep
+              ? itemsPerPage[device]
+              : navigationStep,
           },
         })
       }
@@ -48,5 +54,12 @@ export const useScreenResize = (
 
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [device, itemsPerPage])
+  }, [
+    device,
+    containerRef,
+    infinite,
+    navigationStep,
+    isPageNavigationStep,
+    itemsPerPage,
+  ])
 }

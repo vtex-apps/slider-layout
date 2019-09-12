@@ -27,7 +27,7 @@ const getSlideIndices = (
   slidesToShow: number,
   passVisibleSlides: boolean,
   totalItems: number
-): Array<number> =>
+): number[] =>
   slidesToShow
     ? [
         ...Array(
@@ -61,7 +61,7 @@ const PaginationDots: FC<Props> = ({ controls }) => {
       !isExactDivision && isLastDot ? Math.floor(totalItems / slidesPerPage) : 0
 
     dispatch({
-      type: 'slide',
+      type: 'SLIDE',
       payload: {
         transform: -(slideWidth * (slideToGo - overslideThreshold)),
         currentSlide: index,

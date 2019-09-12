@@ -1,15 +1,21 @@
-import React, { createContext, useReducer, useContext, ReactNode } from 'react'
+import React, { createContext, useReducer, useContext, FC } from 'react'
+import { useDevice } from 'vtex.device-detector'
 
 interface LoadAction {
-  type: 'load'
-  payload: { slidesToShow: number; deviceType: string }
+  type: 'LOAD'
+  payload: {
+    slidesToShow: number
+    deviceType: 'desktop' | 'tablet' | 'phone'
+    navigationStep: number
+  }
 }
 
 interface LoadCorrectAction {
-  type: 'loadAndCorrect'
+  type: 'LOADANDCORRECT'
   payload: {
     slidesPerPage: number
-    deviceType: string
+    navigationStep: number
+    deviceType: 'desktop' | 'tablet' | 'phone'
     containerWidth: number
     slideWidth: number
     shouldCorrectItemPosition: boolean
@@ -17,23 +23,14 @@ interface LoadCorrectAction {
 }
 
 interface SlideAction {
-  type: 'slide'
+  type: 'SLIDE'
   payload: {
     transform: number
     currentSlide: number
   }
 }
 
-interface SetInitialStateFromPropsAction {
-  type: 'setInitialStateFromProps'
-  payload: {
-    totalItems: number
-    infinite: boolean
-    navigationStep: number
-  }
-}
-
-interface State {
+interface State extends SliderLayoutProps {
   /** Width of each item */
   slideWidth: number
   /** Width of the full container */
@@ -42,39 +39,33 @@ interface State {
   slidesPerPage: number
   /** Index of the first item (left) of the current page */
   currentSlide: number
-  /** If the dom is loaded or not */
-  isDOMLoaded: boolean
   /** Current device type (based on containerWidth and responsive prop) */
-  deviceType?: string
+  deviceType: 'desktop' | 'tablet' | 'phone'
   /** Current transform value */
   transform: number
   totalItems: number
-  infinite: boolean
   navigationStep: number
+  isPageNavigationStep: boolean
 }
 
-type Action =
-  | LoadAction
-  | LoadCorrectAction
-  | SlideAction
-  | SetInitialStateFromPropsAction
+type Action = LoadAction | LoadCorrectAction | SlideAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
 const SliderDispatchContext = createContext<Dispatch | undefined>(undefined)
 
-function sliderContextReducer(state: State, action: Action) {
+function sliderContextReducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'load':
+    case 'LOAD':
       return {
         ...state,
-        isDOMLoaded: true,
-        ...action.payload,
+        deviceType: action.payload.deviceType,
+        navigationStep: action.payload.navigationStep,
       }
-    case 'loadAndCorrect':
+    case 'LOADANDCORRECT':
       return {
         ...state,
-        isDOMLoaded: true,
+        navigationStep: action.payload.navigationStep,
         slidesPerPage: action.payload.slidesPerPage,
         deviceType: action.payload.deviceType,
         containerWidth: action.payload.containerWidth,
@@ -83,35 +74,58 @@ function sliderContextReducer(state: State, action: Action) {
           ? -action.payload.slideWidth * state.currentSlide
           : state.transform,
       }
-    case 'slide':
+    case 'SLIDE':
       return {
         ...state,
-        ...action.payload,
-      }
-    case 'setInitialStateFromProps':
-      return {
-        ...state,
-        totalItems: action.payload.totalItems,
-        infinite: action.payload.infinite,
-        navigationStep: action.payload.navigationStep,
+        transform: action.payload.transform,
+        currentSlide: action.payload.currentSlide,
       }
     default:
       return state
   }
 }
 
-function SliderContextProvider({ children }: { children: ReactNode }) {
+const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
+  children,
+  totalItems,
+  label = 'slider',
+  infinite = false,
+  showNavigationArrows = 'always',
+  showPaginationDots = 'always',
+  navigationStep = 'page',
+  usePagination = true,
+  slideTransition = {
+    speed: 400,
+    delay: 0,
+    timing: 'ease-in-out',
+  },
+  itemsPerPage = {
+    desktop: 5,
+    tablet: 3,
+    phone: 1,
+  },
+}) => {
+  const { device } = useDevice()
+  const resolvedNavigationStep =
+    navigationStep === 'page' ? itemsPerPage[device] : navigationStep
+
   const [state, dispatch] = useReducer(sliderContextReducer, {
     slideWidth: 0,
-    slidesPerPage: 0,
+    slidesPerPage: itemsPerPage[device],
     currentSlide: 0,
-    deviceType: '',
-    isDOMLoaded: false,
+    deviceType: 'desktop',
     transform: 0,
     containerWidth: 0,
-    totalItems: 0,
-    infinite: false,
-    navigationStep: 0,
+    infinite,
+    navigationStep: resolvedNavigationStep,
+    showNavigationArrows,
+    showPaginationDots,
+    usePagination,
+    slideTransition,
+    itemsPerPage,
+    label,
+    totalItems,
+    isPageNavigationStep: navigationStep === 'page',
   })
 
   return (

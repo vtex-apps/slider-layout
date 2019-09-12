@@ -1,9 +1,9 @@
-import React, { FC, useRef, Fragment, useEffect } from 'react'
+import React, { FC, useRef, Fragment } from 'react'
 import { useDevice } from 'vtex.device-detector'
 
 import { useScreenResize } from '../hooks/useScreenResize'
 import { useTouchHandlers } from '../hooks/useTouchHandlers'
-import { useSliderState, useSliderDispatch } from './SliderContext'
+import { useSliderState } from './SliderContext'
 import SliderTrack from './SliderTrack'
 import SlideList from './SlideList'
 import Arrow from './Arrow'
@@ -11,44 +11,22 @@ import PaginationDots from './PaginationDots'
 
 import sliderCSS from './slider.css'
 
-const Slider: FC<SliderLayoutProps> = ({
-  label = 'slider',
-  children,
-  showNavigationArrows = 'always',
-  showPaginationDots = 'always',
-  infinite,
-  navigationStep,
-  usePagination = true,
-  slideTransition = {
-    speed: 400,
-    delay: 0,
-    timing: 'ease-in-out',
-  },
-  itemsPerPage = {
-    desktop: 5,
-    tablet: 3,
-    phone: 1,
-  },
-}) => {
-  const { isMobile } = useDevice()
-  const { slidesPerPage } = useSliderState()
-  const resolvedNavigationStep =
-    navigationStep === 'page' ? slidesPerPage : navigationStep
-  const dispatch = useSliderDispatch()
+const Slider: FC = ({ children }) => {
+  const { isMobile, device } = useDevice()
+  const {
+    showNavigationArrows,
+    showPaginationDots,
+    usePagination,
+    slideTransition,
+    label,
+  } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
-  const totalItems = React.Children.count(children)
   const controls = `${label
     .toLowerCase()
     .trim()
     .replace(/ /g, '-')}-items`
 
-  useEffect(() => {
-    dispatch({
-      type: 'setInitialStateFromProps',
-      payload: { totalItems, infinite, navigationStep: resolvedNavigationStep },
-    })
-  }, [totalItems, infinite, resolvedNavigationStep])
-  useScreenResize(containerRef, infinite, itemsPerPage)
+  useScreenResize(containerRef, device)
   const { onTouchEnd, onTouchStart } = useTouchHandlers()
 
   const shouldShowArrows = !!(
