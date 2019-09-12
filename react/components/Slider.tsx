@@ -5,7 +5,6 @@ import { useScreenResize } from '../hooks/useScreenResize'
 import { useTouchHandlers } from '../hooks/useTouchHandlers'
 import { useSliderState } from './SliderContext'
 import SliderTrack from './SliderTrack'
-import SlideList from './SlideList'
 import Arrow from './Arrow'
 import PaginationDots from './PaginationDots'
 
@@ -17,7 +16,6 @@ const Slider: FC = ({ children }) => {
     showNavigationArrows,
     showPaginationDots,
     usePagination,
-    slideTransition,
     label,
   } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -52,9 +50,7 @@ const Slider: FC = ({ children }) => {
       } ${sliderCSS.container || ''}`}
       ref={containerRef}
     >
-      <SliderTrack slideTransition={slideTransition}>
-        <SlideList>{children}</SlideList>
-      </SliderTrack>
+      <SliderTrack>{children}</SliderTrack>
       {shouldShowArrows && usePagination && (
         <Fragment>
           <Arrow orientation="left" controls={controls} />
