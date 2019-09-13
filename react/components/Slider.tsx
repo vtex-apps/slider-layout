@@ -25,7 +25,7 @@ const Slider: FC = ({ children }) => {
     .replace(/ /g, '-')}-items`
 
   useScreenResize(containerRef, device)
-  const { onTouchEnd, onTouchStart } = useTouchHandlers()
+  const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers()
 
   const shouldShowArrows = !!(
     showNavigationArrows === 'always' ||
@@ -42,6 +42,7 @@ const Slider: FC = ({ children }) => {
     <section
       onTouchStart={e => (usePagination ? onTouchStart(e) : null)}
       onTouchEnd={e => (usePagination ? onTouchEnd(e) : null)}
+      onTouchMove={e => (usePagination ? onTouchMove(e) : null)}
       aria-roledescription="carousel"
       aria-label={label}
       style={{ WebkitOverflowScrolling: !usePagination ? 'touch' : undefined }}
