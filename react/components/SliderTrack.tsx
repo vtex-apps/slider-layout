@@ -10,6 +10,7 @@ const SliderTrack: FC = ({ children }) => {
     slidesPerPage,
     currentSlide,
     totalItems,
+    isOnTouchMove,
     slideTransition: { speed, timing, delay },
   } = useSliderState()
 
@@ -25,8 +26,9 @@ const SliderTrack: FC = ({ children }) => {
     <div
       className={`${sliderCSS.slider || ''} flex relative pa0 ma0`}
       style={{
-        willChange: 'transform',
-        transition: `transform ${speed}ms ${timing}`,
+        transition: isOnTouchMove
+          ? undefined
+          : `transform ${speed}ms ${timing}`,
         transitionDelay: `${delay}ms`,
         transform: `translate3d(${transform}px, 0, 0)`,
       }}

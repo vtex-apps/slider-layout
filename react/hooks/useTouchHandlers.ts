@@ -49,15 +49,9 @@ export const useTouchHandlers = () => {
     const newTransform =
       touchState.touchInitialTransform + (currentX - touchState.touchStartX)
 
-    const transformDelta = Math.abs(
-      newTransform - touchState.touchInitialTransform
-    )
-
-    if (transformDelta >= 0.95 * slideWidth) return
-
     dispatch({
       type: 'TOUCH',
-      payload: { transform: newTransform },
+      payload: { transform: newTransform, isOnTouchMove: true },
     })
   }
 
@@ -70,10 +64,19 @@ export const useTouchHandlers = () => {
     } else {
       dispatch({
         type: 'TOUCH',
-        payload: { transform: touchState.touchInitialTransform },
+        payload: {
+          transform: touchState.touchInitialTransform,
+          isOnTouchMove: false,
+        },
       })
     }
     setTouchState({ touchStartX: 0, touchInitialTransform: transform })
+    dispatch({
+      type: 'TOUCH',
+      payload: {
+        isOnTouchMove: false,
+      },
+    })
   }
 
   return { onTouchEnd, onTouchStart, onTouchMove }

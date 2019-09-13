@@ -33,7 +33,8 @@ interface SlideAction {
 interface TouchAction {
   type: 'TOUCH'
   payload: {
-    transform: number
+    transform?: number
+    isOnTouchMove: boolean
   }
 }
 
@@ -53,6 +54,7 @@ interface State extends SliderLayoutProps {
   totalItems: number
   navigationStep: number
   isPageNavigationStep: boolean
+  isOnTouchMove: boolean
 }
 
 type Action = LoadAction | LoadCorrectAction | SlideAction | TouchAction
@@ -90,7 +92,8 @@ function sliderContextReducer(state: State, action: Action): State {
     case 'TOUCH':
       return {
         ...state,
-        transform: action.payload.transform,
+        transform: action.payload.transform || state.transform,
+        isOnTouchMove: action.payload.isOnTouchMove,
       }
     default:
       return state
@@ -138,6 +141,7 @@ const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
     label,
     totalItems,
     isPageNavigationStep: navigationStep === 'page',
+    isOnTouchMove: false,
   })
 
   return (
