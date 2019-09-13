@@ -5224,6 +5224,18 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+"vtex.device-detector@http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.device-detector@0.2.2/public/_types/react":
+  version "0.2.2"
+  resolved "http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.device-detector@0.2.2/public/_types/react#cda89d82840660b8fbabc2160db70aae9726cebb"
+
+"vtex.render-runtime@http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.render-runtime@8.62.2/public/_types/react":
+  version "8.62.2"
+  resolved "http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.render-runtime@8.62.2/public/_types/react#9449eec2e1744531e3a9827f48c86059963a190a"
+
+"vtex.store-icons@http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.store-icons@0.13.2/public/_types/react":
+  version "0.13.2"
+  resolved "http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.store-icons@0.13.2/public/_types/react#cc84c911f9f478f6d6165514a8da1b2338e7eee2"
+
 w3c-hr-time@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"
