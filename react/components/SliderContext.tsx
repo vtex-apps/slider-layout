@@ -30,6 +30,13 @@ interface SlideAction {
   }
 }
 
+interface TouchAction {
+  type: 'TOUCH'
+  payload: {
+    transform: number
+  }
+}
+
 interface State extends SliderLayoutProps {
   /** Width of each item */
   slideWidth: number
@@ -48,7 +55,7 @@ interface State extends SliderLayoutProps {
   isPageNavigationStep: boolean
 }
 
-type Action = LoadAction | LoadCorrectAction | SlideAction
+type Action = LoadAction | LoadCorrectAction | SlideAction | TouchAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
@@ -80,6 +87,11 @@ function sliderContextReducer(state: State, action: Action): State {
         transform: action.payload.transform,
         currentSlide: action.payload.currentSlide,
       }
+    case 'TOUCH':
+      return {
+        ...state,
+        transform: action.payload.transform,
+      }
     default:
       return state
   }
@@ -97,7 +109,7 @@ const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
   slideTransition = {
     speed: 400,
     delay: 0,
-    timing: 'ease-in-out',
+    timing: '',
   },
   itemsPerPage = {
     desktop: 5,
