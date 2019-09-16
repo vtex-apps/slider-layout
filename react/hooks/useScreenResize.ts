@@ -22,7 +22,7 @@ export const useScreenResize = (
           containerWidth / itemsPerPage[device]
         )
         dispatch({
-          type: 'LOADANDCORRECT',
+          type: 'LOAD_AND_CORRECT',
           payload: {
             slidesPerPage: itemsPerPage[device],
             deviceType: device,
