@@ -11,7 +11,7 @@ interface LoadAction {
 }
 
 interface LoadCorrectAction {
-  type: 'LOADANDCORRECT'
+  type: 'LOAD_AND_CORRECT'
   payload: {
     slidesPerPage: number
     navigationStep: number
