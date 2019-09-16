@@ -1,22 +1,50 @@
-import React, { FC, Fragment } from 'react'
+import React, {
+  FC,
+  useState,
+  useLayoutEffect,
+  useRef,
+  ReactElement,
+  Fragment,
+} from 'react'
 import { useSSR } from 'vtex.render-runtime'
 
 import { useSliderState } from './SliderContext'
+import Slide from './Slide'
 import sliderCSS from './slider.css'
 
 const SliderTrack: FC = ({ children }) => {
   const {
     transform,
-    slideWidth,
+    isOnTouchMove,
     slidesPerPage,
     currentSlide,
     totalItems,
-    isOnTouchMove,
     slideTransition: { speed, timing, delay },
   } = useSliderState()
   const isSSR = useSSR()
 
   const childrenArray = React.Children.toArray(children)
+
+  const [isSliderReady, setIsSliderReady] = useState(false)
+  const [componentsToRender, setComponentsToRender] = useState(new Array())
+  const trackRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    const { current } = trackRef
+    let components: ReactElement[] = []
+
+    if (current && !isSliderReady) {
+      current.childNodes.forEach((val, index) => {
+        const componentToRender: ReactElement = (
+          <Slide node={val} index={index} />
+        )
+        components.push(componentToRender)
+      })
+    }
+
+    setIsSliderReady(true)
+    setComponentsToRender(components)
+  }, [])
 
   const isSlideVisibile = (
     index: number,
@@ -58,6 +86,7 @@ const SliderTrack: FC = ({ children }) => {
   return (
     <div
       className={`${sliderCSS.sliderTrack} flex relative pa0 ma0`}
+      ref={trackRef}
       style={{
         transition: isOnTouchMove
           ? undefined
@@ -68,26 +97,9 @@ const SliderTrack: FC = ({ children }) => {
       aria-atomic="false"
       aria-live="polite"
     >
-      {childrenArray.map((child, index) => (
-        <div
-          key={index}
-          className={`flex relative ${sliderCSS.slide}`}
-          data-index={index}
-          style={{
-            width: `${slideWidth}px`,
-          }}
-          aria-hidden={
-            isSlideVisibile(index, currentSlide, slidesPerPage)
-              ? 'false'
-              : 'true'
-          }
-          role="group"
-          aria-roledescription="slide"
-          aria-label={`${index + 1} of ${totalItems}`}
-        >
-          <div className="w-100">{child}</div>
-        </div>
-      ))}
+      {!isSliderReady
+        ? children
+        : componentsToRender.map(element => <Fragment>{element}</Fragment>)}
     </div>
   )
 }
