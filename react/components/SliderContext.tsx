@@ -71,7 +71,7 @@ function sliderContextReducer(state: State, action: Action): State {
         deviceType: action.payload.deviceType,
         navigationStep: action.payload.navigationStep,
       }
-    case 'LOADANDCORRECT':
+    case 'LOAD_AND_CORRECT':
       return {
         ...state,
         navigationStep: action.payload.navigationStep,
