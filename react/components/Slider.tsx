@@ -48,7 +48,7 @@ const Slider: FC = ({ children }) => {
       style={{ WebkitOverflowScrolling: !usePagination ? 'touch' : undefined }}
       className={`w-100 flex items-center relative ${
         usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
-      } ${sliderCSS.container || ''}`}
+      } ${sliderCSS.layoutContainer}`}
       ref={containerRef}
     >
       <SliderTrack>{children}</SliderTrack>
