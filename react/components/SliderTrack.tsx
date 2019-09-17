@@ -24,7 +24,7 @@ const SliderTrack: FC = ({ children }) => {
 
   return (
     <div
-      className={`${sliderCSS.slider || ''} flex relative pa0 ma0`}
+      className={`${sliderCSS.sliderTrack} flex relative pa0 ma0`}
       style={{
         transition: isOnTouchMove
           ? undefined
@@ -38,7 +38,7 @@ const SliderTrack: FC = ({ children }) => {
       {React.Children.toArray(children).map((child, index) => (
         <div
           key={index}
-          className={`flex relative ${sliderCSS.sliderItem || ''}`}
+          className={`flex relative ${sliderCSS.slide}`}
           data-index={index}
           style={{
             width: `${slideWidth}px`,
@@ -52,7 +52,7 @@ const SliderTrack: FC = ({ children }) => {
           aria-roledescription="slide"
           aria-label={`${index + 1} of ${totalItems}`}
         >
-          {child}
+          <div className="w-100">{child}</div>
         </div>
       ))}
     </div>
