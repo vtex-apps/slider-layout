@@ -5,7 +5,6 @@ declare module '*.css' {
 
 interface CSSHandles {
   layoutContainer: string
-  sliderContainer: string
   sliderTrack: string
   slide: string
   leftArrow: string
