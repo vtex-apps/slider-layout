@@ -9,27 +9,21 @@ import useKeyboardArrows from '../hooks/useKeyboardArrows'
 
 interface Props {
   custom?: ReactNode
-  navigationStep: number
   orientation: 'left' | 'right'
-  totalItems: number
-  infinite: boolean
-  label: string
+  controls: string
 }
 
-const Arrow: FC<Props> = ({
-  custom,
-  navigationStep,
-  orientation,
-  totalItems,
-  infinite,
-  label,
-}) => {
-  const { currentSlide, slidesPerPage, slideWidth } = useSliderState()
+const Arrow: FC<Props> = ({ custom, orientation, controls }) => {
+  const {
+    currentSlide,
+    slidesPerPage,
+    slideWidth,
+    navigationStep,
+    totalItems,
+    infinite,
+  } = useSliderState()
   const dispatch = useSliderDispatch()
-  const controls = `${label
-    .toLowerCase()
-    .trim()
-    .replace(/ /g, '-')}-items`
+
   const isLeftEndReach = !(
     currentSlide - (navigationStep ? navigationStep : 1) >=
     0
@@ -52,7 +46,7 @@ const Arrow: FC<Props> = ({
       infinite
     )
     dispatch({
-      type: 'slide',
+      type: 'SLIDE',
       payload: {
         transform: nextPosition || 0,
         currentSlide: nextSlides || 0,

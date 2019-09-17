@@ -3,36 +3,58 @@ import React, { FC } from 'react'
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
 
-interface Props {
-  slideTransition: TransitionType
-}
+const SliderTrack: FC = ({ children }) => {
+  const {
+    transform,
+    slideWidth,
+    slidesPerPage,
+    currentSlide,
+    totalItems,
+    isOnTouchMove,
+    slideTransition: { speed, timing, delay },
+  } = useSliderState()
 
-interface TransitionType {
-  /** Transition speed in ms */
-  speed: number
-  /** Transition delay in ms */
-  delay: number
-  /** Timing function */
-  timing: string
-}
-
-const SliderTrack: FC<Props> = ({ children, slideTransition }) => {
-  const { speed, timing, delay } = slideTransition
-  const { transform } = useSliderState()
+  const isSlideVisibile = (
+    index: number,
+    currentSlide: number,
+    slidesToShow: number
+  ): boolean => {
+    return index >= currentSlide && index < currentSlide + slidesToShow
+  }
 
   return (
     <div
       className={`${sliderCSS.slider || ''} flex relative pa0 ma0`}
       style={{
-        willChange: 'transform',
-        transition: `transform ${speed}ms ${timing}`,
+        transition: isOnTouchMove
+          ? undefined
+          : `transform ${speed}ms ${timing}`,
         transitionDelay: `${delay}ms`,
         transform: `translate3d(${transform}px, 0, 0)`,
       }}
       aria-atomic="false"
       aria-live="polite"
     >
-      {children}
+      {React.Children.toArray(children).map((child, index) => (
+        <div
+          key={index}
+          className={`flex relative ${sliderCSS.sliderItem || ''}`}
+          data-index={index}
+          style={{
+            width: `${slideWidth}px`,
+          }}
+          aria-hidden={
+            isSlideVisibile(index, currentSlide, slidesPerPage)
+              ? 'false'
+              : 'true'
+          }
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${index + 1} of ${totalItems}`}
+        >
+          {child}
+        </div>
+      ))}
     </div>
   )
 }
