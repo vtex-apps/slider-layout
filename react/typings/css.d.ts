@@ -4,10 +4,10 @@ declare module '*.css' {
 }
 
 interface CSSHandles {
-  container: string
+  layoutContainer: string
   sliderContainer: string
-  slider: string
-  sliderItem: string
+  sliderTrack: string
+  slide: string
   leftArrow: string
   rightArrow: string
   dotsContainer: string
