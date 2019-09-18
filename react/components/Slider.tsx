@@ -17,12 +17,14 @@ const Slider: FC = ({ children }) => {
     showPaginationDots,
     usePagination,
     label,
+    slideWidth,
   } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const controls = `${label
     .toLowerCase()
     .trim()
     .replace(/ /g, '-')}-items`
+  const isSliderReady = slideWidth > 0
 
   useScreenResize(containerRef, device)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers()
@@ -51,15 +53,19 @@ const Slider: FC = ({ children }) => {
       } ${sliderCSS.layoutContainer}`}
       ref={containerRef}
     >
-      <SliderTrack>{children}</SliderTrack>
-      {shouldShowArrows && usePagination && (
+      {isSliderReady && (
         <Fragment>
-          <Arrow orientation="left" controls={controls} />
-          <Arrow orientation="right" controls={controls} />
+          <SliderTrack>{children}</SliderTrack>
+          {shouldShowArrows && usePagination && (
+            <Fragment>
+              <Arrow orientation="left" controls={controls} />
+              <Arrow orientation="right" controls={controls} />
+            </Fragment>
+          )}
+          {shouldShowPaginationDots && usePagination && (
+            <PaginationDots controls={controls} />
+          )}
         </Fragment>
-      )}
-      {shouldShowPaginationDots && usePagination && (
-        <PaginationDots controls={controls} />
       )}
     </section>
   )
