@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import React, { FC, Fragment } from 'react'
+import { useSSR } from 'vtex.render-runtime/core/main'
 
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
@@ -13,6 +14,9 @@ const SliderTrack: FC = ({ children }) => {
     isOnTouchMove,
     slideTransition: { speed, timing, delay },
   } = useSliderState()
+  const isSSR = useSSR()
+
+  const childrenArray = React.Children.toArray(children)
 
   const isSlideVisibile = (
     index: number,
@@ -20,6 +24,35 @@ const SliderTrack: FC = ({ children }) => {
     slidesToShow: number
   ): boolean => {
     return index >= currentSlide && index < currentSlide + slidesToShow
+  }
+
+  if (isSSR) {
+    const slideWidthPercentage = 100 / slidesPerPage
+
+    return (
+      <Fragment>
+        {childrenArray.slice(0, slidesPerPage).map((child, index) => (
+          <div
+            key={index}
+            className={`flex relative ${sliderCSS.slide}`}
+            data-index={index}
+            style={{
+              width: `${slideWidthPercentage}%`,
+            }}
+            aria-hidden={
+              isSlideVisibile(index, currentSlide, slidesPerPage)
+                ? 'false'
+                : 'true'
+            }
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${totalItems}`}
+          >
+            <div className="w-100">{child}</div>
+          </div>
+        ))}
+      </Fragment>
+    )
   }
 
   return (
@@ -35,7 +68,7 @@ const SliderTrack: FC = ({ children }) => {
       aria-atomic="false"
       aria-live="polite"
     >
-      {React.Children.toArray(children).map((child, index) => (
+      {childrenArray.map((child, index) => (
         <div
           key={index}
           className={`flex relative ${sliderCSS.slide}`}
