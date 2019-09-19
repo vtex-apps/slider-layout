@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react'
-import { useSSR } from 'vtex.render-runtime/core/main'
+import { useSSR } from 'vtex.render-runtime'
 
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
