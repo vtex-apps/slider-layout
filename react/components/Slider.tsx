@@ -10,22 +10,27 @@ import PaginationDots from './PaginationDots'
 
 import sliderCSS from './slider.css'
 
-const Slider: FC = ({ children }) => {
+const Slider: FC<SliderLayoutSiteEditorProps & { totalItems: number }> = ({
+  children,
+  totalItems,
+  infinite,
+  showNavigationArrows,
+  showPaginationDots,
+  usePagination,
+}) => {
   const { isMobile, device } = useDevice()
-  const {
-    showNavigationArrows,
-    showPaginationDots,
-    usePagination,
-    label,
-  } = useSliderState()
+  const { label } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const controls = `${label
     .toLowerCase()
     .trim()
     .replace(/ /g, '-')}-items`
 
-  useScreenResize(containerRef, device)
-  const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers()
+  useScreenResize(containerRef, device, infinite)
+  const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
+    totalItems,
+    infinite,
+  })
 
   const shouldShowArrows = !!(
     showNavigationArrows === 'always' ||
@@ -51,15 +56,25 @@ const Slider: FC = ({ children }) => {
       } ${sliderCSS.layoutContainer}`}
       ref={containerRef}
     >
-      <SliderTrack>{children}</SliderTrack>
+      <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
       {shouldShowArrows && usePagination && (
         <Fragment>
-          <Arrow orientation="left" controls={controls} />
-          <Arrow orientation="right" controls={controls} />
+          <Arrow
+            totalItems={totalItems}
+            orientation="left"
+            controls={controls}
+            infinite={infinite}
+          />
+          <Arrow
+            totalItems={totalItems}
+            orientation="right"
+            controls={controls}
+            infinite={infinite}
+          />
         </Fragment>
       )}
       {shouldShowPaginationDots && usePagination && (
-        <PaginationDots controls={controls} />
+        <PaginationDots totalItems={totalItems} controls={controls} />
       )}
     </section>
   )

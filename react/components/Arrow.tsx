@@ -11,16 +11,22 @@ interface Props {
   custom?: ReactNode
   orientation: 'left' | 'right'
   controls: string
+  totalItems: number
+  infinite: boolean
 }
 
-const Arrow: FC<Props> = ({ custom, orientation, controls }) => {
+const Arrow: FC<Props> = ({
+  custom,
+  orientation,
+  controls,
+  totalItems,
+  infinite,
+}) => {
   const {
     currentSlide,
     slidesPerPage,
     slideWidth,
     navigationStep,
-    totalItems,
-    infinite,
   } = useSliderState()
   const dispatch = useSliderDispatch()
 

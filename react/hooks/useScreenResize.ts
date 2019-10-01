@@ -4,10 +4,10 @@ import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
 export const useScreenResize = (
   containerRef: RefObject<HTMLDivElement>,
-  device: 'desktop' | 'tablet' | 'phone'
+  device: 'desktop' | 'tablet' | 'phone',
+  infinite: boolean
 ) => {
   const {
-    infinite,
     navigationStep,
     isPageNavigationStep,
     itemsPerPage,
