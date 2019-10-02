@@ -10,7 +10,11 @@ import PaginationDots from './PaginationDots'
 
 import sliderCSS from './slider.css'
 
-const Slider: FC<SliderLayoutSiteEditorProps & { totalItems: number }> = ({
+interface Props extends SliderLayoutSiteEditorProps {
+  totalItems: number
+}
+
+const Slider: FC<Props> = ({
   children,
   totalItems,
   infinite,
