@@ -20,8 +20,6 @@ Notice that you could use _any_ array of blocks as `children`, given that they a
 
 This props should be edited at your theme's `blocks.json`:
 
-#### flex-layout.row
-
 | Prop name                  | Type                  | Description                                                                                                   | Default value |
 | -------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------- | ------------- |
 | `label`                | `String`             | Aria label to be used by the `<Slider />` component.                            | `'slider'`       |
@@ -30,10 +28,8 @@ This props should be edited at your theme's `blocks.json`:
 | `infinite`             | `Boolean`  | Controls if the slider should or should not be infinite.                        | `false`   |
 | `navigationStep`               | `Number`&#124;`'page'`  | How many slides should be slid when the user navigates. When set to `'page'`, the number of slides that will slide is equal to the number of slides in a page of the slider.                    | `'page'`   |
 | `usePagination`            | `Boolean`  | Toggles whether or not to use a fluid scroll for navigation, disabling the notion of a "page".                       | `true`   |
-| `preserveLayoutOnMobile`   | `Boolean`             | Whether or not the flex-row should break into a column layout on mobile.                                      | `false`       |
 | `itemsPerPage` | `{ destop: Number, tablet: Number, phone: Number }`             | Controls how many slides should be shown on each type of device.                                       | `{ destop: 5, tablet: 3, phone: 1 }`       |
 | `slideTransition` | `{ speed: Number, delay: Number, timing: String }`             | Controls the transition animation between slides.                                       | `{ speed: 400, delay: 0, timing: '' }`       |
-
 
 
 ## Styles API
@@ -60,7 +56,7 @@ To use this CSS API, you must add the `styles` builder and create an app styling
 
 ### CSS namespaces
 
-Below, we describe the namespaces that are defined by `flex-layout`.
+Below, we describe the namespaces that are defined by `slider-layout`.
 
 | Class name      | Description                    |
 | --------------- | ------------------------------ |
