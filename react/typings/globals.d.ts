@@ -13,7 +13,7 @@ declare global {
     usePagination: boolean
   }
 
-  interface SliderLayoutProps extends SliderLayoutSiteEditorProps {
+  interface SliderLayoutProps {
     totalItems?: number
     label: string
     slideTransition: {

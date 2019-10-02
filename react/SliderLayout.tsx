@@ -5,26 +5,28 @@ import Slider from './components/Slider'
 import { SliderContextProvider } from './components/SliderContext'
 
 const SliderLayout: StorefrontFunctionComponent<
-  SliderLayoutProps & { siteEditorConfig: SliderLayoutSiteEditorProps }
-> = props => {
-  const totalItems = props.totalItems || React.Children.count(props.children)
-  const {
-    infinite = false,
-    showNavigationArrows = 'always',
-    showPaginationDots = 'always',
-    usePagination = true,
-  } = props
+  SliderLayoutProps & SliderLayoutSiteEditorProps
+> = ({
+  totalItems,
+  infinite = false,
+  showNavigationArrows = 'always',
+  showPaginationDots = 'always',
+  usePagination = true,
+  children,
+  ...contextProps
+}) => {
+  const totalSlides = totalItems || React.Children.count(children)
 
   return (
-    <SliderContextProvider totalItems={totalItems} {...props}>
+    <SliderContextProvider totalItems={totalSlides} {...contextProps}>
       <Slider
         infinite={infinite}
         showNavigationArrows={showNavigationArrows}
         showPaginationDots={showPaginationDots}
-        totalItems={totalItems}
+        totalItems={totalSlides}
         usePagination={usePagination}
       >
-        {props.children}
+        {children}
       </Slider>
     </SliderContextProvider>
   )
