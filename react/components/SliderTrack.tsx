@@ -4,13 +4,12 @@ import { useSSR } from 'vtex.render-runtime'
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
 
-const SliderTrack: FC = ({ children }) => {
+const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
   const {
     transform,
     slideWidth,
     slidesPerPage,
     currentSlide,
-    totalItems,
     isOnTouchMove,
     slideTransition: { speed, timing, delay },
   } = useSliderState()

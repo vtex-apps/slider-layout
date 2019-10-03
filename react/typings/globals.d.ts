@@ -1,25 +1,38 @@
-interface SliderLayoutProps {
-  label: string
-  showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-  infinite: boolean
-  showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-  slideTransition: {
-    /** Transition speed in ms */
-    speed: number
-    /** Transition delay in ms */
-    delay: number
-    timing: string
+import { FunctionComponent } from 'react'
+
+declare global {
+  interface StorefrontFunctionComponent<P = {}> extends FunctionComponent<P> {
+    schema?: object
+    getSchema?(props?: P): object
   }
-  autoplay?: {
-    /** Timeout duration in ms */
-    timeout: number
-    stopOnHover?: boolean
+
+  interface SliderLayoutSiteEditorProps {
+    infinite: boolean
+    showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
+    showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
+    usePagination: boolean
   }
-  navigationStep: number | 'page'
-  usePagination: boolean
-  itemsPerPage: {
-    desktop: number
-    tablet: number
-    phone: number
+
+  interface SliderLayoutProps {
+    totalItems?: number
+    label: string
+    slideTransition: {
+      /** Transition speed in ms */
+      speed: number
+      /** Transition delay in ms */
+      delay: number
+      timing: string
+    }
+    autoplay?: {
+      /** Timeout duration in ms */
+      timeout: number
+      stopOnHover?: boolean
+    }
+    navigationStep: number | 'page'
+    itemsPerPage: {
+      desktop: number
+      tablet: number
+      phone: number
+    }
   }
 }

@@ -8,6 +8,7 @@ const DOTS_DEFAULT_SIZE = 0.625
 
 interface Props {
   controls: string
+  totalItems: number
 }
 
 const getSelectedDot = (
@@ -36,14 +37,13 @@ const getSlideIndices = (
       ]
     : []
 
-const PaginationDots: FC<Props> = ({ controls }) => {
+const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
   const dispatch = useSliderDispatch()
   const {
     slideWidth,
     slidesPerPage,
     currentSlide,
     navigationStep,
-    totalItems,
   } = useSliderState()
   const passVisibleSlides = navigationStep === slidesPerPage
 

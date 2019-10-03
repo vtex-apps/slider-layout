@@ -2,15 +2,19 @@ import { useState } from 'react'
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 import { populateSlides } from '../utils/populateSlides'
 
-export const useTouchHandlers = () => {
+export const useTouchHandlers = ({
+  totalItems,
+  infinite,
+}: {
+  totalItems: number
+  infinite: boolean
+}) => {
   const dispatch = useSliderDispatch()
   const {
     currentSlide,
     slidesPerPage,
     slideWidth,
-    totalItems,
     navigationStep,
-    infinite,
     transform,
   } = useSliderState()
   const [touchState, setTouchState] = useState({
