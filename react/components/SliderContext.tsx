@@ -149,7 +149,7 @@ function useSliderState() {
   const context = useContext(SliderStateContext)
   if (context === undefined) {
     throw new Error(
-      'useAppVersionState must be used within a SliderContextProvider'
+      'useSliderState must be used within a SliderContextProvider'
     )
   }
   return context
@@ -160,7 +160,7 @@ function useSliderDispatch() {
 
   if (context === undefined) {
     throw new Error(
-      'useAppVersionDispatch must be used within a SliderContextProvider'
+      'useSliderDispatch must be used within a SliderContextProvider'
     )
   }
   return context
