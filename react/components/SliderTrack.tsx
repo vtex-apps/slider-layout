@@ -1,5 +1,9 @@
 import React, { FC, Fragment } from 'react'
 import { useSSR } from 'vtex.render-runtime'
+import {
+  useProductSummaryListState,
+  useImageListState,
+} from 'vtex.list-context'
 
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
@@ -14,8 +18,12 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slideTransition: { speed, timing, delay },
   } = useSliderState()
   const isSSR = useSSR()
+  const productList = useProductSummaryListState() || []
+  const imageList = useImageListState() || []
 
   const childrenArray = React.Children.toArray(children)
+    .concat(productList)
+    .concat(imageList)
 
   const isSlideVisibile = (
     index: number,
