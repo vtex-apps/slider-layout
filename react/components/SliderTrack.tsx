@@ -21,6 +21,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
   const productList = useProductSummaryListState() || []
   const imageList = useImageListState() || []
 
+  // TO-DO: Enable the user to control WHERE items from lists should be inserted
   const childrenArray = React.Children.toArray(children)
     .concat(productList)
     .concat(imageList)
