@@ -1,9 +1,6 @@
 import React from 'react'
 import { defineMessages } from 'react-intl'
-import {
-  useProductSummaryListState,
-  useImageListState,
-} from 'vtex.list-context'
+import { useListContext } from 'vtex.list-context'
 
 import Slider from './components/Slider'
 import { SliderContextProvider } from './components/SliderContext'
@@ -19,11 +16,8 @@ const SliderLayout: StorefrontFunctionComponent<
   children,
   ...contextProps
 }) => {
-  const productList = useProductSummaryListState() || []
-  const imageList = useImageListState() || []
-  const totalSlides =
-    totalItems ||
-    React.Children.count(children) + productList.length + imageList.length
+  const { list } = useListContext() || []
+  const totalSlides = totalItems || React.Children.count(children) + list.length
 
   return (
     <SliderContextProvider totalItems={totalSlides} {...contextProps}>

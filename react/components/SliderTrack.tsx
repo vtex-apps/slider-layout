@@ -1,9 +1,6 @@
 import React, { FC, Fragment } from 'react'
 import { useSSR } from 'vtex.render-runtime'
-import {
-  useProductSummaryListState,
-  useImageListState,
-} from 'vtex.list-context'
+import { useListContext } from 'vtex.list-context'
 
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
@@ -18,13 +15,10 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slideTransition: { speed, timing, delay },
   } = useSliderState()
   const isSSR = useSSR()
-  const productList = useProductSummaryListState() || []
-  const imageList = useImageListState() || []
+  const { list } = useListContext()
 
   // TO-DO: Enable the user to control WHERE items from lists should be inserted
-  const childrenArray = React.Children.toArray(children)
-    .concat(productList)
-    .concat(imageList)
+  const childrenArray = React.Children.toArray(children).concat(list)
 
   const isSlideVisibile = (
     index: number,
