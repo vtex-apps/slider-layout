@@ -17,7 +17,6 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
   const isSSR = useSSR()
   const { list } = useListContext()
 
-  // TO-DO: Enable the user to control WHERE items from lists should be inserted
   const childrenArray = React.Children.toArray(children).concat(list)
 
   const isSlideVisibile = (
