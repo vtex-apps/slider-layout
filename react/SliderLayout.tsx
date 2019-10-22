@@ -1,5 +1,6 @@
 import React from 'react'
 import { defineMessages } from 'react-intl'
+import { useListContext } from 'vtex.list-context'
 
 import Slider from './components/Slider'
 import { SliderContextProvider } from './components/SliderContext'
@@ -15,7 +16,8 @@ const SliderLayout: StorefrontFunctionComponent<
   children,
   ...contextProps
 }) => {
-  const totalSlides = totalItems || React.Children.count(children)
+  const { list } = useListContext() || []
+  const totalSlides = totalItems || React.Children.count(children) + list.length
 
   return (
     <SliderContextProvider totalItems={totalSlides} {...contextProps}>
@@ -62,24 +64,24 @@ SliderLayout.schema = {
   properties: {
     infinite: {
       default: true,
-      title: messages.sliderInfinite,
+      title: messages.sliderInfinite.id,
       type: 'boolean',
     },
     showNavigationArrows: {
       default: 'always',
       enum: ['mobileOnly', 'desktopOnly', 'always', 'never'],
-      title: messages.sliderShowNavigation,
+      title: messages.sliderShowNavigation.id,
       type: 'string',
     },
     showPaginationDots: {
       default: 'always',
       enum: ['mobileOnly', 'desktopOnly', 'always', 'never'],
-      title: messages.sliderShowPaginationDots,
+      title: messages.sliderShowPaginationDots.id,
       type: 'string',
     },
     usePagination: {
       default: true,
-      title: messages.sliderUsePagination,
+      title: messages.sliderUsePagination.id,
       type: 'boolean',
     },
   },

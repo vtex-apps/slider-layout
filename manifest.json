@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "vtex.device-detector": "0.x",
-    "vtex.store-icons": "0.x"
+    "vtex.store-icons": "0.x",
+    "vtex.list-context": "0.x"
   },
   "builders": {
     "react": "3.x",
     "store": "0.x",
+    "messages": "1.x",
     "docs": "0.x"
   },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"

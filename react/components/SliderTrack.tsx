@@ -1,5 +1,6 @@
 import React, { FC, Fragment } from 'react'
 import { useSSR } from 'vtex.render-runtime'
+import { useListContext } from 'vtex.list-context'
 
 import { useSliderState } from './SliderContext'
 import sliderCSS from './slider.css'
@@ -14,8 +15,9 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slideTransition: { speed, timing, delay },
   } = useSliderState()
   const isSSR = useSSR()
+  const { list } = useListContext()
 
-  const childrenArray = React.Children.toArray(children)
+  const childrenArray = React.Children.toArray(children).concat(list)
 
   const isSlideVisibile = (
     index: number,
