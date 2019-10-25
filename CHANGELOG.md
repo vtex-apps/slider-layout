@@ -6,8 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Support for `autoplay` feature via a new `autoplay` prop.
+
+### Changed
+- CSS handles.
 
 ## [0.6.0] - 2019-10-22
+### Added
+- Support for consuming `list-context`s.
 
 ## [0.5.0] - 2019-10-03
 ### Added
