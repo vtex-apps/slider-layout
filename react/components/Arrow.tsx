@@ -1,10 +1,10 @@
 import React, { memo, FC, ReactNode } from 'react'
 import { IconCaret } from 'vtex.store-icons'
+import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderState, useSliderDispatch } from './SliderContext'
 import { populateSlides } from '../utils/populateSlides'
 
-import sliderCSS from './slider.css'
 import useKeyboardArrows from '../hooks/useKeyboardArrows'
 
 interface Props {
@@ -14,6 +14,8 @@ interface Props {
   totalItems: number
   infinite: boolean
 }
+
+const CSS_HANDLES = ['sliderLeftArrow', 'sliderRightArrow', 'sliderArrows']
 
 const Arrow: FC<Props> = ({
   custom,
@@ -29,6 +31,8 @@ const Arrow: FC<Props> = ({
     navigationStep,
   } = useSliderState()
   const dispatch = useSliderDispatch()
+
+  const handles = useCssHandles(CSS_HANDLES)
 
   const isLeftEndReach = !(
     currentSlide - (navigationStep ? navigationStep : 1) >=
@@ -65,8 +69,12 @@ const Arrow: FC<Props> = ({
   return (
     <button
       className={`${
-        orientation === 'left' ? 'left-1' : 'right-1'
-      } ${sliderCSS} absolute ma2 transparent flex items-center justify-center bn outline-0 pointer`}
+        orientation === 'left'
+          ? `${handles.sliderLeftArrow} left-1`
+          : `${handles.sliderRightArrow} right-1`
+      } ${
+        handles.sliderArrows
+      } absolute ma2 transparent flex items-center justify-center bn outline-0 pointer`}
       style={{ background: 'transparent' }}
       onClick={() => populate(orientation)}
       aria-controls={controls}
