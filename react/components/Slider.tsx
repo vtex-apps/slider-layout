@@ -1,18 +1,20 @@
 import React, { FC, useRef, Fragment } from 'react'
 import { useDevice } from 'vtex.device-detector'
+import { useCssHandles } from 'vtex.css-handles'
 
 import { useScreenResize } from '../hooks/useScreenResize'
 import { useTouchHandlers } from '../hooks/useTouchHandlers'
+import { useAutoplay } from '../hooks/useAutoplay'
 import { useSliderState } from './SliderContext'
 import SliderTrack from './SliderTrack'
 import Arrow from './Arrow'
 import PaginationDots from './PaginationDots'
 
-import sliderCSS from './slider.css'
-
 interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
 }
+
+const CSS_HANDLES = ['sliderLayoutContainer']
 
 const Slider: FC<Props> = ({
   children,
@@ -22,6 +24,7 @@ const Slider: FC<Props> = ({
   showPaginationDots,
   usePagination,
 }) => {
+  const handles = useCssHandles(CSS_HANDLES)
   const { isMobile, device } = useDevice()
   const { label } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -30,6 +33,7 @@ const Slider: FC<Props> = ({
     .trim()
     .replace(/ /g, '-')}-items`
 
+  useAutoplay(infinite, containerRef)
   useScreenResize(containerRef, device, infinite)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     totalItems,
@@ -57,7 +61,7 @@ const Slider: FC<Props> = ({
       style={{ WebkitOverflowScrolling: !usePagination ? 'touch' : undefined }}
       className={`w-100 flex items-center relative ${
         usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
-      } ${sliderCSS.layoutContainer}`}
+      } ${handles.sliderLayoutContainer}`}
       ref={containerRef}
     >
       <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
