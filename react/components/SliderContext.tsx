@@ -101,6 +101,7 @@ function sliderContextReducer(state: State, action: Action): State {
 }
 
 const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
+  autoplay,
   children,
   totalItems,
   label = 'slider',
@@ -131,6 +132,7 @@ const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
     slideTransition,
     itemsPerPage,
     label,
+    autoplay,
     totalItems,
     isPageNavigationStep: navigationStep === 'page',
     isOnTouchMove: false,

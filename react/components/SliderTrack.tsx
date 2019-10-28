@@ -1,9 +1,11 @@
 import React, { FC, Fragment } from 'react'
 import { useSSR } from 'vtex.render-runtime'
 import { useListContext } from 'vtex.list-context'
+import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
-import sliderCSS from './slider.css'
+
+const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer']
 
 const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
   const {
@@ -15,6 +17,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slideTransition: { speed, timing, delay },
   } = useSliderState()
   const isSSR = useSSR()
+  const handles = useCssHandles(CSS_HANDLES)
   const { list } = useListContext()
 
   const childrenArray = React.Children.toArray(children).concat(list)
@@ -35,7 +38,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
         {childrenArray.slice(0, slidesPerPage).map((child, index) => (
           <div
             key={index}
-            className={`flex relative ${sliderCSS.slide}`}
+            className={`flex relative ${handles.slide}`}
             data-index={index}
             style={{
               width: `${slideWidthPercentage}%`,
@@ -58,7 +61,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
 
   return (
     <div
-      className={`${sliderCSS.sliderTrack} flex relative pa0 ma0`}
+      className={`${handles.sliderTrack} flex relative pa0 ma0`}
       style={{
         transition: isOnTouchMove
           ? undefined
@@ -72,7 +75,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
       {childrenArray.map((child, index) => (
         <div
           key={index}
-          className={`flex relative ${sliderCSS.slide}`}
+          className={`flex relative ${handles.slide}`}
           data-index={index}
           style={{
             width: `${slideWidth}px`,
@@ -86,7 +89,9 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
           aria-roledescription="slide"
           aria-label={`${index + 1} of ${totalItems}`}
         >
-          <div className="w-100">{child}</div>
+          <div className={`${handles.slideChildrenContainer} w-100`}>
+            {child}
+          </div>
         </div>
       ))}
     </div>

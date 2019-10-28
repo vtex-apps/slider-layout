@@ -1,11 +1,11 @@
 import React, { memo, FC, ReactNode } from 'react'
 import { IconCaret } from 'vtex.store-icons'
+import { useCssHandles } from 'vtex.css-handles'
 
-import { useSliderState, useSliderDispatch } from './SliderContext'
-import { populateSlides } from '../utils/populateSlides'
+import { useSliderState } from './SliderContext'
 
-import sliderCSS from './slider.css'
 import useKeyboardArrows from '../hooks/useKeyboardArrows'
+import { useSliderControls } from '../hooks/useSliderControls'
 
 interface Props {
   custom?: ReactNode
@@ -15,6 +15,8 @@ interface Props {
   infinite: boolean
 }
 
+const CSS_HANDLES = ['sliderLeftArrow', 'sliderRightArrow', 'sliderArrows']
+
 const Arrow: FC<Props> = ({
   custom,
   orientation,
@@ -22,13 +24,10 @@ const Arrow: FC<Props> = ({
   totalItems,
   infinite,
 }) => {
-  const {
-    currentSlide,
-    slidesPerPage,
-    slideWidth,
-    navigationStep,
-  } = useSliderState()
-  const dispatch = useSliderDispatch()
+  const { currentSlide, slidesPerPage, navigationStep } = useSliderState()
+  const { goBack, goForward } = useSliderControls(infinite)
+
+  const handles = useCssHandles(CSS_HANDLES)
 
   const isLeftEndReach = !(
     currentSlide - (navigationStep ? navigationStep : 1) >=
@@ -40,35 +39,19 @@ const Arrow: FC<Props> = ({
     ((orientation === 'left' && isLeftEndReach) ||
       (orientation === 'right' && isRightEndReach))
 
-  /** Populate next slider page */
-  const populate = (direction: 'left' | 'right') => {
-    const { nextSlides, nextPosition } = populateSlides(
-      direction,
-      currentSlide,
-      slidesPerPage,
-      slideWidth,
-      totalItems,
-      navigationStep,
-      infinite
-    )
-    dispatch({
-      type: 'SLIDE',
-      payload: {
-        transform: nextPosition || 0,
-        currentSlide: nextSlides || 0,
-      },
-    })
-  }
-
-  useKeyboardArrows(() => populate('left'), () => populate('right'))
+  useKeyboardArrows(goBack, goForward)
 
   return (
     <button
       className={`${
-        orientation === 'left' ? 'left-1' : 'right-1'
-      } ${sliderCSS} absolute ma2 transparent flex items-center justify-center bn outline-0 pointer`}
+        orientation === 'left'
+          ? `${handles.sliderLeftArrow} left-1`
+          : `${handles.sliderRightArrow} right-1`
+      } ${
+        handles.sliderArrows
+      } absolute ma2 transparent flex items-center justify-center bn outline-0 pointer`}
       style={{ background: 'transparent' }}
-      onClick={() => populate(orientation)}
+      onClick={orientation === 'left' ? goBack : goForward}
       aria-controls={controls}
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}

@@ -1,8 +1,7 @@
 import React, { memo, FC } from 'react'
+import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderDispatch, useSliderState } from './SliderContext'
-
-import sliderCSS from './slider.css'
 
 const DOTS_DEFAULT_SIZE = 0.625
 
@@ -10,6 +9,8 @@ interface Props {
   controls: string
   totalItems: number
 }
+
+const CSS_HANDLES = ['paginationDotsContainer', 'paginationDot'] as const
 
 const getSelectedDot = (
   passVisibleSlides: boolean,
@@ -38,13 +39,14 @@ const getSlideIndices = (
     : []
 
 const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
-  const dispatch = useSliderDispatch()
   const {
     slideWidth,
     slidesPerPage,
     currentSlide,
     navigationStep,
   } = useSliderState()
+  const dispatch = useSliderDispatch()
+  const handles = useCssHandles(CSS_HANDLES)
   const passVisibleSlides = navigationStep === slidesPerPage
 
   const slideIndexes = getSlideIndices(
@@ -71,7 +73,7 @@ const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
 
   return (
     <div
-      className={`${sliderCSS.dotsContainer} flex absolute justify-center pa0 ma0 bottom-0 left-0 right-0`}
+      className={`${handles.paginationDotsContainer} flex absolute justify-center pa0 ma0 bottom-0 left-0 right-0`}
       role="group"
       aria-label="Carousel Dots"
     >
@@ -81,7 +83,7 @@ const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
           getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
         return (
           <div
-            className={`${sliderCSS.dot} ${
+            className={`${handles.paginationDot} ${
               isActive ? 'bg-emphasis' : 'bg-muted-3'
             } grow dib br-100 pa2 mr2 ml2 bw0 pointer outline-0`}
             style={{

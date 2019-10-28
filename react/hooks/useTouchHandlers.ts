@@ -1,46 +1,24 @@
 import { useState } from 'react'
+
+import { useSliderControls } from './useSliderControls'
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
-import { populateSlides } from '../utils/populateSlides'
+
+const SWIPE_THRESHOLD = 75
 
 export const useTouchHandlers = ({
-  totalItems,
   infinite,
 }: {
   totalItems: number
   infinite: boolean
 }) => {
   const dispatch = useSliderDispatch()
-  const {
-    currentSlide,
-    slidesPerPage,
-    slideWidth,
-    navigationStep,
-    transform,
-  } = useSliderState()
+  const { transform } = useSliderState()
+  const { goForward, goBack } = useSliderControls(infinite)
+
   const [touchState, setTouchState] = useState({
     touchStartX: 0,
     touchInitialTransform: 0,
   })
-  const SWIPE_THRESHOLD = 75
-
-  const populate = (direction: 'left' | 'right') => {
-    const { nextSlides, nextPosition } = populateSlides(
-      direction,
-      currentSlide,
-      slidesPerPage,
-      slideWidth,
-      totalItems,
-      navigationStep,
-      infinite
-    )
-    dispatch({
-      type: 'SLIDE',
-      payload: {
-        transform: nextPosition || 0,
-        currentSlide: nextSlides || 0,
-      },
-    })
-  }
 
   const onTouchStart = (e: React.TouchEvent) => {
     const startX = e.touches[0].clientX
@@ -62,10 +40,19 @@ export const useTouchHandlers = ({
   const onTouchEnd = (e: React.TouchEvent) => {
     const endX = e.changedTouches[0].clientX
     const delta = endX - touchState.touchStartX
+
     if (Math.abs(delta) > SWIPE_THRESHOLD) {
-      if (delta > 0) populate('left')
-      if (delta < 0) populate('right')
+      // Swipe from left to right
+      if (delta > 0) {
+        goBack()
+      }
+
+      // Swipe from right to left
+      if (delta < 0) {
+        goForward()
+      }
     } else {
+      // Ignore the swipe if the SWIPE_THRESHOLD is not reached
       dispatch({
         type: 'TOUCH',
         payload: {
@@ -74,6 +61,7 @@ export const useTouchHandlers = ({
         },
       })
     }
+
     setTouchState({ touchStartX: 0, touchInitialTransform: transform })
     dispatch({
       type: 'TOUCH',
