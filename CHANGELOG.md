@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.7.1] - 2019-11-25
+
 ## [0.7.0] - 2019-10-28
 ### Added
 - Support for `autoplay` feature via a new `autoplay` prop.
