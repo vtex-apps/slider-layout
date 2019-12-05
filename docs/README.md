@@ -2,23 +2,52 @@
 
 Slider-Layout is a flexible solution for building `sliders` of `blocks` within VTEX IO Store Framework.
 
-## Blocks API
+<img width="1316" alt="Screen Shot 2019-12-05 at 08 09 03" src="https://user-images.githubusercontent.com/27777263/70230361-e839db00-1736-11ea-9f29-7c945c10a5f7.png">
 
-The API for `slider-layout` is very permissive, similar to the `flex-layout` interface:
+## Configuration
+
+1. Add the slider-layout app to your theme's dependencies in the `manifest.json`, for example:
 
 ```json
-"slider-layout": {
-  "component": "SliderLayout",
-  "composition": "children",
-  "allowed": "*"
-},
+"dependencies": {
+  "vtex.slider-layout": "0.x"
+}
 ```
 
-Notice that you could use _any_ array of blocks as `children`, given that they are allowed by the `block` that is directly above your `slider-layout`.
+2. Add the `slider-layout` to your template. For example:
 
-### Configuration
+```json
+ "slider-layout#home": {
+   "children": ["info-card#1", "info-card#2"],
+   "props": {
+     "autoplay": {
+       "timeout": 5000,
+       "stopOnHover": false
+     }
+   }
+ },
+  
+ "info-card#1": {
+   "props": {
+     "imageUrl": "https://images.unsplash.com/photo-1524185962737-ea7c028a12cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+     "isFullModeStyle": true,
+     "headline": "Black Friday",
+     "callToActionText": "Subscribe",
+     "textPosition": "center"
+   }
+ },
+  
+ "info-card#2": {
+   "props": {
+     "imageUrl": "https://images.unsplash.com/photo-1524185962737-ea7c028a12cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+     "isFullModeStyle": true,
+     "headline": "Black Friday",
+     "callToActionText": "Subscribe",
+     "textPosition": "center"
+   }
+ }
 
-This props should be edited at your theme's `blocks.json`:
+```
 
 | Prop name              | Type                                                       | Description                                                                                                                                                                  | Default value                          |
 | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
@@ -32,33 +61,11 @@ This props should be edited at your theme's `blocks.json`:
 | `slideTransition`      | `{ speed: Number, delay: Number, timing: String }`         | Controls the transition animation between slides.                                                                                                                            | `{ speed: 400, delay: 0, timing: '' }` |
 | `autoplay`             | `{ timeout: Number, stopOnHover: Boolean }`                | Controls the autoplay feature.                                                                                                                                               | `undefined`                            |
 
-## Styles API
+## Customization
 
-This app provides some CSS classes as an API for style customization.
+In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization). 
 
-To use this CSS API, you must add the `styles` builder and create an app styling CSS file.
-
-1. Add the `styles` builder to your `manifest.json`:
-
-```json
-"builders": {
-  "styles": "1.x"
-}
-```
-
-2. Create a file called `vtex.slider-layout.css` inside the `styles/css` folder. Add your custom styles:
-
-```css
-.slide {
-  margin-top: 10px;
-}
-```
-
-### CSS namespaces
-
-Below, we describe the namespaces that are defined by `slider-layout`.
-
-| Class name                |
+| CSS Handles               |
 | ------------------------- |
 | `sliderLayoutContainer`   |
 | `sliderTrack`             |
