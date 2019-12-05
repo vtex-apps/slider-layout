@@ -2,7 +2,7 @@
 
 Slider-Layout is a flexible solution for building `sliders` of `blocks` within VTEX IO Store Framework.
 
-![](src="https://user-images.githubusercontent.com/27777263/70230361-e839db00-1736-11ea-9f29-7c945c10a5f7.png")
+![](https://user-images.githubusercontent.com/27777263/70230361-e839db00-1736-11ea-9f29-7c945c10a5f7.png)
 
 ## Configuration
 
