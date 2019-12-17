@@ -4,6 +4,9 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
 
 ![](https://user-images.githubusercontent.com/27777263/70230361-e839db00-1736-11ea-9f29-7c945c10a5f7.png)
 
+:warning: In order to use the `slider-layout` as a substitute to the `carousel` component, check this [recipe](https://vtex.io/docs/recipes/layout/building-a-carousel-through-lists-and-slider-layout) out.
+
+
 ## Configuration
 
 1. Add the slider-layout app to your theme's dependencies in the `manifest.json`, for example:
@@ -48,6 +51,7 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
  }
 
 ```
+
 
 | Prop name              | Type                                                       | Description                                                                                                                                                                  | Default value                          |
 | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
