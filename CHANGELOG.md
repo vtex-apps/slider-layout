@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.7.3] - 2019-12-17
+
 ### Added
 - Recipe about how to use slider-layout as carousel
 
