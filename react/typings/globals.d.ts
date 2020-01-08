@@ -16,6 +16,7 @@ declare global {
   interface SliderLayoutProps {
     totalItems?: number
     label: string
+    arrowIconSize: number
     slideTransition: {
       /** Transition speed in ms */
       speed: number
