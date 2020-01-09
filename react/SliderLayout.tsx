@@ -1,6 +1,7 @@
 import React from 'react'
 import { defineMessages } from 'react-intl'
 import { useListContext } from 'vtex.list-context'
+import { useResponsiveValue } from 'vtex.responsive-values'
 
 import Slider from './components/Slider'
 import { SliderContextProvider } from './components/SliderContext'
@@ -20,6 +21,7 @@ const SliderLayout: StorefrontFunctionComponent<
 }) => {
   const { list } = useListContext() || []
   const totalSlides = totalItems || React.Children.count(children) + list.length
+  const responsiveArrowIconSize = useResponsiveValue(arrowIconSize)
 
   return (
     <SliderContextProvider totalItems={totalSlides} {...contextProps}>
@@ -30,7 +32,7 @@ const SliderLayout: StorefrontFunctionComponent<
         totalItems={totalSlides}
         usePagination={usePagination}
         fullWidth={fullWidth}
-        arrowIconSize={arrowIconSize}
+        arrowIconSize={responsiveArrowIconSize}
       >
         {children}
       </Slider>
