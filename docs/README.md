@@ -65,7 +65,7 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
 | `slideTransition`      | `{ speed: Number, delay: Number, timing: String }`         | Controls the transition animation between slides.                                                                                                                            | `{ speed: 400, delay: 0, timing: '' }` |
 | `autoplay`             | `{ timeout: Number, stopOnHover: Boolean }`                | Controls the autoplay feature.                                                                                                                                               | `undefined`                            |
 | `fullWidth`            | `Boolean`                                                  | Controls whether or not the slides should occupy the full available width, making the arrows appear on top of them.                                                          | `true`                                 |
-| `arrowIconSize`        | `Number`                                                   | Controls the size (height and width) in pixels of the arrows.                                                                                                                | `25`                                   |
+| `arrowIconSize`        | `Number`                                                   | Controls the size (height and width) in pixels of the arrows. This is a responsive prop, which means you can pass different values for each breakpoint.                                                                                                               | `25`                                   |
 
 ## Customization
 
