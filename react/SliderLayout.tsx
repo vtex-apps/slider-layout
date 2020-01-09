@@ -13,6 +13,8 @@ const SliderLayout: StorefrontFunctionComponent<
   showNavigationArrows = 'always',
   showPaginationDots = 'always',
   usePagination = true,
+  fullWidth = true,
+  arrowIconSize = 25,
   children,
   ...contextProps
 }) => {
@@ -27,6 +29,8 @@ const SliderLayout: StorefrontFunctionComponent<
         showPaginationDots={showPaginationDots}
         totalItems={totalSlides}
         usePagination={usePagination}
+        fullWidth={fullWidth}
+        arrowIconSize={arrowIconSize}
       >
         {children}
       </Slider>

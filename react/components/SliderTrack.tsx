@@ -89,7 +89,9 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
           aria-roledescription="slide"
           aria-label={`${index + 1} of ${totalItems}`}
         >
-          <div className={`${handles.slideChildrenContainer} w-100`}>
+          <div
+            className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
+          >
             {child}
           </div>
         </div>
