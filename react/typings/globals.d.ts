@@ -11,12 +11,13 @@ declare global {
     showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
     showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
     usePagination: boolean
+    fullWidth: boolean
+    arrowIconSize: number
   }
 
   interface SliderLayoutProps {
     totalItems?: number
     label: string
-    arrowIconSize: number
     slideTransition: {
       /** Transition speed in ms */
       speed: number
