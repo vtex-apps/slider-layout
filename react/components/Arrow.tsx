@@ -13,7 +13,7 @@ interface Props {
   controls: string
   totalItems: number
   infinite: boolean
-  arrowIconSize: number
+  arrowSize: number
 }
 
 const CSS_HANDLES = ['sliderLeftArrow', 'sliderRightArrow', 'sliderArrows']
@@ -24,7 +24,7 @@ const Arrow: FC<Props> = ({
   controls,
   totalItems,
   infinite,
-  arrowIconSize,
+  arrowSize,
 }) => {
   const { currentSlide, slidesPerPage, navigationStep } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
@@ -58,9 +58,7 @@ const Arrow: FC<Props> = ({
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}
     >
-      {custom || (
-        <IconCaret size={arrowIconSize} orientation={orientation} thin />
-      )}
+      {custom || <IconCaret size={arrowSize} orientation={orientation} thin />}
     </button>
   )
 }

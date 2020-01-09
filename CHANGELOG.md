@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - New `sliderTrackContainer` CSS handle.
-- New props `fullWidth` and `arrowIconSize`.
+- New props `fullWidth` and `arrowSize`.
 
 ## [0.7.3] - 2019-12-17
 

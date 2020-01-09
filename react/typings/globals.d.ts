@@ -13,7 +13,7 @@ declare global {
     showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
     usePagination: boolean
     fullWidth: boolean
-    arrowIconSize: MaybeResponsiveValue<number>
+    arrowSize: MaybeResponsiveValue<number>
   }
 
   interface SliderLayoutProps {

@@ -15,13 +15,13 @@ const SliderLayout: StorefrontFunctionComponent<
   showPaginationDots = 'always',
   usePagination = true,
   fullWidth = true,
-  arrowIconSize = 25,
+  arrowSize = 25,
   children,
   ...contextProps
 }) => {
   const { list } = useListContext() || []
   const totalSlides = totalItems || React.Children.count(children) + list.length
-  const responsiveArrowIconSize = useResponsiveValue(arrowIconSize)
+  const responsiveArrowIconSize = useResponsiveValue(arrowSize)
 
   return (
     <SliderContextProvider totalItems={totalSlides} {...contextProps}>
@@ -32,7 +32,7 @@ const SliderLayout: StorefrontFunctionComponent<
         totalItems={totalSlides}
         usePagination={usePagination}
         fullWidth={fullWidth}
-        arrowIconSize={responsiveArrowIconSize}
+        arrowSize={responsiveArrowIconSize}
       >
         {children}
       </Slider>

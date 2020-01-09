@@ -23,7 +23,7 @@ const Slider: FC<Props> = ({
   showNavigationArrows,
   showPaginationDots,
   usePagination,
-  arrowIconSize,
+  arrowSize,
   fullWidth,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
@@ -62,8 +62,8 @@ const Slider: FC<Props> = ({
       aria-label={label}
       style={{
         WebkitOverflowScrolling: !usePagination ? 'touch' : undefined,
-        paddingLeft: fullWidth ? undefined : arrowIconSize * 2,
-        paddingRight: fullWidth ? undefined : arrowIconSize * 2,
+        paddingLeft: fullWidth ? undefined : arrowSize * 2,
+        paddingRight: fullWidth ? undefined : arrowSize * 2,
       }}
       className={`w-100 flex items-center relative ${handles.sliderLayoutContainer}`}
     >
@@ -82,14 +82,14 @@ const Slider: FC<Props> = ({
             orientation="left"
             controls={controls}
             infinite={infinite}
-            arrowIconSize={arrowIconSize}
+            arrowSize={arrowSize}
           />
           <Arrow
             totalItems={totalItems}
             orientation="right"
             controls={controls}
             infinite={infinite}
-            arrowIconSize={arrowIconSize}
+            arrowSize={arrowSize}
           />
         </Fragment>
       )}
