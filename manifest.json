@@ -12,7 +12,8 @@
     "vtex.device-detector": "0.x",
     "vtex.store-icons": "0.x",
     "vtex.list-context": "0.x",
-    "vtex.css-handles": "0.x"
+    "vtex.css-handles": "0.x",
+    "vtex.responsive-values": "0.x"
   },
   "builders": {
     "react": "3.x",

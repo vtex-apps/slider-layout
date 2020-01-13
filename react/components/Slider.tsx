@@ -14,7 +14,7 @@ interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
 }
 
-const CSS_HANDLES = ['sliderLayoutContainer']
+const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const
 
 const Slider: FC<Props> = ({
   children,
@@ -23,6 +23,8 @@ const Slider: FC<Props> = ({
   showNavigationArrows,
   showPaginationDots,
   usePagination,
+  arrowSize,
+  fullWidth,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
   const { isMobile, device } = useDevice()
@@ -58,13 +60,21 @@ const Slider: FC<Props> = ({
       onTouchMove={e => (usePagination ? onTouchMove(e) : null)}
       aria-roledescription="carousel"
       aria-label={label}
-      style={{ WebkitOverflowScrolling: !usePagination ? 'touch' : undefined }}
-      className={`w-100 flex items-center relative ${
-        usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
-      } ${handles.sliderLayoutContainer}`}
-      ref={containerRef}
+      style={{
+        WebkitOverflowScrolling: !usePagination ? 'touch' : undefined,
+        paddingLeft: fullWidth ? undefined : arrowSize * 2,
+        paddingRight: fullWidth ? undefined : arrowSize * 2,
+      }}
+      className={`w-100 flex items-center relative ${handles.sliderLayoutContainer}`}
     >
-      <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
+      <div
+        className={`flex w-100 ${handles.sliderTrackContainer} ${
+          usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
+        }`}
+        ref={containerRef}
+      >
+        <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
+      </div>
       {shouldShowArrows && usePagination && (
         <Fragment>
           <Arrow
@@ -72,12 +82,14 @@ const Slider: FC<Props> = ({
             orientation="left"
             controls={controls}
             infinite={infinite}
+            arrowSize={arrowSize}
           />
           <Arrow
             totalItems={totalItems}
             orientation="right"
             controls={controls}
             infinite={infinite}
+            arrowSize={arrowSize}
           />
         </Fragment>
       )}

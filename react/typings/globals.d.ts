@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react'
+import { MaybeResponsiveValue } from 'vtex.responsive-values'
 
 declare global {
   interface StorefrontFunctionComponent<P = {}> extends FunctionComponent<P> {
@@ -11,6 +12,8 @@ declare global {
     showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
     showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
     usePagination: boolean
+    fullWidth: boolean
+    arrowSize: MaybeResponsiveValue<number>
   }
 
   interface SliderLayoutProps {

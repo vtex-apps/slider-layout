@@ -61,9 +61,11 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
 | `infinite`             | `Boolean`                                                  | Controls if the slider should or should not be infinite.                                                                                                                     | `false`                                |
 | `navigationStep`       | `Number`&#124;`'page'`                                     | How many slides should be slid when the user navigates. When set to `'page'`, the number of slides that will slide is equal to the number of slides in a page of the slider. | `'page'`                               |
 | `usePagination`        | `Boolean`                                                  | Toggles whether or not to use a fluid scroll for navigation, disabling the notion of a "page".                                                                               | `true`                                 |
-| `itemsPerPage`         | `{ desktop: Number, tablet: Number, phone: Number }`        | Controls how many slides should be shown on each type of device.                                                                                                             | `{ desktop: 5, tablet: 3, phone: 1 }`   |
+| `itemsPerPage`         | `{ desktop: Number, tablet: Number, phone: Number }`       | Controls how many slides should be shown on each type of device.                                                                                                             | `{ desktop: 5, tablet: 3, phone: 1 }`  |
 | `slideTransition`      | `{ speed: Number, delay: Number, timing: String }`         | Controls the transition animation between slides.                                                                                                                            | `{ speed: 400, delay: 0, timing: '' }` |
 | `autoplay`             | `{ timeout: Number, stopOnHover: Boolean }`                | Controls the autoplay feature.                                                                                                                                               | `undefined`                            |
+| `fullWidth`            | `Boolean`                                                  | Controls whether or not the slides should occupy the full available width, making the arrows appear on top of them.                                                          | `true`                                 |
+| `arrowSize`        | `Number`                                                   | Controls the size (height and width) in pixels of the arrows. This is a responsive prop, which means you can pass different values for each breakpoint.                                                                                                               | `25`                                   |
 
 ## Customization
 
@@ -72,6 +74,7 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | CSS Handles               |
 | ------------------------- |
 | `sliderLayoutContainer`   |
+| `sliderTrackContainer`    |
 | `sliderTrack`             |
 | `slide`                   |
 | `slideChildrenContainer`  |
