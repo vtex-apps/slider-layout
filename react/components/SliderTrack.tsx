@@ -1,5 +1,4 @@
-import React, { FC, Fragment } from 'react'
-import { useSSR } from 'vtex.render-runtime'
+import React, { FC } from 'react'
 import { useListContext } from 'vtex.list-context'
 import { useCssHandles } from 'vtex.css-handles'
 
@@ -16,47 +15,17 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     isOnTouchMove,
     slideTransition: { speed, timing, delay },
   } = useSliderState()
-  const isSSR = useSSR()
   const handles = useCssHandles(CSS_HANDLES)
   const { list } = useListContext()
 
   const childrenArray = React.Children.toArray(children).concat(list)
 
-  const isSlideVisibile = (
+  const isSlideVisible = (
     index: number,
     currentSlide: number,
     slidesToShow: number
   ): boolean => {
     return index >= currentSlide && index < currentSlide + slidesToShow
-  }
-
-  if (isSSR) {
-    const slideWidthPercentage = 100 / slidesPerPage
-
-    return (
-      <Fragment>
-        {childrenArray.slice(0, slidesPerPage).map((child, index) => (
-          <div
-            key={index}
-            className={`flex relative ${handles.slide}`}
-            data-index={index}
-            style={{
-              width: `${slideWidthPercentage}%`,
-            }}
-            aria-hidden={
-              isSlideVisibile(index, currentSlide, slidesPerPage)
-                ? 'false'
-                : 'true'
-            }
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`${index + 1} of ${totalItems}`}
-          >
-            <div className="w-100">{child}</div>
-          </div>
-        ))}
-      </Fragment>
-    )
   }
 
   return (
@@ -67,7 +36,8 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
           ? undefined
           : `transform ${speed}ms ${timing}`,
         transitionDelay: `${delay}ms`,
-        transform: `translate3d(${transform}px, 0, 0)`,
+        transform: `translate3d(${transform}%, 0, 0)`,
+        width: `${(totalItems * 100) / slidesPerPage}%`,
       }}
       aria-atomic="false"
       aria-live="polite"
@@ -78,10 +48,10 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
           className={`flex relative ${handles.slide}`}
           data-index={index}
           style={{
-            width: `${slideWidth}px`,
+            width: `${slideWidth}%`,
           }}
           aria-hidden={
-            isSlideVisibile(index, currentSlide, slidesPerPage)
+            isSlideVisible(index, currentSlide, slidesPerPage)
               ? 'false'
               : 'true'
           }

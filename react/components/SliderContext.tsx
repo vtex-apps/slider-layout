@@ -1,24 +1,12 @@
 import React, { createContext, useReducer, useContext, FC } from 'react'
 import { useDevice } from 'vtex.device-detector'
 
-interface LoadAction {
-  type: 'LOAD'
+interface AdjustOnResizeAction {
+  type: 'ADJUST_ON_RESIZE'
   payload: {
-    slidesToShow: number
-    deviceType: 'desktop' | 'tablet' | 'phone'
-    navigationStep: number
-  }
-}
-
-interface LoadCorrectAction {
-  type: 'LOAD_AND_CORRECT'
-  payload: {
+    shouldCorrectItemPosition: boolean
     slidesPerPage: number
     navigationStep: number
-    deviceType: 'desktop' | 'tablet' | 'phone'
-    containerWidth: number
-    slideWidth: number
-    shouldCorrectItemPosition: boolean
   }
 }
 
@@ -39,25 +27,25 @@ interface TouchAction {
 }
 
 interface State extends SliderLayoutProps {
-  /** Width of each item */
+  /** Width of each slide */
   slideWidth: number
-  /** Width of the full container */
-  containerWidth: number
   /** Number of slides to show per page */
   slidesPerPage: number
-  /** Index of the first item (left) of the current page */
+  /** Index of the leftmost slide of the current page */
   currentSlide: number
-  /** Current device type (based on containerWidth and responsive prop) */
-  deviceType: 'desktop' | 'tablet' | 'phone'
   /** Current transform value */
   transform: number
+  /** Total number of slides */
   totalItems: number
+  /** Number of slides to slide in navigation */
   navigationStep: number
+  /** Whether or not navigationStep prop is set to 'page' */
   isPageNavigationStep: boolean
+  /** Whether or not a touchmove event is happening */
   isOnTouchMove: boolean
 }
 
-type Action = LoadAction | LoadCorrectAction | SlideAction | TouchAction
+type Action = AdjustOnResizeAction | SlideAction | TouchAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
@@ -65,22 +53,13 @@ const SliderDispatchContext = createContext<Dispatch | undefined>(undefined)
 
 function sliderContextReducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'LOAD':
+    case 'ADJUST_ON_RESIZE':
       return {
         ...state,
-        deviceType: action.payload.deviceType,
-        navigationStep: action.payload.navigationStep,
-      }
-    case 'LOAD_AND_CORRECT':
-      return {
-        ...state,
-        navigationStep: action.payload.navigationStep,
         slidesPerPage: action.payload.slidesPerPage,
-        deviceType: action.payload.deviceType,
-        containerWidth: action.payload.containerWidth,
-        slideWidth: action.payload.slideWidth,
+        navigationStep: action.payload.navigationStep,
         transform: action.payload.shouldCorrectItemPosition
-          ? -action.payload.slideWidth * state.currentSlide
+          ? -state.slideWidth * state.currentSlide
           : state.transform,
       }
     case 'SLIDE':
@@ -122,12 +101,10 @@ const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
     navigationStep === 'page' ? itemsPerPage[device] : navigationStep
 
   const [state, dispatch] = useReducer(sliderContextReducer, {
-    slideWidth: 0,
+    slideWidth: 100 / totalItems,
     slidesPerPage: itemsPerPage[device],
     currentSlide: 0,
-    deviceType: 'desktop',
     transform: 0,
-    containerWidth: 0,
     navigationStep: resolvedNavigationStep,
     slideTransition,
     itemsPerPage,

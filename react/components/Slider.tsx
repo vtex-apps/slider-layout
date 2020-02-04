@@ -27,7 +27,7 @@ const Slider: FC<Props> = ({
   fullWidth,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
-  const { isMobile, device } = useDevice()
+  const { isMobile } = useDevice()
   const { label } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const controls = `${label
@@ -36,7 +36,7 @@ const Slider: FC<Props> = ({
     .replace(/ /g, '-')}-items`
 
   useAutoplay(infinite, containerRef)
-  useScreenResize(containerRef, device, infinite)
+  useScreenResize(infinite)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     totalItems,
     infinite,
@@ -68,7 +68,7 @@ const Slider: FC<Props> = ({
       className={`w-100 flex items-center relative ${handles.sliderLayoutContainer}`}
     >
       <div
-        className={`flex w-100 ${handles.sliderTrackContainer} ${
+        className={`w-100 ${handles.sliderTrackContainer} ${
           usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
         }`}
         ref={containerRef}
