@@ -30,14 +30,17 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
 
   return (
     <div
-      className={`${handles.sliderTrack} flex relative pa0 ma0`}
+      className={`${handles.sliderTrack} flex justify-around relative pa0 ma0`}
       style={{
         transition: isOnTouchMove
           ? undefined
           : `transform ${speed}ms ${timing}`,
         transitionDelay: `${delay}ms`,
         transform: `translate3d(${transform}%, 0, 0)`,
-        width: `${(totalItems * 100) / slidesPerPage}%`,
+        width:
+          slidesPerPage < totalItems
+            ? `${(totalItems * 100) / slidesPerPage}%`
+            : '100%',
       }}
       aria-atomic="false"
       aria-live="polite"

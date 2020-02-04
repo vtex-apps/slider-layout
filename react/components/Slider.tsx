@@ -28,7 +28,7 @@ const Slider: FC<Props> = ({
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
   const { isMobile } = useDevice()
-  const { label } = useSliderState()
+  const { label, slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const controls = `${label
     .toLowerCase()
@@ -40,23 +40,32 @@ const Slider: FC<Props> = ({
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
   })
+  const shouldBeStaticList = slidesPerPage >= totalItems
 
-  const shouldShowArrows = !!(
-    showNavigationArrows === 'always' ||
-    (showNavigationArrows === 'mobileOnly' && isMobile) ||
-    (showNavigationArrows === 'desktopOnly' && !isMobile)
+  const shouldShowArrows = Boolean(
+    (showNavigationArrows === 'always' ||
+      (showNavigationArrows === 'mobileOnly' && isMobile) ||
+      (showNavigationArrows === 'desktopOnly' && !isMobile)) &&
+      !shouldBeStaticList
   )
-  const shouldShowPaginationDots = !!(
-    showPaginationDots === 'always' ||
-    (showPaginationDots === 'mobileOnly' && isMobile) ||
-    (showPaginationDots === 'desktopOnly' && !isMobile)
+  const shouldShowPaginationDots = Boolean(
+    (showPaginationDots === 'always' ||
+      (showPaginationDots === 'mobileOnly' && isMobile) ||
+      (showPaginationDots === 'desktopOnly' && !isMobile)) &&
+      !shouldBeStaticList
   )
 
   return (
     <section
-      onTouchStart={e => (usePagination ? onTouchStart(e) : null)}
-      onTouchEnd={e => (usePagination ? onTouchEnd(e) : null)}
-      onTouchMove={e => (usePagination ? onTouchMove(e) : null)}
+      onTouchStart={e =>
+        usePagination && !shouldBeStaticList ? onTouchStart(e) : null
+      }
+      onTouchEnd={e =>
+        usePagination && !shouldBeStaticList ? onTouchEnd(e) : null
+      }
+      onTouchMove={e =>
+        usePagination && !shouldBeStaticList ? onTouchMove(e) : null
+      }
       aria-roledescription="carousel"
       aria-label={label}
       style={{
