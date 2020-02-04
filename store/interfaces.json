@@ -1,7 +1,6 @@
 {
   "slider-layout": {
     "component": "SliderLayout",
-    "composition": "children",
-    "allowed": "*"
+    "composition": "children"
   }
 }
