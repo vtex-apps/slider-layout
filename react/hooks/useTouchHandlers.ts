@@ -5,19 +5,14 @@ import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
 const SWIPE_THRESHOLD = 75
 
-export const useTouchHandlers = ({
-  infinite,
-}: {
-  totalItems: number
-  infinite: boolean
-}) => {
+export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
   const dispatch = useSliderDispatch()
   const { transform } = useSliderState()
   const { goForward, goBack } = useSliderControls(infinite)
 
   const [touchState, setTouchState] = useState({
     touchStartX: 0,
-    touchInitialTransform: 0,
+    touchInitialTransform: transform,
   })
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -29,7 +24,8 @@ export const useTouchHandlers = ({
     const currentX = e.touches[0].clientX
 
     const newTransform =
-      touchState.touchInitialTransform + (currentX - touchState.touchStartX)
+      touchState.touchInitialTransform +
+      (currentX - touchState.touchStartX) / 100
 
     dispatch({
       type: 'TOUCH',

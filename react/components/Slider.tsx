@@ -38,7 +38,6 @@ const Slider: FC<Props> = ({
   useAutoplay(infinite, containerRef)
   useScreenResize(infinite)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
-    totalItems,
     infinite,
   })
 
