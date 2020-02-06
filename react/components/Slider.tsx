@@ -37,36 +37,29 @@ const Slider: FC<Props> = ({
 
   useAutoplay(infinite, containerRef)
   useScreenResize(infinite)
+  const shouldBeStaticList = slidesPerPage >= totalItems
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
+    shouldUsePagination,
+    shouldBeStaticList,
   })
-  const shouldBeStaticList = slidesPerPage >= totalItems
 
   const shouldShowArrows = Boolean(
-    (showNavigationArrows === 'always' ||
+    showNavigationArrows === 'always' ||
       (showNavigationArrows === 'mobileOnly' && isMobile) ||
-      (showNavigationArrows === 'desktopOnly' && !isMobile)) &&
-      !shouldBeStaticList
+      (showNavigationArrows === 'desktopOnly' && !isMobile)
   )
   const shouldShowPaginationDots = Boolean(
-    (showPaginationDots === 'always' ||
+    showPaginationDots === 'always' ||
       (showPaginationDots === 'mobileOnly' && isMobile) ||
-      (showPaginationDots === 'desktopOnly' && !isMobile)) &&
-      !shouldBeStaticList
+      (showPaginationDots === 'desktopOnly' && !isMobile)
   )
-
-  const touchStartHandler = (e: React.TouchEvent) =>
-    shouldUsePagination && !shouldBeStaticList ? onTouchStart(e) : null
-  const touchEndHandler = (e: React.TouchEvent) =>
-    shouldUsePagination && !shouldBeStaticList ? onTouchEnd(e) : null
-  const touchMoveHandler = (e: React.TouchEvent) =>
-    shouldUsePagination && !shouldBeStaticList ? onTouchMove(e) : null
 
   return (
     <section
-      onTouchStart={touchStartHandler}
-      onTouchEnd={touchEndHandler}
-      onTouchMove={touchMoveHandler}
+      onTouchStart={onTouchEnd}
+      onTouchEnd={onTouchStart}
+      onTouchMove={onTouchMove}
       aria-roledescription="carousel"
       aria-label={label}
       style={{

@@ -5,7 +5,17 @@ import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
 const SWIPE_THRESHOLD = 75
 
-export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
+interface Args {
+  infinite: boolean
+  shouldBeStaticList: boolean
+  shouldUsePagination: boolean
+}
+
+export const useTouchHandlers = ({
+  infinite,
+  shouldBeStaticList,
+  shouldUsePagination,
+}: Args) => {
   const dispatch = useSliderDispatch()
   const { transform } = useSliderState()
   const { goForward, goBack } = useSliderControls(infinite)
@@ -14,6 +24,14 @@ export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
     touchStartX: 0,
     touchInitialTransform: transform,
   })
+
+  if (shouldBeStaticList || !shouldUsePagination) {
+    return {
+      onTouchStart: undefined,
+      onTouchMove: undefined,
+      onTouchEnd: undefined,
+    }
+  }
 
   const onTouchStart = (e: React.TouchEvent) => {
     const startX = e.touches[0].clientX
