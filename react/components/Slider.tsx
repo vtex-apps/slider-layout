@@ -22,7 +22,7 @@ const Slider: FC<Props> = ({
   infinite,
   showNavigationArrows,
   showPaginationDots,
-  usePagination,
+  usePagination: shouldUsePagination,
   arrowSize,
   fullWidth,
 }) => {
@@ -55,21 +55,22 @@ const Slider: FC<Props> = ({
       !shouldBeStaticList
   )
 
+  const touchStartHandler = (e: React.TouchEvent) =>
+    shouldUsePagination && !shouldBeStaticList ? onTouchStart(e) : null
+  const touchEndHandler = (e: React.TouchEvent) =>
+    shouldUsePagination && !shouldBeStaticList ? onTouchEnd(e) : null
+  const touchMoveHandler = (e: React.TouchEvent) =>
+    shouldUsePagination && !shouldBeStaticList ? onTouchMove(e) : null
+
   return (
     <section
-      onTouchStart={e =>
-        usePagination && !shouldBeStaticList ? onTouchStart(e) : null
-      }
-      onTouchEnd={e =>
-        usePagination && !shouldBeStaticList ? onTouchEnd(e) : null
-      }
-      onTouchMove={e =>
-        usePagination && !shouldBeStaticList ? onTouchMove(e) : null
-      }
+      onTouchStart={touchStartHandler}
+      onTouchEnd={touchEndHandler}
+      onTouchMove={touchMoveHandler}
       aria-roledescription="carousel"
       aria-label={label}
       style={{
-        WebkitOverflowScrolling: !usePagination ? 'touch' : undefined,
+        WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
         paddingLeft: fullWidth ? undefined : arrowSize * 2,
         paddingRight: fullWidth ? undefined : arrowSize * 2,
       }}
@@ -77,13 +78,13 @@ const Slider: FC<Props> = ({
     >
       <div
         className={`w-100 ${handles.sliderTrackContainer} ${
-          usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
+          shouldUsePagination ? 'overflow-hidden' : 'overflow-x-scroll'
         }`}
         ref={containerRef}
       >
         <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
       </div>
-      {shouldShowArrows && usePagination && (
+      {shouldShowArrows && shouldUsePagination && (
         <Fragment>
           <Arrow
             totalItems={totalItems}
@@ -101,7 +102,7 @@ const Slider: FC<Props> = ({
           />
         </Fragment>
       )}
-      {shouldShowPaginationDots && usePagination && (
+      {shouldShowPaginationDots && shouldUsePagination && (
         <PaginationDots totalItems={totalItems} controls={controls} />
       )}
     </section>
