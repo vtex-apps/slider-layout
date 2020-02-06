@@ -22,13 +22,13 @@ const Slider: FC<Props> = ({
   infinite,
   showNavigationArrows,
   showPaginationDots,
-  usePagination,
+  usePagination: shouldUsePagination,
   arrowSize,
   fullWidth,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
-  const { isMobile, device } = useDevice()
-  const { label } = useSliderState()
+  const { isMobile } = useDevice()
+  const { label, slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const controls = `${label
     .toLowerCase()
@@ -36,46 +36,48 @@ const Slider: FC<Props> = ({
     .replace(/ /g, '-')}-items`
 
   useAutoplay(infinite, containerRef)
-  useScreenResize(containerRef, device, infinite)
+  useScreenResize(infinite)
+  const shouldBeStaticList = slidesPerPage >= totalItems
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
-    totalItems,
     infinite,
+    shouldUsePagination,
+    shouldBeStaticList,
   })
 
-  const shouldShowArrows = !!(
+  const shouldShowArrows = Boolean(
     showNavigationArrows === 'always' ||
-    (showNavigationArrows === 'mobileOnly' && isMobile) ||
-    (showNavigationArrows === 'desktopOnly' && !isMobile)
+      (showNavigationArrows === 'mobileOnly' && isMobile) ||
+      (showNavigationArrows === 'desktopOnly' && !isMobile)
   )
-  const shouldShowPaginationDots = !!(
+  const shouldShowPaginationDots = Boolean(
     showPaginationDots === 'always' ||
-    (showPaginationDots === 'mobileOnly' && isMobile) ||
-    (showPaginationDots === 'desktopOnly' && !isMobile)
+      (showPaginationDots === 'mobileOnly' && isMobile) ||
+      (showPaginationDots === 'desktopOnly' && !isMobile)
   )
 
   return (
     <section
-      onTouchStart={e => (usePagination ? onTouchStart(e) : null)}
-      onTouchEnd={e => (usePagination ? onTouchEnd(e) : null)}
-      onTouchMove={e => (usePagination ? onTouchMove(e) : null)}
+      onTouchStart={onTouchEnd}
+      onTouchEnd={onTouchStart}
+      onTouchMove={onTouchMove}
       aria-roledescription="carousel"
       aria-label={label}
       style={{
-        WebkitOverflowScrolling: !usePagination ? 'touch' : undefined,
+        WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
         paddingLeft: fullWidth ? undefined : arrowSize * 2,
         paddingRight: fullWidth ? undefined : arrowSize * 2,
       }}
       className={`w-100 flex items-center relative ${handles.sliderLayoutContainer}`}
     >
       <div
-        className={`flex w-100 ${handles.sliderTrackContainer} ${
-          usePagination ? 'overflow-hidden' : 'overflow-x-scroll'
+        className={`w-100 ${handles.sliderTrackContainer} ${
+          shouldUsePagination ? 'overflow-hidden' : 'overflow-x-scroll'
         }`}
         ref={containerRef}
       >
         <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
       </div>
-      {shouldShowArrows && usePagination && (
+      {shouldShowArrows && shouldUsePagination && (
         <Fragment>
           <Arrow
             totalItems={totalItems}
@@ -93,7 +95,7 @@ const Slider: FC<Props> = ({
           />
         </Fragment>
       )}
-      {shouldShowPaginationDots && usePagination && (
+      {shouldShowPaginationDots && shouldUsePagination && (
         <PaginationDots totalItems={totalItems} controls={controls} />
       )}
     </section>

@@ -1,51 +1,29 @@
-import { useEffect, RefObject } from 'react'
+import { useEffect } from 'react'
+import { useDevice } from 'vtex.device-detector'
 
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
-export const useScreenResize = (
-  containerRef: RefObject<HTMLDivElement>,
-  device: 'desktop' | 'tablet' | 'phone',
-  infinite: boolean
-) => {
+export const useScreenResize = (infinite: boolean) => {
   const {
     navigationStep,
     isPageNavigationStep,
     itemsPerPage,
   } = useSliderState()
+  const { device } = useDevice()
   const dispatch = useSliderDispatch()
 
   useEffect(() => {
     const setNewState = (shouldCorrectItemPosition: boolean) => {
-      if (containerRef && containerRef.current) {
-        const containerWidth = containerRef.current.offsetWidth
-        const slideWidth: number = Math.round(
-          containerWidth / itemsPerPage[device]
-        )
-        dispatch({
-          type: 'LOAD_AND_CORRECT',
-          payload: {
-            slidesPerPage: itemsPerPage[device],
-            deviceType: device,
-            navigationStep: isPageNavigationStep
-              ? itemsPerPage[device]
-              : navigationStep,
-            containerWidth,
-            slideWidth,
-            shouldCorrectItemPosition,
-          },
-        })
-      } else {
-        dispatch({
-          type: 'LOAD',
-          payload: {
-            slidesToShow: itemsPerPage[device],
-            deviceType: device,
-            navigationStep: isPageNavigationStep
-              ? itemsPerPage[device]
-              : navigationStep,
-          },
-        })
-      }
+      dispatch({
+        type: 'ADJUST_ON_RESIZE',
+        payload: {
+          shouldCorrectItemPosition,
+          slidesPerPage: itemsPerPage[device],
+          navigationStep: isPageNavigationStep
+            ? itemsPerPage[device]
+            : navigationStep,
+        },
+      })
     }
     const onResize = (value?: UIEvent): void => {
       setNewState(!value || infinite)
@@ -55,11 +33,11 @@ export const useScreenResize = (
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [
-    device,
-    containerRef,
     infinite,
-    navigationStep,
-    isPageNavigationStep,
+    dispatch,
     itemsPerPage,
+    device,
+    isPageNavigationStep,
+    navigationStep,
   ])
 }
