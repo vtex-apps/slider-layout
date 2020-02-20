@@ -1,11 +1,10 @@
-# VTEX Slider-Layout
+# Slider-Layout
 
 Slider-Layout is a flexible solution for building `sliders` of `blocks` within VTEX IO Store Framework.
 
 ![](https://user-images.githubusercontent.com/27777263/70230361-e839db00-1736-11ea-9f29-7c945c10a5f7.png)
 
 :warning: In order to use the `slider-layout` as a substitute to the `carousel` component, check this [recipe](https://vtex.io/docs/recipes/layout/building-a-carousel-through-lists-and-slider-layout) out.
-
 
 ## Configuration
 
@@ -29,7 +28,6 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
      }
    }
  },
-  
  "info-card#1": {
    "props": {
      "imageUrl": "https://images.unsplash.com/photo-1524185962737-ea7c028a12cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -39,7 +37,6 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
      "textPosition": "center"
    }
  },
-  
  "info-card#2": {
    "props": {
      "imageUrl": "https://images.unsplash.com/photo-1524185962737-ea7c028a12cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
@@ -49,9 +46,7 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
      "textPosition": "center"
    }
  }
-
 ```
-
 
 | Prop name              | Type                                                       | Description                                                                                                                                                                  | Default value                          |
 | ---------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
@@ -65,11 +60,11 @@ Slider-Layout is a flexible solution for building `sliders` of `blocks` within V
 | `slideTransition`      | `{ speed: Number, delay: Number, timing: String }`         | Controls the transition animation between slides.                                                                                                                            | `{ speed: 400, delay: 0, timing: '' }` |
 | `autoplay`             | `{ timeout: Number, stopOnHover: Boolean }`                | Controls the autoplay feature.                                                                                                                                               | `undefined`                            |
 | `fullWidth`            | `Boolean`                                                  | Controls whether or not the slides should occupy the full available width, making the arrows appear on top of them.                                                          | `true`                                 |
-| `arrowSize`        | `Number`                                                   | Controls the size (height and width) in pixels of the arrows. This is a responsive prop, which means you can pass different values for each breakpoint.                                                                                                               | `25`                                   |
+| `arrowSize`            | `Number`                                                   | Controls the size (height and width) in pixels of the arrows. This is a responsive prop, which means you can pass different values for each breakpoint.                      | `25`                                   |
 
 ## Customization
 
-In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization). 
+In order to apply CSS customizations in this and other blocks, follow the instructions given in the recipe on [Using CSS Handles for store customization](https://vtex.io/docs/recipes/style/using-css-handles-for-store-customization).
 
 | CSS Handles               |
 | ------------------------- |
@@ -83,3 +78,4 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `sliderArrows`            |
 | `paginationDotsContainer` |
 | `paginationDot`           |
+| `paginationDot--isActive` |
