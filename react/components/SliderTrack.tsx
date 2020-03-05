@@ -15,10 +15,10 @@ const isSlideVisible = (
 }
 
 const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
-  /** Keeps track of slides that have been visualised before, to keep
-   * rendering them. We want to keep rendering them because the issue
-   * is mostly rendering slides that might never be viewed; On the other
-   * hand, hiding slides that were visible causes visual glitches */
+  /** Keeps track of slides that have been visualised before.
+   * We want to keep rendering them because the issue is mostly rendering
+   * slides that might never be viewed; On the other hand, hiding slides
+   * that were visible causes visual glitches */
   const visitedSlides = useRef<Set<number>>(new Set())
 
   useEffect(() => {
