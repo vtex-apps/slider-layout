@@ -22,9 +22,9 @@ const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
   const visitedSlides = useRef<Set<number>>(new Set())
 
   useEffect(() => {
-    Array(slidesPerPage).fill('').forEach((_, i) => {
+    for (let i = 0; i < slidesPerPage; i++) {
       visitedSlides.current.add(currentSlide + i)
-    })
+    }
   }, [currentSlide])
 
   const isItemVisible = (index: number) => isSlideVisible(index, currentSlide, slidesPerPage)
