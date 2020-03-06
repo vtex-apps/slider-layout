@@ -61,6 +61,14 @@ const messages = defineMessages({
     id: 'admin/editor.slider-layout.usePagination',
     defaultMessage: '',
   },
+  sliderFullWidth: {
+    id: 'admin/editor.slider-layout.sliderFullWidth',
+    defaultMessage: '',
+  },
+  sliderFullWidthDescription: {
+    id: 'admin/editor.slider-layout.sliderFullWidthDescription',
+    defaultMessage: '',
+  },
 })
 
 SliderLayout.schema = {
@@ -89,6 +97,42 @@ SliderLayout.schema = {
       default: true,
       title: messages.sliderUsePagination.id,
       type: 'boolean',
+    },
+    fullWidth: {
+      default: true,
+      title: messages.sliderFullWidth.id,
+      description: messages.sliderFullWidthDescription.id,
+      type: 'boolean',
+    },
+    autoplay: {
+      type: 'object',
+      isLayout: true,
+      properties: {
+        timeout: {
+          type: 'number',
+        },
+        stopOnHover: {
+          type: 'boolean',
+        },
+      },
+    },
+    itemsPerPage: {
+      type: 'object',
+      isLayout: true,
+      properties: {
+        desktop: {
+          default: 5,
+          type: 'number',
+        },
+        tablet: {
+          default: 3,
+          type: 'number',
+        },
+        phone: {
+          default: 1,
+          type: 'number',
+        },
+      },
     },
   },
 }
