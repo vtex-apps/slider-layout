@@ -1,10 +1,40 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import { useListContext } from 'vtex.list-context'
 import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
 
 const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer']
+
+const isSlideVisible = (
+  index: number,
+  currentSlide: number,
+  slidesToShow: number
+): boolean => {
+  return index >= currentSlide && index < currentSlide + slidesToShow
+}
+
+const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
+  /** Keeps track of slides that have been visualised before.
+   * We want to keep rendering them because the issue is mostly rendering
+   * slides that might never be viewed; On the other hand, hiding slides
+   * that were visible causes visual glitches */
+  const visitedSlides = useRef<Set<number>>(new Set())
+
+  useEffect(() => {
+    for (let i = 0; i < slidesPerPage; i++) {
+      visitedSlides.current.add(currentSlide + i)
+    }
+  }, [currentSlide])
+
+  const isItemVisible = (index: number) => isSlideVisible(index, currentSlide, slidesPerPage)
+
+  const shouldRenderItem = (index: number) => {
+    return visitedSlides.current.has(index) || isItemVisible(index)
+  }
+
+  return { shouldRenderItem, isItemVisible }
+}
 
 const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
   const {
@@ -16,17 +46,12 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slideTransition: { speed, timing, delay },
   } = useSliderState()
   const handles = useCssHandles(CSS_HANDLES)
+
+  const { shouldRenderItem, isItemVisible } = useSliderVisibility(currentSlide, slidesPerPage)
+
   const { list } = useListContext()
 
   const childrenArray = React.Children.toArray(children).concat(list)
-
-  const isSlideVisible = (
-    index: number,
-    currentSlide: number,
-    slidesToShow: number
-  ): boolean => {
-    return index >= currentSlide && index < currentSlide + slidesToShow
-  }
 
   return (
     <div
@@ -45,30 +70,32 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
       aria-atomic="false"
       aria-live="polite"
     >
-      {childrenArray.map((child, index) => (
-        <div
-          key={index}
-          className={`flex relative ${handles.slide}`}
-          data-index={index}
-          style={{
-            width: `${slideWidth}%`,
-          }}
-          aria-hidden={
-            isSlideVisible(index, currentSlide, slidesPerPage)
-              ? 'false'
-              : 'true'
-          }
-          role="group"
-          aria-roledescription="slide"
-          aria-label={`${index + 1} of ${totalItems}`}
-        >
+      {childrenArray.map((child, index) => {
+        return (
           <div
-            className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
+            key={index}
+            className={`flex relative ${handles.slide}`}
+            data-index={index}
+            style={{
+              width: `${slideWidth}%`,
+            }}
+            aria-hidden={
+              isItemVisible(index)
+                ? 'false'
+                : 'true'
+            }
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${index + 1} of ${totalItems}`}
           >
-            {child}
+            <div
+              className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
+            >
+              {shouldRenderItem(index) ? child : null}
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
