@@ -1,6 +1,9 @@
 {
   "slider-layout": {
     "component": "SliderLayout",
-    "composition": "children"
+    "composition": "children",
+    "content": {
+      "$ref": "#/definitions/SliderLayout"
+    }
   }
 }

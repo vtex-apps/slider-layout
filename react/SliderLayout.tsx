@@ -73,37 +73,8 @@ const messages = defineMessages({
 
 SliderLayout.schema = {
   title: messages.sliderTitle.id,
-  description: messages.sliderTitle.id,
   type: 'object',
   properties: {
-    infinite: {
-      default: true,
-      title: messages.sliderInfinite.id,
-      type: 'boolean',
-    },
-    showNavigationArrows: {
-      default: 'always',
-      enum: ['mobileOnly', 'desktopOnly', 'always', 'never'],
-      title: messages.sliderShowNavigation.id,
-      type: 'string',
-    },
-    showPaginationDots: {
-      default: 'always',
-      enum: ['mobileOnly', 'desktopOnly', 'always', 'never'],
-      title: messages.sliderShowPaginationDots.id,
-      type: 'string',
-    },
-    usePagination: {
-      default: true,
-      title: messages.sliderUsePagination.id,
-      type: 'boolean',
-    },
-    fullWidth: {
-      default: true,
-      title: messages.sliderFullWidth.id,
-      description: messages.sliderFullWidthDescription.id,
-      type: 'boolean',
-    },
     autoplay: {
       type: 'object',
       isLayout: true,
