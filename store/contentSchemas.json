@@ -1,0 +1,37 @@
+{
+  "definitions": {
+    "SliderLayout": {
+      "type": "object",
+      "properties": {
+        "infinite": {
+          "default": true,
+          "title": "admin/editor.slider-layout.infinite",
+          "type": "boolean"
+        },
+        "showNavigationArrows": {
+          "default": "always",
+          "enum": ["mobileOnly", "desktopOnly", "always", "never"],
+          "title": "admin/editor.slider-layout.showNavigation",
+          "type": "string"
+        },
+        "showPaginationDots": {
+          "default": "always",
+          "enum": ["mobileOnly", "desktopOnly", "always", "never"],
+          "title": "admin/editor.slider-layout.showPaginationDots",
+          "type": "string"
+        },
+        "usePagination": {
+          "default": true,
+          "title": "admin/editor.slider-layout.usePagination",
+          "type": "boolean"
+        },
+        "fullWidth": {
+          "default": true,
+          "title": "admin/editor.slider-layout.sliderFullWidth",
+          "description": "admin/editor.slider-layout.sliderFullWidthDescription",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
