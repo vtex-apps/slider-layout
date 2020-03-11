@@ -12,6 +12,7 @@ declare module 'vtex.css-handles' {
 
     return cssHandles
   }
+  export const applyModifiers
 }
 
 type CssHandlesInput = readonly string[]

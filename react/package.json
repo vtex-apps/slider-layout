@@ -18,13 +18,7 @@
   "devDependencies": {
     "@types/react": "^16.8.15",
     "@vtex/test-tools": "^0.2.0",
-    "eslint": "^6.2.2",
-    "eslint-config-vtex": "^10.1.0",
-    "eslint-config-vtex-react": "^5.0.1",
     "prettier": "^1.18.2",
-    "typescript": "3.7.3",
-    "vtex.device-detector": "http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.device-detector@0.2.2/public/_types/react",
-    "vtex.store-icons": "http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.store-icons@0.13.2/public/_types/react",
-    "vtex.render-runtime": "http://vtex.vteximg.com.br/_v/public/typings/v1/vtex.render-runtime@8.62.2/public/_types/react"
+    "typescript": "3.7.3"
   }
 }

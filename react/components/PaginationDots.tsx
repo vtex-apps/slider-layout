@@ -1,5 +1,5 @@
 import React, { memo, FC } from 'react'
-import { useCssHandles } from 'vtex.css-handles'
+import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderDispatch, useSliderState } from './SliderContext'
 
@@ -83,7 +83,10 @@ const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
           getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
         return (
           <div
-            className={`${handles.paginationDot} ${
+            className={`${applyModifiers(
+              handles.paginationDot,
+              isActive ? 'isActive' : ''
+            )} ${
               isActive ? 'bg-emphasis' : 'bg-muted-3'
             } grow dib br-100 pa2 mr2 ml2 bw0 pointer outline-0`}
             style={{
