@@ -103,7 +103,11 @@ const Slider: FC<Props> = ({
         </Fragment>
       )}
       {shouldShowPaginationDots && shouldUsePagination && (
-        <PaginationDots totalItems={totalItems} controls={controls} />
+        <PaginationDots
+          totalItems={totalItems}
+          controls={controls}
+          infinite={infinite}
+        />
       )}
     </section>
   )
