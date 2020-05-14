@@ -71,7 +71,7 @@ function sliderContextReducer(state: State, action: Action): State {
     case 'TOUCH':
       return {
         ...state,
-        transform: action.payload.transform || state.transform,
+        transform: action.payload.transform ?? state.transform,
         isOnTouchMove: action.payload.isOnTouchMove,
       }
     default:
