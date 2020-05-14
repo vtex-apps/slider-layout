@@ -6,9 +6,8 @@ import { useResponsiveValue } from 'vtex.responsive-values'
 import Slider from './components/Slider'
 import { SliderContextProvider } from './components/SliderContext'
 
-const SliderLayout: StorefrontFunctionComponent<
-  SliderLayoutProps & SliderLayoutSiteEditorProps
-> = ({
+const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
+  SliderLayoutSiteEditorProps> = ({
   totalItems,
   infinite = false,
   showNavigationArrows = 'always',
@@ -19,8 +18,8 @@ const SliderLayout: StorefrontFunctionComponent<
   children,
   ...contextProps
 }) => {
-  const { list } = useListContext() || []
-  const totalSlides = totalItems || React.Children.count(children) + list.length
+  const list = useListContext()?.list ?? []
+  const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
 
   return (
