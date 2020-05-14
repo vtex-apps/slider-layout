@@ -39,6 +39,18 @@ const Arrow: FC<Props> = ({
 
   useKeyboardArrows(goBack, goForward)
 
+  function handleArrowClick(
+    _: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    if (orientation === 'left') {
+      goBack()
+    }
+
+    if (orientation === 'right') {
+      goForward()
+    }
+  }
+
   return (
     <button
       className={`${
@@ -49,7 +61,7 @@ const Arrow: FC<Props> = ({
         handles.sliderArrows
       } absolute transparent ma2 flex items-center justify-center bn outline-0 pointer`}
       style={{ background: 'transparent' }}
-      onClick={() => (orientation === 'left' ? goBack() : goForward())}
+      onClick={handleArrowClick}
       aria-controls={controls}
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}
