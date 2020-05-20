@@ -53,6 +53,8 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   )
 
   const handleDotClick = (index: number) => {
+    // Considering that each pagination dot represents a page, pageDelta
+    // represents how many pages did the user "skip" by clicking in the dot.
     const pageDelta =
       index - getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
 
