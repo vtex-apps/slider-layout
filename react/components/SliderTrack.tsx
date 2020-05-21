@@ -8,8 +8,6 @@ const CSS_HANDLES = [
   'sliderTrack',
   'slide',
   'slideChildrenContainer',
-  'firstVisible',
-  'lastVisible',
 ]
 
 const isSlideVisible = (
