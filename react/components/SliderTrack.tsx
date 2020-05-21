@@ -24,9 +24,11 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   if (index % slidesPerPage === 0) {
     return 'firstVisible'
   }
+  
   if ((index + 1) % slidesPerPage === 0) {
     return 'lastVisible'
   }
+  
   return ''
 }
 
