@@ -75,6 +75,8 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `sliderTrackContainer`    |
 | `sliderTrack`             |
 | `slide`                   |
+| `slide--firstVisible`     |
+| `slide--lastVisible`      |
 | `slideChildrenContainer`  |
 | `sliderLeftArrow`         |
 | `sliderRightArrow`        |
@@ -82,8 +84,6 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `paginationDotsContainer` |
 | `paginationDot`           |
 | `paginationDot--isActive` |
-| `firstVisible`            |
-| `lastVisible`             |
 
 ## Contributors ✨
 
