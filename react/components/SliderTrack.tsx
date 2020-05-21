@@ -15,14 +15,15 @@ const isSlideVisible = (
 }
 
 const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
+  // every multiple of the number of slidesPerPage is a first (e.g. 0,3,6 if slidesPerPage is 3)
   if (index % slidesPerPage === 0) {
     return 'firstVisible'
   }
-  
+  // every slide before  the multiple of the number of slidesPerPage is a last (e.g. 2,5,8 if slidesPerPage is 3)
   if ((index + 1) % slidesPerPage === 0) {
     return 'lastVisible'
   }
-  
+
   return ''
 }
 
