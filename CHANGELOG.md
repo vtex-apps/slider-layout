@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
-- New CSS Handles `firstVisible` and `lastVisible`
+- Modifiers `firstVisible` and `lastVisible` for the `slide` CSS Handles 
 
 ## [0.11.0] - 2020-03-11
 ### Added
