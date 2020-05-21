@@ -4,7 +4,7 @@ import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
 
-const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer']
+const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer', 'firstVisible', 'lastVisible']
 
 const isSlideVisible = (
   index: number,
@@ -12,6 +12,19 @@ const isSlideVisible = (
   slidesToShow: number
 ): boolean => {
   return index >= currentSlide && index < currentSlide + slidesToShow
+}
+
+const getFirstOrLastVisible = (
+  handles: Record<string,string>,
+  slidesPerPage: number,
+  index: number,
+) => {
+  if (index % slidesPerPage === 0) {
+    return handles.firstVisible
+  } else if (((index + 1) % slidesPerPage) === 0) {
+    return handles.lastVisible
+  }
+  return ''
 }
 
 const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
@@ -74,7 +87,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
         return (
           <div
             key={index}
-            className={`flex relative ${handles.slide}`}
+            className={`flex relative ${handles.slide} ${getFirstOrLastVisible(handles, slidesPerPage, index)}`}
             data-index={index}
             style={{
               width: `${slideWidth}%`,
