@@ -21,7 +21,8 @@ const getFirstOrLastVisible = (
 ) => {
   if (index % slidesPerPage === 0) {
     return handles.firstVisible
-  } else if (((index + 1) % slidesPerPage) === 0) {
+  }
+  if (((index + 1) % slidesPerPage) === 0) {
     return handles.lastVisible
   }
   return ''
