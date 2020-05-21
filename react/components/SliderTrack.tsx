@@ -4,11 +4,7 @@ import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
 
-const CSS_HANDLES = [
-  'sliderTrack',
-  'slide',
-  'slideChildrenContainer',
-]
+const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer']
 
 const isSlideVisible = (
   index: number,
