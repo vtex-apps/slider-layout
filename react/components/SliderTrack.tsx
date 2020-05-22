@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react'
 import { useListContext } from 'vtex.list-context'
-import { useCssHandles } from 'vtex.css-handles'
+import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
 
@@ -14,6 +14,19 @@ const isSlideVisible = (
   return index >= currentSlide && index < currentSlide + slidesToShow
 }
 
+const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
+  // every multiple of the number of slidesPerPage is a first (e.g. 0,3,6 if slidesPerPage is 3)
+  if (index % slidesPerPage === 0) {
+    return 'firstVisible'
+  }
+  // every slide before  the multiple of the number of slidesPerPage is a last (e.g. 2,5,8 if slidesPerPage is 3)
+  if ((index + 1) % slidesPerPage === 0) {
+    return 'lastVisible'
+  }
+
+  return ''
+}
+
 const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
   /** Keeps track of slides that have been visualised before.
    * We want to keep rendering them because the issue is mostly rendering
@@ -25,9 +38,10 @@ const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
     for (let i = 0; i < slidesPerPage; i++) {
       visitedSlides.current.add(currentSlide + i)
     }
-  }, [currentSlide])
+  }, [currentSlide, slidesPerPage])
 
-  const isItemVisible = (index: number) => isSlideVisible(index, currentSlide, slidesPerPage)
+  const isItemVisible = (index: number) =>
+    isSlideVisible(index, currentSlide, slidesPerPage)
 
   const shouldRenderItem = (index: number) => {
     return visitedSlides.current.has(index) || isItemVisible(index)
@@ -47,7 +61,10 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
   } = useSliderState()
   const handles = useCssHandles(CSS_HANDLES)
 
-  const { shouldRenderItem, isItemVisible } = useSliderVisibility(currentSlide, slidesPerPage)
+  const { shouldRenderItem, isItemVisible } = useSliderVisibility(
+    currentSlide,
+    slidesPerPage
+  )
 
   const { list } = useListContext()
 
@@ -74,16 +91,15 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
         return (
           <div
             key={index}
-            className={`flex relative ${handles.slide}`}
+            className={`${applyModifiers(
+              handles.slide,
+              getFirstOrLastVisible(slidesPerPage, index)
+            )} flex relative`}
             data-index={index}
             style={{
               width: `${slideWidth}%`,
             }}
-            aria-hidden={
-              isItemVisible(index)
-                ? 'false'
-                : 'true'
-            }
+            aria-hidden={isItemVisible(index) ? 'false' : 'true'}
             role="group"
             aria-roledescription="slide"
             aria-label={`${index + 1} of ${totalItems}`}
