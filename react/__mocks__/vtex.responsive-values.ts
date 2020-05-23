@@ -1,1 +1,1 @@
-export const useResponsiveValue = args => args
+export const useResponsiveValue = (args: any) => args
