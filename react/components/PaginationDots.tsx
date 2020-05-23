@@ -67,12 +67,13 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
     <div
       className={`${handles.paginationDotsContainer} flex absolute justify-center pa0 ma0 bottom-0 left-0 right-0`}
       role="group"
-      aria-label="Carousel Dots"
+      aria-label="Slider pagination dots"
     >
       {slideIndexes.map(index => {
         const isActive =
           index ===
           getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
+
         return (
           <div
             className={`${applyModifiers(
@@ -92,6 +93,7 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
             role="button"
             aria-controls={controls}
             aria-label={`Dot ${index + 1} of ${slideIndexes.length}`}
+            data-testid="paginationDot"
           />
         )
       })}
