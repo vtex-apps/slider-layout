@@ -24,7 +24,7 @@ If applicable, add screenshots to help explain your problem.
 **Desktop environment:**
 
 <!--
-Please paste the ouput of the following command in your issue. It helps us identify your environment and act more quickly to solve your problem.
+Please paste the output of the following command in your issue. It helps us identify your environment and act more quickly to solve your problem.
 
 $ npx envinfo --system --binaries --browsers
 
