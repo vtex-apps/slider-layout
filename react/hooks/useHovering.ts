@@ -11,7 +11,7 @@ const useHovering = (ref: React.RefObject<HTMLDivElement>) => {
   const onMouseLeave = () => setHovering(false)
 
   useEffect(() => {
-    if (ref && ref.current) {
+    if (ref?.current) {
       ref.current.addEventListener('mouseenter', onMouseEnter)
       ref.current.addEventListener('mouseleave', onMouseLeave)
     }

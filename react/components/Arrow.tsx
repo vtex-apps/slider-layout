@@ -3,7 +3,6 @@ import { IconCaret } from 'vtex.store-icons'
 import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
-
 import useKeyboardArrows from '../hooks/useKeyboardArrows'
 import { useSliderControls } from '../hooks/useSliderControls'
 
@@ -31,10 +30,7 @@ const Arrow: FC<Props> = ({
 
   const handles = useCssHandles(CSS_HANDLES)
 
-  const isLeftEndReach = !(
-    currentSlide - (navigationStep ? navigationStep : 1) >=
-    0
-  )
+  const isLeftEndReach = !(currentSlide - (navigationStep || 1) >= 0)
   const isRightEndReach = !(currentSlide + 1 + slidesPerPage <= totalItems)
   const disabled =
     !infinite &&
@@ -42,6 +38,18 @@ const Arrow: FC<Props> = ({
       (orientation === 'right' && isRightEndReach))
 
   useKeyboardArrows(goBack, goForward)
+
+  function handleArrowClick(
+    _: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
+    if (orientation === 'left') {
+      goBack()
+    }
+
+    if (orientation === 'right') {
+      goForward()
+    }
+  }
 
   return (
     <button
@@ -53,12 +61,12 @@ const Arrow: FC<Props> = ({
         handles.sliderArrows
       } absolute transparent ma2 flex items-center justify-center bn outline-0 pointer`}
       style={{ background: 'transparent' }}
-      onClick={orientation === 'left' ? goBack : goForward}
+      onClick={handleArrowClick}
       aria-controls={controls}
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}
     >
-      {custom || <IconCaret size={arrowSize} orientation={orientation} thin />}
+      {custom ?? <IconCaret size={arrowSize} orientation={orientation} thin />}
     </button>
   )
 }

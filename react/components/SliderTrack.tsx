@@ -66,7 +66,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slidesPerPage
   )
 
-  const { list } = useListContext()
+  const list = useListContext()?.list ?? []
 
   const childrenArray = React.Children.toArray(children).concat(list)
 

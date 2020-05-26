@@ -10,11 +10,12 @@ export const useSliderControls = (infinite: boolean) => {
   } = useSliderState()
   const dispatch = useSliderDispatch()
 
-  const goBack = () => {
+  const goBack = (step?: number) => {
     let nextSlide = 0
     let nextTransformValue = 0
+    const activeNavigationStep = step ?? navigationStep
 
-    const nextMaximumSlides = currentSlide - navigationStep
+    const nextMaximumSlides = currentSlide - activeNavigationStep
 
     if (nextMaximumSlides >= 0) {
       /** Have more slides hidden on left */
@@ -39,15 +40,17 @@ export const useSliderControls = (infinite: boolean) => {
     })
   }
 
-  const goForward = () => {
+  const goForward = (step?: number) => {
     let nextSlides = 0
     let nextPosition = 0
+    const activeNavigationStep = step ?? navigationStep
 
-    const nextMaximumSlides = currentSlide + 1 + slidesPerPage + navigationStep
+    const nextMaximumSlides =
+      currentSlide + 1 + slidesPerPage + activeNavigationStep
 
     if (nextMaximumSlides <= totalItems) {
       /** Have more slides hidden on right */
-      nextSlides = currentSlide + navigationStep
+      nextSlides = currentSlide + activeNavigationStep
       nextPosition = -(slideWidth * nextSlides)
     } else if (
       nextMaximumSlides > totalItems &&

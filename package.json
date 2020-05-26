@@ -4,6 +4,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "lint": "eslint --ext js,jsx,ts,tsx .",
+    "test": "cd ./react && yarn test",
     "format": "prettier --write \"**/*.{ts,js,json}\""
   },
   "husky": {
@@ -14,6 +15,9 @@
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": [
       "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,graphql,gql}": [
       "prettier --write"
     ],
     "*.json": [

@@ -1,13 +1,15 @@
 import React, { memo, FC } from 'react'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
-import { useSliderDispatch, useSliderState } from './SliderContext'
+import { useSliderState } from './SliderContext'
+import { useSliderControls } from '../hooks/useSliderControls'
 
 const DOTS_DEFAULT_SIZE = 0.625
 
 interface Props {
   controls: string
   totalItems: number
+  infinite: boolean
 }
 
 const CSS_HANDLES = ['paginationDotsContainer', 'paginationDot'] as const
@@ -38,14 +40,9 @@ const getSlideIndices = (
       ]
     : []
 
-const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
-  const {
-    slideWidth,
-    slidesPerPage,
-    currentSlide,
-    navigationStep,
-  } = useSliderState()
-  const dispatch = useSliderDispatch()
+const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
+  const { slidesPerPage, currentSlide, navigationStep } = useSliderState()
+  const { goBack, goForward } = useSliderControls(infinite)
   const handles = useCssHandles(CSS_HANDLES)
   const passVisibleSlides = navigationStep === slidesPerPage
 
@@ -56,31 +53,27 @@ const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
   )
 
   const handleDotClick = (index: number) => {
-    const slideToGo = passVisibleSlides ? index * slidesPerPage : index
-    const isLastDot = index === slideIndexes.length - 1
-    const isExactDivision = totalItems % slidesPerPage === 0
-    const overslideThreshold =
-      !isExactDivision && isLastDot ? Math.floor(totalItems / slidesPerPage) : 0
+    // Considering that each pagination dot represents a page, pageDelta
+    // represents how many pages did the user "skip" by clicking in the dot.
+    const pageDelta =
+      index - getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
 
-    dispatch({
-      type: 'SLIDE',
-      payload: {
-        transform: -(slideWidth * (slideToGo - overslideThreshold)),
-        currentSlide: index,
-      },
-    })
+    const slidesToPass = Math.abs(pageDelta) * navigationStep
+
+    pageDelta > 0 ? goForward(slidesToPass) : goBack(slidesToPass)
   }
 
   return (
     <div
       className={`${handles.paginationDotsContainer} flex absolute justify-center pa0 ma0 bottom-0 left-0 right-0`}
       role="group"
-      aria-label="Carousel Dots"
+      aria-label="Slider pagination dots"
     >
       {slideIndexes.map(index => {
         const isActive =
           index ===
           getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
+
         return (
           <div
             className={`${applyModifiers(
@@ -100,6 +93,7 @@ const PaginationDots: FC<Props> = ({ controls, totalItems }) => {
             role="button"
             aria-controls={controls}
             aria-label={`Dot ${index + 1} of ${slideIndexes.length}`}
+            data-testid="paginationDot"
           />
         )
       })}
