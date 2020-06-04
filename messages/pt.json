@@ -1,6 +1,9 @@
 {
   "admin/editor.slider-layout.title": "Slider-Layout",
   "admin/editor.slider-layout.infinite": "Infinito",
+  "admin/editor.slider-layout.autoplay": "Autoplay",
+  "admin/editor.slider-layout.timeout": "Timeout",
+  "admin/editor.slider-layout.stopOnHover": "Parar no hover",
   "admin/editor.slider-layout.showNavigation": "Mostrar setas para navegação",
   "admin/editor.slider-layout.showPaginationDots": "Mostrar indicadores de paginação",
   "admin/editor.slider-layout.usePagination": "Usar paginação",
