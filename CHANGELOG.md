@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- `autoplay` props `timeout` and `stopOnHover` schema definition and allow it to be controlled by the Site Editor.
+- `autoplay`, `timeout` and `stopOnHover` props to the Site Editor.
 
 ## [0.11.2] - 2020-05-26
 ### Fixed
