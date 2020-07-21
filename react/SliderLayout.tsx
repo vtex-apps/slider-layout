@@ -21,9 +21,15 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   const list = useListContext()?.list ?? []
   const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
+  const slides = React.Children.toArray(children).concat(list)
 
   return (
-    <SliderContextProvider totalItems={totalSlides} {...contextProps}>
+    <SliderContextProvider
+      infinite={infinite}
+      slides={slides}
+      totalItems={totalSlides}
+      {...contextProps}
+    >
       <Slider
         infinite={infinite}
         showNavigationArrows={showNavigationArrows}

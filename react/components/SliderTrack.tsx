@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { useListContext } from 'vtex.list-context'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
-import { useSliderState } from './SliderContext'
+import { useSliderState, useSliderDispatch } from './SliderContext'
 
 const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer']
 
@@ -25,6 +24,13 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   }
 
   return ''
+}
+
+const getTransformValueFromCurrentSlide = (
+  currentSlide: number,
+  transformMap: Record<number, number>
+) => {
+  return transformMap[currentSlide]
 }
 
 const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
@@ -50,15 +56,19 @@ const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
   return { shouldRenderItem, isItemVisible }
 }
 
-const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
+const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
   const {
-    transform,
     slideWidth,
     slidesPerPage,
     currentSlide,
     isOnTouchMove,
+    useSlidingTransitionEffect,
     slideTransition: { speed, timing, delay },
+    slides,
+    transformMap,
+    transform,
   } = useSliderState()
+  const dispatch = useSliderDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 
   const { shouldRenderItem, isItemVisible } = useSliderVisibility(
@@ -66,28 +76,43 @@ const SliderTrack: FC<{ totalItems: number }> = ({ children, totalItems }) => {
     slidesPerPage
   )
 
-  const list = useListContext()?.list ?? []
-
-  const childrenArray = React.Children.toArray(children).concat(list)
+  const trackWidth =
+    slidesPerPage < totalItems
+      ? `${((totalItems + slidesPerPage) * 100) / slidesPerPage}%`
+      : '100%'
 
   return (
     <div
       className={`${handles.sliderTrack} flex justify-around relative pa0 ma0`}
       style={{
-        transition: isOnTouchMove
-          ? undefined
-          : `transform ${speed}ms ${timing}`,
+        transition:
+          isOnTouchMove || !useSlidingTransitionEffect
+            ? undefined
+            : `transform ${speed}ms ${timing}`,
         transitionDelay: `${delay}ms`,
-        transform: `translate3d(${transform}%, 0, 0)`,
-        width:
-          slidesPerPage < totalItems
-            ? `${(totalItems * 100) / slidesPerPage}%`
-            : '100%',
+        transform: `translate3d(${
+          isOnTouchMove
+            ? transform
+            : getTransformValueFromCurrentSlide(currentSlide, transformMap)
+        }%, 0, 0)`,
+        width: trackWidth,
+      }}
+      onTransitionEnd={() => {
+        dispatch({ type: 'DISABLE_TRANSITION' })
+
+        if (currentSlide >= totalItems) {
+          dispatch({
+            type: 'ADJUST_CURRENT_SLIDE',
+            payload: {
+              currentSlide: 0,
+            },
+          })
+        }
       }}
       aria-atomic="false"
       aria-live="polite"
     >
-      {childrenArray.map((child, index) => {
+      {slides.map((child, index) => {
         return (
           <div
             key={index}
