@@ -25,7 +25,7 @@ export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
 
     const newTransform =
       touchState.touchInitialTransform +
-      (currentX - touchState.touchStartX) / 100
+      (currentX - touchState.touchStartX) / 25
 
     dispatch({
       type: 'TOUCH',
