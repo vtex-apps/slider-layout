@@ -26,7 +26,7 @@ export const useSliderControls = (infinite: boolean) => {
       nextSlide = 0
       nextTransformValue = 0
     } else if (infinite) {
-      nextSlide = totalItems - slidesPerPage
+      nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
     }
 
