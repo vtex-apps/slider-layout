@@ -3,14 +3,25 @@ import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderState, useSliderDispatch } from './SliderContext'
 
-const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer']
+const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
 
-const isSlideVisible = (
-  index: number,
-  currentSlide: number,
+const isSlideVisible = ({
+  index,
+  currentSlide,
+  slidesToShow,
+  totalItems,
+}: {
+  index: number
+  currentSlide: number
   slidesToShow: number
-): boolean => {
-  return index >= currentSlide && index < currentSlide + slidesToShow
+  totalItems: number
+}): boolean => {
+  const isClonedSlide = currentSlide < 0 || currentSlide >= totalItems
+
+  return (
+    (index >= currentSlide && index < currentSlide + slidesToShow) ||
+    isClonedSlide
+  )
 }
 
 const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
@@ -26,14 +37,11 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   return ''
 }
 
-const getTransformValueFromCurrentSlide = (
+const useSliderVisibility = (
   currentSlide: number,
-  transformMap: Record<number, number>
+  slidesPerPage: number,
+  totalItems: number
 ) => {
-  return transformMap[currentSlide]
-}
-
-const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
   /** Keeps track of slides that have been visualised before.
    * We want to keep rendering them because the issue is mostly rendering
    * slides that might never be viewed; On the other hand, hiding slides
@@ -47,7 +55,12 @@ const useSliderVisibility = (currentSlide: number, slidesPerPage: number) => {
   }, [currentSlide, slidesPerPage])
 
   const isItemVisible = (index: number) =>
-    isSlideVisible(index, currentSlide, slidesPerPage)
+    isSlideVisible({
+      index,
+      currentSlide,
+      slidesToShow: slidesPerPage,
+      totalItems,
+    })
 
   const shouldRenderItem = (index: number) => {
     return visitedSlides.current.has(index) || isItemVisible(index)
@@ -73,12 +86,13 @@ const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
 
   const { shouldRenderItem, isItemVisible } = useSliderVisibility(
     currentSlide,
-    slidesPerPage
+    slidesPerPage,
+    totalItems
   )
 
   const trackWidth =
     slidesPerPage < totalItems
-      ? `${((totalItems + slidesPerPage) * 100) / slidesPerPage}%`
+      ? `${(slides.length * 100) / slidesPerPage}%`
       : '100%'
 
   return (
@@ -91,9 +105,7 @@ const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
             : `transform ${speed}ms ${timing}`,
         transitionDelay: `${delay}ms`,
         transform: `translate3d(${
-          isOnTouchMove
-            ? transform
-            : getTransformValueFromCurrentSlide(currentSlide, transformMap)
+          isOnTouchMove ? transform : transformMap[currentSlide]
         }%, 0, 0)`,
         width: trackWidth,
       }}
@@ -105,6 +117,17 @@ const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
             type: 'ADJUST_CURRENT_SLIDE',
             payload: {
               currentSlide: 0,
+              transform: transformMap[0],
+            },
+          })
+        }
+
+        if (currentSlide < 0) {
+          dispatch({
+            type: 'ADJUST_CURRENT_SLIDE',
+            payload: {
+              currentSlide: totalItems - slidesPerPage,
+              transform: transformMap[totalItems - slidesPerPage],
             },
           })
         }
@@ -113,26 +136,28 @@ const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
       aria-live="polite"
     >
       {slides.map((child, index) => {
+        const adjustedIndex = index - slidesPerPage
+
         return (
           <div
-            key={index}
+            key={adjustedIndex}
             className={`${applyModifiers(
               handles.slide,
-              getFirstOrLastVisible(slidesPerPage, index)
+              getFirstOrLastVisible(slidesPerPage, adjustedIndex)
             )} flex relative`}
-            data-index={index}
+            data-index={adjustedIndex}
             style={{
               width: `${slideWidth}%`,
             }}
-            aria-hidden={isItemVisible(index) ? 'false' : 'true'}
+            aria-hidden={isItemVisible(adjustedIndex) ? 'false' : 'true'}
             role="group"
             aria-roledescription="slide"
-            aria-label={`${index + 1} of ${totalItems}`}
+            aria-label={`${adjustedIndex + 1} of ${totalItems}`}
           >
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
             >
-              {shouldRenderItem(index) ? child : null}
+              {shouldRenderItem(adjustedIndex) ? child : null}
             </div>
           </div>
         )

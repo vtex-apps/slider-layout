@@ -4,6 +4,7 @@ import React, {
   useContext,
   FC,
   ReactNode,
+  useMemo,
 } from 'react'
 import { useDevice } from 'vtex.device-detector'
 
@@ -40,6 +41,7 @@ interface AdjustCurrentSlideAction {
   type: 'ADJUST_CURRENT_SLIDE'
   payload: {
     currentSlide: number
+    transform?: number
   }
 }
 
@@ -117,6 +119,7 @@ function sliderContextReducer(state: State, action: Action): State {
       return {
         ...state,
         currentSlide: action.payload.currentSlide,
+        transform: action.payload.transform ?? state.transform,
       }
     default:
       return state
@@ -143,28 +146,35 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   },
 }) => {
   const { device } = useDevice()
+
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage[device] : navigationStep
-
-  const initialSlideWidth =
-    100 / (totalItems + (infinite ? itemsPerPage[device] : 0))
 
   const postRenderedSlides = infinite
     ? slides.slice(0, itemsPerPage[device])
     : []
+  const preRenderedSlides = infinite
+    ? slides.slice(slides.length - itemsPerPage[device])
+    : []
+  const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
-  const newSlides = slides.concat(postRenderedSlides)
+  const slideWidth = useMemo(() => 100 / newSlides.length, [newSlides.length])
 
-  const transformMap: Record<number, number> = {}
-  newSlides.forEach((_, idx) => {
-    transformMap[idx] = -(initialSlideWidth * idx)
-  })
+  const transformMap = useMemo(() => {
+    const currentMap: Record<number, number> = {}
+
+    newSlides.forEach((_, idx) => {
+      currentMap[idx - itemsPerPage[device]] = -(slideWidth * idx)
+    })
+
+    return currentMap
+  }, [device, slideWidth, newSlides, itemsPerPage])
 
   const [state, dispatch] = useReducer(sliderContextReducer, {
-    slideWidth: initialSlideWidth,
+    slideWidth,
     slidesPerPage: itemsPerPage[device],
     currentSlide: 0,
-    transform: 0,
+    transform: transformMap[0],
     transformMap,
     slides: newSlides,
     navigationStep: resolvedNavigationStep,
