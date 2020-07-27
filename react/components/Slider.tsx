@@ -82,7 +82,9 @@ const Slider: FC<Props> = ({
         }`}
         ref={containerRef}
       >
-        <SliderTrack totalItems={totalItems}>{children}</SliderTrack>
+        <SliderTrack infinite={infinite} totalItems={totalItems}>
+          {children}
+        </SliderTrack>
       </div>
       {shouldShowArrows && shouldUsePagination && (
         <Fragment>
