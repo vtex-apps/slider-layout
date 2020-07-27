@@ -5,6 +5,11 @@ import { useSliderState, useSliderDispatch } from './SliderContext'
 
 const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
 
+interface Props {
+  totalItems: number
+  infinite: boolean
+}
+
 const isSlideVisible = ({
   index,
   currentSlide,
@@ -22,6 +27,26 @@ const isSlideVisible = ({
     (index >= currentSlide && index < currentSlide + slidesToShow) ||
     isClonedSlide
   )
+}
+
+const resolveAriaAttributes = (
+  visible: boolean,
+  index: number,
+  totalItems: number
+) => {
+  if (index < 0 || index >= totalItems) {
+    return {
+      'aria-hidden': !visible,
+      role: 'none presentation',
+    }
+  }
+
+  return {
+    'aria-hidden': visible,
+    role: 'group',
+    'aria-roledescription': 'slide',
+    'aria-label': `${index + 1} of ${totalItems}`,
+  }
 }
 
 const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
@@ -69,7 +94,7 @@ const useSliderVisibility = (
   return { shouldRenderItem, isItemVisible }
 }
 
-const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
+const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
   const {
     slideWidth,
     slidesPerPage,
@@ -136,11 +161,19 @@ const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
       aria-live="polite"
     >
       {slides.map((child, index) => {
-        const adjustedIndex = index - slidesPerPage
+        // This is to take into account that there is a clone of the last page
+        // in the left, to enable the infinite loop effect in case infinite
+        // is set to true.
+        const adjustedIndex = index - (infinite ? slidesPerPage : 0)
 
         return (
           <div
             key={adjustedIndex}
+            {...resolveAriaAttributes(
+              isItemVisible(adjustedIndex),
+              adjustedIndex,
+              totalItems
+            )}
             className={`${applyModifiers(
               handles.slide,
               getFirstOrLastVisible(slidesPerPage, adjustedIndex)
@@ -149,10 +182,6 @@ const SliderTrack: FC<{ totalItems: number }> = ({ totalItems }) => {
             style={{
               width: `${slideWidth}%`,
             }}
-            aria-hidden={isItemVisible(adjustedIndex) ? 'false' : 'true'}
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`${adjustedIndex + 1} of ${totalItems}`}
           >
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
