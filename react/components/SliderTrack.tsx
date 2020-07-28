@@ -178,7 +178,11 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
               handles.slide,
               getFirstOrLastVisible(slidesPerPage, adjustedIndex)
             )} flex relative`}
-            data-index={adjustedIndex}
+            data-index={
+              adjustedIndex >= 0 && adjustedIndex < totalItems
+                ? adjustedIndex + 1
+                : undefined
+            }
             style={{
               width: `${slideWidth}%`,
             }}
