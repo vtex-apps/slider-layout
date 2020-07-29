@@ -116,7 +116,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
   )
 
   const trackWidth =
-    slidesPerPage < totalItems
+    slidesPerPage <= totalItems
       ? `${(slides.length * 100) / slidesPerPage}%`
       : '100%'
 
