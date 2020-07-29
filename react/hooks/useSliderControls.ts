@@ -4,9 +4,9 @@ export const useSliderControls = (infinite: boolean) => {
   const {
     currentSlide,
     slidesPerPage,
-    slideWidth,
     totalItems,
     navigationStep,
+    transformMap,
   } = useSliderState()
   const dispatch = useSliderDispatch()
 
@@ -20,15 +20,14 @@ export const useSliderControls = (infinite: boolean) => {
     if (nextMaximumSlides >= 0) {
       /** Have more slides hidden on left */
       nextSlide = nextMaximumSlides
-      nextTransformValue = -(slideWidth * nextSlide)
+      nextTransformValue = transformMap[nextSlide]
     } else if (nextMaximumSlides < 0 && currentSlide !== 0) {
       /** Prevent overslide */
       nextSlide = 0
       nextTransformValue = 0
     } else if (infinite) {
-      /** If reach start, go to last slide */
-      nextSlide = totalItems - slidesPerPage
-      nextTransformValue = -(slideWidth * nextSlide)
+      nextSlide = nextMaximumSlides
+      nextTransformValue = transformMap[nextSlide]
     }
 
     dispatch({
@@ -41,8 +40,8 @@ export const useSliderControls = (infinite: boolean) => {
   }
 
   const goForward = (step?: number) => {
-    let nextSlides = 0
-    let nextPosition = 0
+    let nextSlide = 0
+    let nextTransformValue = 0
     const activeNavigationStep = step ?? navigationStep
 
     const nextMaximumSlides =
@@ -50,26 +49,25 @@ export const useSliderControls = (infinite: boolean) => {
 
     if (nextMaximumSlides <= totalItems) {
       /** Have more slides hidden on right */
-      nextSlides = currentSlide + activeNavigationStep
-      nextPosition = -(slideWidth * nextSlides)
+      nextSlide = currentSlide + activeNavigationStep
+      nextTransformValue = transformMap[nextSlide]
     } else if (
       nextMaximumSlides > totalItems &&
       currentSlide !== totalItems - slidesPerPage
     ) {
       /** Prevent overslide */
-      nextSlides = totalItems - slidesPerPage
-      nextPosition = -(slideWidth * nextSlides)
+      nextSlide = totalItems - slidesPerPage
+      nextTransformValue = transformMap[nextSlide]
     } else if (infinite) {
-      /** if reach end go to first slide */
-      nextSlides = 0
-      nextPosition = -(slideWidth * nextSlides)
+      nextSlide = currentSlide + activeNavigationStep
+      nextTransformValue = transformMap[nextSlide]
     }
 
     dispatch({
       type: 'SLIDE',
       payload: {
-        transform: nextPosition,
-        currentSlide: nextSlides,
+        transform: nextTransformValue,
+        currentSlide: nextSlide,
       },
     })
   }

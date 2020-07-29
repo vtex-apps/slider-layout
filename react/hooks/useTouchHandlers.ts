@@ -22,10 +22,9 @@ export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
 
   const onTouchMove = (e: React.TouchEvent) => {
     const currentX = e.touches[0].clientX
+    const touchMoveDelta = currentX - touchState.touchStartX
 
-    const newTransform =
-      touchState.touchInitialTransform +
-      (currentX - touchState.touchStartX) / 25
+    const newTransform = touchState.touchInitialTransform + touchMoveDelta / 25
 
     dispatch({
       type: 'TOUCH',

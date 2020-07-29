@@ -1,4 +1,11 @@
-import React, { createContext, useReducer, useContext, FC } from 'react'
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  FC,
+  ReactNode,
+  useMemo,
+} from 'react'
 import { useDevice } from 'vtex.device-detector'
 
 interface AdjustOnResizeAction {
@@ -13,7 +20,7 @@ interface AdjustOnResizeAction {
 interface SlideAction {
   type: 'SLIDE'
   payload: {
-    transform: number
+    transform?: number
     currentSlide: number
   }
 }
@@ -23,6 +30,18 @@ interface TouchAction {
   payload: {
     transform?: number
     isOnTouchMove: boolean
+  }
+}
+
+interface DisableTransitionAction {
+  type: 'DISABLE_TRANSITION'
+}
+
+interface AdjustCurrentSlideAction {
+  type: 'ADJUST_CURRENT_SLIDE'
+  payload: {
+    currentSlide: number
+    transform?: number
   }
 }
 
@@ -43,9 +62,25 @@ interface State extends SliderLayoutProps {
   isPageNavigationStep: boolean
   /** Whether or not a touchmove event is happening */
   isOnTouchMove: boolean
+  useSlidingTransitionEffect: boolean
+  transformMap: Record<number, number>
+  slides: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
-type Action = AdjustOnResizeAction | SlideAction | TouchAction
+interface SliderContextProps extends SliderLayoutProps {
+  totalItems: number
+  infinite: SliderLayoutSiteEditorProps['infinite']
+  // This type comes from React itself. It is the return type for
+  // React.Children.toArray().
+  slides: Array<Exclude<ReactNode, boolean | null | undefined>>
+}
+
+type Action =
+  | AdjustOnResizeAction
+  | SlideAction
+  | TouchAction
+  | DisableTransitionAction
+  | AdjustCurrentSlideAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
@@ -65,8 +100,9 @@ function sliderContextReducer(state: State, action: Action): State {
     case 'SLIDE':
       return {
         ...state,
-        transform: action.payload.transform,
+        transform: action.payload.transform ?? state.transform,
         currentSlide: action.payload.currentSlide,
+        useSlidingTransitionEffect: true,
       }
     case 'TOUCH':
       return {
@@ -74,17 +110,30 @@ function sliderContextReducer(state: State, action: Action): State {
         transform: action.payload.transform ?? state.transform,
         isOnTouchMove: action.payload.isOnTouchMove,
       }
+    case 'DISABLE_TRANSITION':
+      return {
+        ...state,
+        useSlidingTransitionEffect: false,
+      }
+    case 'ADJUST_CURRENT_SLIDE':
+      return {
+        ...state,
+        currentSlide: action.payload.currentSlide,
+        transform: action.payload.transform ?? state.transform,
+      }
     default:
       return state
   }
 }
 
-const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
+const SliderContextProvider: FC<SliderContextProps> = ({
   autoplay,
   children,
   totalItems,
   label = 'slider',
   navigationStep = 'page',
+  slides,
+  infinite = false,
   slideTransition = {
     speed: 400,
     delay: 0,
@@ -97,14 +146,37 @@ const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
   },
 }) => {
   const { device } = useDevice()
+
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage[device] : navigationStep
 
+  const postRenderedSlides = infinite
+    ? slides.slice(0, itemsPerPage[device])
+    : []
+  const preRenderedSlides = infinite
+    ? slides.slice(slides.length - itemsPerPage[device])
+    : []
+  const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
+
+  const slideWidth = useMemo(() => 100 / newSlides.length, [newSlides.length])
+
+  const transformMap = useMemo(() => {
+    const currentMap: Record<number, number> = {}
+
+    newSlides.forEach((_, idx) => {
+      currentMap[idx - itemsPerPage[device]] = -(slideWidth * idx)
+    })
+
+    return currentMap
+  }, [device, slideWidth, newSlides, itemsPerPage])
+
   const [state, dispatch] = useReducer(sliderContextReducer, {
-    slideWidth: 100 / totalItems,
+    slideWidth,
     slidesPerPage: itemsPerPage[device],
     currentSlide: 0,
-    transform: 0,
+    transform: transformMap[0],
+    transformMap,
+    slides: newSlides,
     navigationStep: resolvedNavigationStep,
     slideTransition,
     itemsPerPage,
@@ -113,6 +185,7 @@ const SliderContextProvider: FC<SliderLayoutProps & { totalItems: number }> = ({
     totalItems,
     isPageNavigationStep: navigationStep === 'page',
     isOnTouchMove: false,
+    useSlidingTransitionEffect: false,
   })
 
   return (
