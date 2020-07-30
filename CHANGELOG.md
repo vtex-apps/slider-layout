@@ -24,7 +24,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Navigation using `PaginationDots` would result in elements not being rendered.
 
 ## [0.11.1] - 2020-05-22
-
 ### Added
 - Modifiers `firstVisible` and `lastVisible` for the `slide` CSS Handles 
 
