@@ -6,8 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- `slidesPerPage` miscalculation in situations where the total number of slides to render where less than the value from `itemsPerPage` for the current device.
 
-## [0.11.5] - 2020-07-30
+## [0.11.5] - 2020-07-30 [YANKED]
 ### Fixed
 - `SliderTrack` component miscalculating its own width.
 
