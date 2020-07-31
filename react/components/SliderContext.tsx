@@ -150,11 +150,14 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage[device] : navigationStep
 
+  const resolvedSlidesPerPage =
+    totalItems <= itemsPerPage[device] ? totalItems : itemsPerPage[device]
+
   const postRenderedSlides = infinite
-    ? slides.slice(0, itemsPerPage[device])
+    ? slides.slice(0, resolvedSlidesPerPage)
     : []
   const preRenderedSlides = infinite
-    ? slides.slice(slides.length - itemsPerPage[device])
+    ? slides.slice(slides.length - resolvedSlidesPerPage)
     : []
   const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
@@ -164,15 +167,15 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     const currentMap: Record<number, number> = {}
 
     newSlides.forEach((_, idx) => {
-      currentMap[idx - itemsPerPage[device]] = -(slideWidth * idx)
+      currentMap[idx - resolvedSlidesPerPage] = -(slideWidth * idx)
     })
 
     return currentMap
-  }, [device, slideWidth, newSlides, itemsPerPage])
+  }, [slideWidth, newSlides, resolvedSlidesPerPage])
 
   const [state, dispatch] = useReducer(sliderContextReducer, {
     slideWidth,
-    slidesPerPage: itemsPerPage[device],
+    slidesPerPage: resolvedSlidesPerPage,
     currentSlide: 0,
     transform: transformMap[0],
     transformMap,

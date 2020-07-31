@@ -8,20 +8,25 @@ export const useScreenResize = (infinite: boolean) => {
     navigationStep,
     isPageNavigationStep,
     itemsPerPage,
+    totalItems,
   } = useSliderState()
   const { device } = useDevice()
   const dispatch = useSliderDispatch()
 
   useEffect(() => {
+    const newSlidesPerPage =
+      totalItems <= itemsPerPage[device] ? totalItems : itemsPerPage[device]
+    const newNavigationStep = isPageNavigationStep
+      ? newSlidesPerPage
+      : navigationStep
+
     const setNewState = (shouldCorrectItemPosition: boolean) => {
       dispatch({
         type: 'ADJUST_ON_RESIZE',
         payload: {
           shouldCorrectItemPosition,
-          slidesPerPage: itemsPerPage[device],
-          navigationStep: isPageNavigationStep
-            ? itemsPerPage[device]
-            : navigationStep,
+          slidesPerPage: newSlidesPerPage,
+          navigationStep: newNavigationStep,
         },
       })
     }
@@ -35,6 +40,7 @@ export const useScreenResize = (infinite: boolean) => {
   }, [
     infinite,
     dispatch,
+    totalItems,
     itemsPerPage,
     device,
     isPageNavigationStep,
