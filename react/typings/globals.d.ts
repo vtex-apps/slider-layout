@@ -32,10 +32,6 @@ declare global {
       stopOnHover?: boolean
     }
     navigationStep: number | 'page'
-    itemsPerPage: {
-      desktop: number
-      tablet: number
-      phone: number
-    }
+    itemsPerPage: MaybeResponsiveValue<number>
   }
 }
