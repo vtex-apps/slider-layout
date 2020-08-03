@@ -16,11 +16,17 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   fullWidth = true,
   arrowSize = 25,
   children,
+  itemsPerPage = {
+    desktop: 5,
+    tablet: 3,
+    phone: 1,
+  },
   ...contextProps
 }) => {
   const list = useListContext()?.list ?? []
   const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
+  const responsiveItemsPerPage = useResponsiveValue(itemsPerPage)
   const slides = React.Children.toArray(children).concat(list)
 
   return (
@@ -28,6 +34,7 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
       infinite={infinite}
       slides={slides}
       totalItems={totalSlides}
+      itemsPerPage={responsiveItemsPerPage}
       {...contextProps}
     >
       <Slider
@@ -38,6 +45,7 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
         usePagination={usePagination}
         fullWidth={fullWidth}
         arrowSize={responsiveArrowIconSize}
+        itemsPerPage={responsiveItemsPerPage}
       >
         {children}
       </Slider>

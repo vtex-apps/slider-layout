@@ -6,7 +6,6 @@ import React, {
   ReactNode,
   useMemo,
 } from 'react'
-import { useDevice } from 'vtex.device-detector'
 
 interface AdjustOnResizeAction {
   type: 'ADJUST_ON_RESIZE'
@@ -134,24 +133,17 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   navigationStep = 'page',
   slides,
   infinite = false,
+  itemsPerPage,
   slideTransition = {
     speed: 400,
     delay: 0,
     timing: '',
   },
-  itemsPerPage = {
-    desktop: 5,
-    tablet: 3,
-    phone: 1,
-  },
 }) => {
-  const { device } = useDevice()
-
   const resolvedNavigationStep =
-    navigationStep === 'page' ? itemsPerPage[device] : navigationStep
-
+    navigationStep === 'page' ? itemsPerPage : navigationStep
   const resolvedSlidesPerPage =
-    totalItems <= itemsPerPage[device] ? totalItems : itemsPerPage[device]
+    totalItems <= itemsPerPage ? totalItems : itemsPerPage
 
   const postRenderedSlides = infinite
     ? slides.slice(0, resolvedSlidesPerPage)

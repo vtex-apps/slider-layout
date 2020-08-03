@@ -12,6 +12,7 @@ import PaginationDots from './PaginationDots'
 
 interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
+  itemsPerPage: number
 }
 
 const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const
@@ -25,6 +26,7 @@ const Slider: FC<Props> = ({
   usePagination: shouldUsePagination,
   arrowSize,
   fullWidth,
+  itemsPerPage,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
   const { isMobile } = useDevice()
@@ -36,7 +38,7 @@ const Slider: FC<Props> = ({
     .replace(/ /g, '-')}-items`
 
   useAutoplay(infinite, containerRef)
-  useScreenResize(infinite)
+  useScreenResize(infinite, itemsPerPage)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
   })
