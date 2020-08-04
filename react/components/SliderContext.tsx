@@ -159,11 +159,12 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     const currentMap: Record<number, number> = {}
 
     newSlides.forEach((_, idx) => {
-      currentMap[idx - resolvedSlidesPerPage] = -(slideWidth * idx)
+      const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
+      currentMap[currIdx] = -(slideWidth * idx)
     })
 
     return currentMap
-  }, [slideWidth, newSlides, resolvedSlidesPerPage])
+  }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite])
 
   const [state, dispatch] = useReducer(sliderContextReducer, {
     slideWidth,
