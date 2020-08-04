@@ -17,6 +17,7 @@ export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
 
   const onTouchStart = (e: React.TouchEvent) => {
     const startX = e.touches[0].clientX
+
     setTouchState({ touchStartX: startX, touchInitialTransform: transform })
   }
 

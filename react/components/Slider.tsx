@@ -42,6 +42,7 @@ const Slider: FC<Props> = ({
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
   })
+
   const shouldBeStaticList = slidesPerPage >= totalItems
 
   const shouldShowArrows = Boolean(
@@ -50,6 +51,7 @@ const Slider: FC<Props> = ({
       (showNavigationArrows === 'desktopOnly' && !isMobile)) &&
       !shouldBeStaticList
   )
+
   const shouldShowPaginationDots = Boolean(
     (showPaginationDots === 'always' ||
       (showPaginationDots === 'mobileOnly' && isMobile) ||
@@ -59,8 +61,10 @@ const Slider: FC<Props> = ({
 
   const touchStartHandler = (e: React.TouchEvent) =>
     shouldUsePagination && !shouldBeStaticList ? onTouchStart(e) : null
+
   const touchEndHandler = (e: React.TouchEvent) =>
     shouldUsePagination && !shouldBeStaticList ? onTouchEnd(e) : null
+
   const touchMoveHandler = (e: React.TouchEvent) =>
     shouldUsePagination && !shouldBeStaticList ? onTouchMove(e) : null
 

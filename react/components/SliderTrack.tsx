@@ -54,6 +54,7 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   if (index % slidesPerPage === 0) {
     return 'firstVisible'
   }
+
   // every slide before  the multiple of the number of slidesPerPage is a last (e.g. 2,5,8 if slidesPerPage is 3)
   if ((index + 1) % slidesPerPage === 0) {
     return 'lastVisible'
@@ -106,6 +107,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
     transformMap,
     transform,
   } = useSliderState()
+
   const dispatch = useSliderDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 

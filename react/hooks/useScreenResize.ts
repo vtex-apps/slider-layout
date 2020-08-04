@@ -9,6 +9,7 @@ export const useScreenResize = (infinite: boolean, itemsPerPage: number) => {
   useEffect(() => {
     const newSlidesPerPage =
       totalItems <= itemsPerPage ? totalItems : itemsPerPage
+
     const newNavigationStep = isPageNavigationStep
       ? newSlidesPerPage
       : navigationStep
@@ -23,12 +24,15 @@ export const useScreenResize = (infinite: boolean, itemsPerPage: number) => {
         },
       })
     }
+
     const onResize = (value?: UIEvent): void => {
       setNewState(!value || infinite)
     }
+
     setNewState(false)
 
     window.addEventListener('resize', onResize)
+
     return () => window.removeEventListener('resize', onResize)
   }, [
     infinite,

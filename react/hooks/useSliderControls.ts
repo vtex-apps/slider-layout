@@ -8,6 +8,7 @@ export const useSliderControls = (infinite: boolean) => {
     navigationStep,
     transformMap,
   } = useSliderState()
+
   const dispatch = useSliderDispatch()
 
   const goBack = (step?: number) => {

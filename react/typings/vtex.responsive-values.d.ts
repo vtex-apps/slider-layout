@@ -1,16 +1,6 @@
 declare module 'vtex.responsive-values' {
-  export enum InputDevices {
-    mobile = 'mobile',
-    phone = 'phone',
-    tablet = 'tablet',
-    desktop = 'desktop',
-  }
-
-  export enum OutputDevices {
-    phone = 'phone',
-    tablet = 'tablet',
-    desktop = 'desktop',
-  }
+  export type InputDevices = 'mobile' | 'phone' | 'tablet' | 'desktop'
+  export type InputDevices = 'phone' | 'tablet' | 'desktop'
 
   export type ResponsiveInput<T> = { [P in keyof typeof InputDevices]?: T }
   export type MaybeResponsiveInput<T> = T | ResponsiveInput<T>
