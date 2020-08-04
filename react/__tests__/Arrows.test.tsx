@@ -25,7 +25,6 @@ beforeEach(() => {
 })
 
 describe('Accessibility', () => {
-  // eslint-disable-next-line prettier/prettier
   ;(useSliderState as jest.Mock).mockImplementation(() => ({
     currentSlide: 0,
     slidesPerPage: 5,
@@ -63,7 +62,6 @@ describe('Accessibility', () => {
 })
 
 describe('Behavior upon interaction', () => {
-  // eslint-disable-next-line prettier/prettier
   ;(useSliderState as jest.Mock).mockImplementation(() => ({
     currentSlide: 0,
     slidesPerPage: 5,
@@ -130,7 +128,6 @@ describe('Behavior upon interaction', () => {
   })
 
   it('should not go forward on click if if the slider is not infinite and right-end is reached', () => {
-    // eslint-disable-next-line prettier/prettier
     ;(useSliderState as jest.Mock).mockImplementation(() => ({
       currentSlide: 5,
       slidesPerPage: 5,
