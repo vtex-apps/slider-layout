@@ -90,7 +90,7 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 
 | Prop name | Type | Description | Default value |
 | ------- | ------ | -------- | ------------- | 
-| `timeout` | `number` |  Timeout (in seconds) between each slide. |  `undefined` | 
+| `timeout` | `number` |  Timeout (in `ms`) between each slide. |  `undefined` | 
 | `stopOnHover` | `boolean` |  Whether the auto play should stop when users are hovering the slider (`true`) or not (`false`). | `undefined` | 
 
 
