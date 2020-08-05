@@ -8,6 +8,7 @@ const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
 interface Props {
   totalItems: number
   infinite: boolean
+  usePagination: boolean
 }
 
 const isSlideVisible = ({
@@ -95,7 +96,7 @@ const useSliderVisibility = (
   return { shouldRenderItem, isItemVisible }
 }
 
-const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
+const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
   const {
     slideWidth,
     slidesPerPage,
@@ -192,7 +193,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
             >
-              {shouldRenderItem(adjustedIndex) ? child : null}
+              {!usePagination || shouldRenderItem(adjustedIndex) ? child : null}
             </div>
           </div>
         )
