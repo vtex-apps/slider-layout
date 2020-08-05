@@ -6,11 +6,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Slider Layout is a flexible solution for building sliders of blocks within VTEX IO Store Framework. 
+Slider Layout is a flexible solution for building sliders of blocks within VTEX Store Framework, such as a carousel component. 
 
 ![](https://user-images.githubusercontent.com/27777263/70230361-e839db00-1736-11ea-9f29-7c945c10a5f7.png)
 
-:warning: In order to use the `slider-layout` as a substitute to the `carousel` component, check the [Building a Carousel through lists and Slider Layout](https://vtex.io/docs/recipes/layout/building-a-carousel-through-lists-and-slider-layout) documentation out.
+:info: *In order to use the Slider Layout as a substitute to the [Carousel app](https://github.com/vtex-apps/carousel), check out the [Building a Carousel through lists and Slider Layout](https://vtex.io/docs/recipes/layout/building-a-carousel-through-lists-and-slider-layout) documentation.
 
 ## Configuration
 
