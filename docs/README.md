@@ -56,8 +56,8 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
   },
 ```
 
-| Prop name              | Type      | Description      | Default value                          |
-| ---------------------- | ----------------- | ---------------- | ------------------------- |
+| Prop name              | Type                         | Description               | Default value                        |
+| ---------------------- | ---------------------------- | ------------------------- | ------------------------------------ |
 | `label`   | `string`  | `aria-label` attribute value to be used by the `<Slider/>` component when rendered. The `aria-label` value should explicitly tell users what the HTML element being inspected is responsible for.   | `slider`  |
 | `showNavigationArrows` | `enum` | When navigation arrows should be rendered. Possible values are: `mobileOnly`, `desktopOnly`, `always`, or `never`.  | `always` |
 | `showPaginationDots`   | `enum` | When pagination dots should be rendered. Possible values are: `mobileOnly`, `desktopOnly`, `always`, or `never`.  | `always` |
