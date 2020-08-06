@@ -77,6 +77,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
 
   return (
     <div
+      data-testid="slider-track"
       className={`${handles.sliderTrack} flex justify-around relative pa0 ma0`}
       style={{
         transition:
