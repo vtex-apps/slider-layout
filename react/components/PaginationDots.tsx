@@ -22,6 +22,7 @@ const getSelectedDot = (
   const realCurrentSlide = passVisibleSlides
     ? currentSlide + (slidesToShow - 1)
     : currentSlide
+
   return passVisibleSlides
     ? Math.floor(realCurrentSlide / slidesToShow)
     : realCurrentSlide

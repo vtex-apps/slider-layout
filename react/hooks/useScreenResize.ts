@@ -1,21 +1,15 @@
 import { useEffect } from 'react'
-import { useDevice } from 'vtex.device-detector'
 
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
-export const useScreenResize = (infinite: boolean) => {
-  const {
-    navigationStep,
-    isPageNavigationStep,
-    itemsPerPage,
-    totalItems,
-  } = useSliderState()
-  const { device } = useDevice()
+export const useScreenResize = (infinite: boolean, itemsPerPage: number) => {
+  const { navigationStep, isPageNavigationStep, totalItems } = useSliderState()
   const dispatch = useSliderDispatch()
 
   useEffect(() => {
     const newSlidesPerPage =
-      totalItems <= itemsPerPage[device] ? totalItems : itemsPerPage[device]
+      totalItems <= itemsPerPage ? totalItems : itemsPerPage
+
     const newNavigationStep = isPageNavigationStep
       ? newSlidesPerPage
       : navigationStep
@@ -30,19 +24,21 @@ export const useScreenResize = (infinite: boolean) => {
         },
       })
     }
+
     const onResize = (value?: UIEvent): void => {
       setNewState(!value || infinite)
     }
+
     setNewState(false)
 
     window.addEventListener('resize', onResize)
+
     return () => window.removeEventListener('resize', onResize)
   }, [
     infinite,
     dispatch,
     totalItems,
     itemsPerPage,
-    device,
     isPageNavigationStep,
     navigationStep,
   ])

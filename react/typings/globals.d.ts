@@ -2,9 +2,10 @@ import { FunctionComponent } from 'react'
 import { MaybeResponsiveValue } from 'vtex.responsive-values'
 
 declare global {
-  interface StorefrontFunctionComponent<P = {}> extends FunctionComponent<P> {
-    schema?: object
-    getSchema?(props?: P): object
+  interface StorefrontFunctionComponent<P = Record<string, unknown>>
+    extends FunctionComponent<P> {
+    schema?: Record<string, unknown>
+    getSchema?(props?: P): Record<string, unknown>
   }
 
   interface SliderLayoutSiteEditorProps {
@@ -32,10 +33,6 @@ declare global {
       stopOnHover?: boolean
     }
     navigationStep: number | 'page'
-    itemsPerPage: {
-      desktop: number
-      tablet: number
-      phone: number
-    }
+    itemsPerPage: MaybeResponsiveValue<number>
   }
 }

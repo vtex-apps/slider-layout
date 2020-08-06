@@ -12,6 +12,7 @@ import PaginationDots from './PaginationDots'
 
 interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
+  itemsPerPage: number
 }
 
 const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const
@@ -25,6 +26,7 @@ const Slider: FC<Props> = ({
   usePagination: shouldUsePagination,
   arrowSize,
   fullWidth,
+  itemsPerPage,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
   const { isMobile } = useDevice()
@@ -36,10 +38,11 @@ const Slider: FC<Props> = ({
     .replace(/ /g, '-')}-items`
 
   useAutoplay(infinite, containerRef)
-  useScreenResize(infinite)
+  useScreenResize(infinite, itemsPerPage)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
   })
+
   const shouldBeStaticList = slidesPerPage >= totalItems
 
   const shouldShowArrows = Boolean(
@@ -48,6 +51,7 @@ const Slider: FC<Props> = ({
       (showNavigationArrows === 'desktopOnly' && !isMobile)) &&
       !shouldBeStaticList
   )
+
   const shouldShowPaginationDots = Boolean(
     (showPaginationDots === 'always' ||
       (showPaginationDots === 'mobileOnly' && isMobile) ||
@@ -57,8 +61,10 @@ const Slider: FC<Props> = ({
 
   const touchStartHandler = (e: React.TouchEvent) =>
     shouldUsePagination && !shouldBeStaticList ? onTouchStart(e) : null
+
   const touchEndHandler = (e: React.TouchEvent) =>
     shouldUsePagination && !shouldBeStaticList ? onTouchEnd(e) : null
+
   const touchMoveHandler = (e: React.TouchEvent) =>
     shouldUsePagination && !shouldBeStaticList ? onTouchMove(e) : null
 
@@ -82,7 +88,11 @@ const Slider: FC<Props> = ({
         }`}
         ref={containerRef}
       >
-        <SliderTrack infinite={infinite} totalItems={totalItems}>
+        <SliderTrack
+          infinite={infinite}
+          totalItems={totalItems}
+          usePagination={shouldUsePagination}
+        >
           {children}
         </SliderTrack>
       </div>

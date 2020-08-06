@@ -8,6 +8,7 @@ const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
 interface Props {
   totalItems: number
   infinite: boolean
+  usePagination: boolean
 }
 
 const isSlideVisible = ({
@@ -54,6 +55,7 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   if (index % slidesPerPage === 0) {
     return 'firstVisible'
   }
+
   // every slide before  the multiple of the number of slidesPerPage is a last (e.g. 2,5,8 if slidesPerPage is 3)
   if ((index + 1) % slidesPerPage === 0) {
     return 'lastVisible'
@@ -94,7 +96,7 @@ const useSliderVisibility = (
   return { shouldRenderItem, isItemVisible }
 }
 
-const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
+const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
   const {
     slideWidth,
     slidesPerPage,
@@ -106,6 +108,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
     transformMap,
     transform,
   } = useSliderState()
+
   const dispatch = useSliderDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 
@@ -190,7 +193,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite }) => {
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
             >
-              {shouldRenderItem(adjustedIndex) ? child : null}
+              {!usePagination || shouldRenderItem(adjustedIndex) ? child : null}
             </div>
           </div>
         )

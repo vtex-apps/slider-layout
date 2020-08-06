@@ -1,8 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
 
-export const IconCaret: FC<any> = ({ orientation, size }) => (
-  <div data-testid="Tooltip">
-    {orientation}
-    {size}
-  </div>
+export const IconCaret = (props: Record<string, unknown>) => (
+  <div data-testid={`icon-caret-${props.orientation}`} />
 )

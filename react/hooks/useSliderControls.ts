@@ -8,6 +8,7 @@ export const useSliderControls = (infinite: boolean) => {
     navigationStep,
     transformMap,
   } = useSliderState()
+
   const dispatch = useSliderDispatch()
 
   const goBack = (step?: number) => {
@@ -48,14 +49,14 @@ export const useSliderControls = (infinite: boolean) => {
       currentSlide + 1 + slidesPerPage + activeNavigationStep
 
     if (nextMaximumSlides <= totalItems) {
-      /** Have more slides hidden on right */
+      /** There are some slides hidden on the right */
       nextSlide = currentSlide + activeNavigationStep
       nextTransformValue = transformMap[nextSlide]
     } else if (
       nextMaximumSlides > totalItems &&
       currentSlide !== totalItems - slidesPerPage
     ) {
-      /** Prevent overslide */
+      /** Prevent over-slide */
       nextSlide = totalItems - slidesPerPage
       nextTransformValue = transformMap[nextSlide]
     } else if (infinite) {
