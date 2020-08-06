@@ -61,10 +61,10 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 | `label`   | `string`  | `aria-label` attribute value to be used by the `<Slider/>` component when rendered. The `aria-label` value should explicitly tell users what the HTML element being inspected is responsible for.   | `slider`  |
 | `showNavigationArrows` | `enum` | When navigation arrows should be rendered. Possible values are: `mobileOnly`, `desktopOnly`, `always`, or `never`.  | `always` |
 | `showPaginationDots`   | `enum` | When pagination dots should be rendered. Possible values are: `mobileOnly`, `desktopOnly`, `always`, or `never`.  | `always` |
-| `infinite`   | `boolean`   | Whether the slider should be infinite (`true`) or not (`false`) meaning it will have an explicit end for users. | `false` |
-| `usePagination`        | `boolean`  | Whether the slide navigation use pages (`true`) or not (`false`), using fluid scroll for slide navigation instead.  | `true` |   
-| `navigationStep`       | `number` / `enum` | Number of slides that should be displayed when users click on one of the Slider's arrows. It is also possible to set this prop value as `page`, meaning that the number of slides that will be displayed when one of the arrows is clicked on is equal to the number of slides set per page. | `page`  |
-| `itemsPerPage`         | `object`    | Number of slides to be shown on each type of device. For more on this, check out the  `itemsPerPage` object section below. | `{ desktop: 5, tablet: 3, phone: 1 }`  |
+| `infinite`   | `boolean`   | Whether the slider should be infinite (`true`) or not (`false`). When this prop is set as `false`, the slider will have an explicit end for users. | `false` |
+| `usePagination`        | `boolean`  | Whether the slider should use slide pages (`true`) or not (`false`). When this prop is set as `false`, the slider will use smooth scrolling for slide navigation instead of arrows.  | `true` |  
+| `itemsPerPage`         | `object`    | Number of slider items to be shown on each type of device. For more on this, check out the  `itemsPerPage` object section below. | `{ desktop: 5, tablet: 3, phone: 1 }`  |
+| `navigationStep`       | `number` / `enum` | Number of slider items that should be displayed at a time when users click on one of the slider's arrows. It is also possible to set this prop value as `page`, meaning that the number of slider items to be displayed when one of the arrows is clicked on is equal to the number of slider items set per page (in the `itemsPerPage` prop). | `page`  |
 | `slideTransition`      | `object`  | Controls the transition animation between slides based on [CSS attributes](https://developer.mozilla.org/en-US/docs/Web/CSS/transition). For more on this, check out the `slideTransition` object section below.  | `{ speed: 400, delay: 0, timing: '' }` |
 | `autoplay`  | `object` | Controls the autoplay feature behavior. For more on this, check out the `autoplay` object section below.   | `undefined` |
 | `fullWidth`            | `boolean` | Whether the slides should occupy the full page width, making the arrows appear on top of them (`true`) or not (`false`). |`true` |
@@ -92,7 +92,6 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 | ------- | ------ | -------- | ------------- | 
 | `timeout` | `number` |  Timeout (in `ms`) between each slide. |  `undefined` | 
 | `stopOnHover` | `boolean` |  Whether the auto play should stop when users are hovering the slider (`true`) or not (`false`). | `undefined` | 
-
 
 ## Customization
 
