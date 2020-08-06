@@ -1,6 +1,6 @@
 {
   "name": "vtex.slider-layout",
-  "version": "0.11.6",
+  "version": "0.12.0",
   "description": "A React Slider component that works well in SPA and SSR",
   "files": [
     "react"
