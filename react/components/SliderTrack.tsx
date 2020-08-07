@@ -43,7 +43,7 @@ const resolveAriaAttributes = (
   }
 
   return {
-    'aria-hidden': visible,
+    'aria-hidden': !visible,
     role: 'group',
     'aria-roledescription': 'slide',
     'aria-label': `${index + 1} of ${totalItems}`,
