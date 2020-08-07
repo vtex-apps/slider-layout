@@ -1,1 +1,1 @@
-export const useResponsiveValue = (args: unknown) => args
+export const useResponsiveValue = jest.fn((args: any) => args)
