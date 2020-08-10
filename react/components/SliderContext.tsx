@@ -8,6 +8,8 @@ import React, {
   useEffect,
 } from 'react'
 
+import { useSliderGroupState } from '../SliderLayoutGroup'
+
 interface AdjustOnResizeAction {
   type: 'ADJUST_ON_RESIZE'
   payload: {
@@ -39,6 +41,14 @@ interface DisableTransitionAction {
 
 interface AdjustCurrentSlideAction {
   type: 'ADJUST_CURRENT_SLIDE'
+  payload: {
+    currentSlide: number
+    transform?: number
+  }
+}
+
+interface SyncSliderGroupAction {
+  type: 'SYNC_SLIDER_GROUP'
   payload: {
     currentSlide: number
     transform?: number
@@ -91,6 +101,7 @@ type Action =
   | DisableTransitionAction
   | AdjustCurrentSlideAction
   | AdjustContextValuesAction
+  | SyncSliderGroupAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
@@ -136,6 +147,14 @@ function sliderContextReducer(state: State, action: Action): State {
         transform: action.payload.transform ?? state.transform,
       }
 
+    case 'SYNC_SLIDER_GROUP':
+      return {
+        ...state,
+        currentSlide: action.payload.currentSlide,
+        transform: action.payload.transform ?? state.transform,
+        useSlidingTransitionEffect: true,
+      }
+
     case 'ADJUST_CONTEXT_VALUES':
       return {
         ...state,
@@ -164,6 +183,8 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     timing: '',
   },
 }) => {
+  const sliderGroupState = useSliderGroupState()
+
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage : navigationStep
 
@@ -197,8 +218,10 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const [state, dispatch] = useReducer(sliderContextReducer, {
     slideWidth,
     slidesPerPage: resolvedSlidesPerPage,
-    currentSlide: 0,
-    transform: transformMap[0],
+    currentSlide: sliderGroupState?.currentSlide ?? 0,
+    transform:
+      sliderGroupState?.transform ??
+      transformMap[sliderGroupState?.currentSlide ?? 0],
     transformMap,
     slides: newSlides,
     navigationStep: resolvedNavigationStep,
@@ -226,6 +249,26 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     // updates its return value for `useResponsiveValue(itemsPerPage)`.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsPerPage])
+
+  useEffect(() => {
+    if (!sliderGroupState) {
+      return
+    }
+
+    dispatch({
+      type: 'SYNC_SLIDER_GROUP',
+      payload: {
+        currentSlide: sliderGroupState.currentSlide,
+        transform:
+          sliderGroupState.transform ??
+          transformMap[sliderGroupState.currentSlide],
+      },
+    })
+    // This should not include transformMap, since that would cause an infinite
+    // loop, and this should only execute to sync sliders inside of a
+    // slider-layout-group.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sliderGroupState])
 
   return (
     <SliderStateContext.Provider value={state}>
