@@ -20,17 +20,17 @@ const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const
 const Slider: FC<Props> = ({
   children,
   totalItems,
-  infinite,
+  infinite = false,
   showNavigationArrows,
   showPaginationDots,
-  usePagination: shouldUsePagination,
+  usePagination: shouldUsePagination = true,
   arrowSize,
   fullWidth,
   itemsPerPage,
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
   const { isMobile } = useDevice()
-  const { label, slidesPerPage } = useSliderState()
+  const { label = 'slider', slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const controls = `${label
     .toLowerCase()
