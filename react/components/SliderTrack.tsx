@@ -130,8 +130,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
         transition:
           isOnTouchMove || !useSlidingTransitionEffect
             ? undefined
-            : `transform ${speed}ms ${timing}`,
-        transitionDelay: `${delay}ms`,
+            : `transform ${speed}ms ${timing} ${delay}ms`,
         transform: `translate3d(${
           isOnTouchMove ? transform : transformMap[currentSlide]
         }%, 0, 0)`,
