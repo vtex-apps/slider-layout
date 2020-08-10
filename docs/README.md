@@ -91,7 +91,31 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 | Prop name | Type | Description | Default value |
 | ------- | ------ | -------- | ------------- | 
 | `timeout` | `number` |  Timeout (in `ms`) between each slide. |  `undefined` | 
-| `stopOnHover` | `boolean` |  Whether the auto play should stop when users are hovering the slider (`true`) or not (`false`). | `undefined` | 
+| `stopOnHover` | `boolean` |  Whether the auto play should stop when users are hovering the slider (`true`) or not (`false`). | `undefined` |
+
+## `slider-layout-group`
+
+The `slider-layout-group` block enables you to keep a group of `slider-layout` blocks in sync with each other.
+
+Here's an example using three `slider-layout` blocks inside of a `slider-layout-group`. Each of those `slider-layout`s received three `rich-text` blocks to serve as individual slides.
+
+![slider-layout-group demo](https://user-images.githubusercontent.com/27777263/89814281-46665b80-db19-11ea-9ff2-8aff60c72a73.gif)
+
+This block only expects to receive `children`, such as:
+
+```json
+{
+  "slider-layout-group#test": {
+    "children": [
+      "slider-layout#1",
+      "slider-layout#2",
+      "slider-layout#3"
+    ]
+  }
+}
+```
+
+:information_source: It is **very** important that all `slider-layout` blocks inside a group receive the same configuration props, and differ only in their children. Trying to use `slider-layout` blocks with different configuration, such as each one with a different value for `itemsPerPage`, will result in unexpected behavior and is **not** supported.
 
 ## Customization
 
