@@ -9,18 +9,18 @@ declare global {
   }
 
   interface SliderLayoutSiteEditorProps {
-    infinite: boolean
-    showNavigationArrows: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-    showPaginationDots: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
-    usePagination: boolean
-    fullWidth: boolean
-    arrowSize: MaybeResponsiveValue<number>
+    infinite?: boolean
+    showNavigationArrows?: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
+    showPaginationDots?: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
+    usePagination?: boolean
+    fullWidth?: boolean
+    arrowSize?: MaybeResponsiveValue<number>
   }
 
   interface SliderLayoutProps {
     totalItems?: number
-    label: string
-    slideTransition: {
+    label?: string
+    slideTransition?: {
       /** Transition speed in ms */
       speed: number
       /** Transition delay in ms */
@@ -32,7 +32,7 @@ declare global {
       timeout: number
       stopOnHover?: boolean
     }
-    navigationStep: number | 'page'
-    itemsPerPage: MaybeResponsiveValue<number>
+    navigationStep?: number | 'page'
+    itemsPerPage?: MaybeResponsiveValue<number>
   }
 }
