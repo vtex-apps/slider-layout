@@ -84,6 +84,7 @@ interface State extends SliderLayoutProps {
   useSlidingTransitionEffect: boolean
   transformMap: Record<number, number>
   slides: Array<Exclude<ReactNode, boolean | null | undefined>>
+  slideTransition: Exclude<SliderLayoutProps['slideTransition'], undefined>
 }
 
 interface SliderContextProps extends SliderLayoutProps {
