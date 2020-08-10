@@ -1,14 +1,31 @@
-import * as React from 'react'
+import React, { createContext, useReducer, useContext } from 'react'
 
-const initialState = {
-  currentSlide: 0,
-  transform: null,
+interface State {
+  currentSlide: number
+  transform?: null | number
 }
 
-const SliderGroupStateContext = React.createContext(initialState)
-const SliderGroupDispatchContext = React.createContext(0)
+interface SlideAction {
+  type: 'SLIDE'
+  payload: {
+    currentSlide: number
+    transform?: number
+  }
+}
 
-const reducer = (state, action) => {
+type Action = SlideAction
+type Dispatch = (action: Action) => void
+
+const SliderGroupStateContext = createContext<State | undefined>({
+  currentSlide: 0,
+  transform: null,
+})
+
+const SliderGroupDispatchContext = createContext<Dispatch | undefined>(
+  undefined
+)
+
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'SLIDE': {
       return {
@@ -17,22 +34,38 @@ const reducer = (state, action) => {
         transform: action.payload.transform,
       }
     }
+
     default: {
       return state
     }
   }
 }
 
-const SliderLayoutGroup: React.FC = (props) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+const SliderLayoutGroup: React.FC = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, {
+    currentSlide: 0,
+    transform: null,
+  })
 
   return (
     <SliderGroupStateContext.Provider value={state}>
       <SliderGroupDispatchContext.Provider value={dispatch}>
-        {props.children}
+        {children}
       </SliderGroupDispatchContext.Provider>
     </SliderGroupStateContext.Provider>
   )
+}
+
+export function useSliderGroupState() {
+  const context = useContext(SliderGroupStateContext)
+
+  return context
+}
+
+export function useSliderGroupDispatch() {
+  const context = useContext(SliderGroupDispatchContext)
+
+  return context
 }
 
 export default SliderLayoutGroup
