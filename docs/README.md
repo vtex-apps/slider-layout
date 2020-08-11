@@ -22,6 +22,13 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 }
 ```
 
+Now, you are able to use all blocks exported by the `slider-layout` app. Check out the full list below:
+
+| Block name     | Description                                     |
+| -------------- | ----------------------------------------------- |
+| `slider-layout` | ![https://img.shields.io/badge/-Mandatory-red](https://img.shields.io/badge/-Mandatory-red) Builds sliders of blocks for your store through its `children` list blocks. |
+| `slider-layout-group` | Enables you to keep a group of `slider-layout` blocks in sync with each other. For more on this, check out the Advanced configurations section below. |
+
 2. Add the `slider-layout` block to your template. For example:
 
 ```json
@@ -93,15 +100,11 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 | `timeout` | `number` |  Timeout (in `ms`) between each slide. |  `undefined` | 
 | `stopOnHover` | `boolean` |  Whether the auto play should stop when users are hovering the slider (`true`) or not (`false`). | `undefined` |
 
-## `slider-layout-group`
+## Advanced configurations
 
-The `slider-layout-group` block enables you to keep a group of `slider-layout` blocks in sync with each other.
+The `slider-layout-group` block is responsible for synchronizing a group of `slider-layout` blocks. 
 
-Here's an example using three `slider-layout` blocks inside of a `slider-layout-group`. Each of those `slider-layout`s received three `rich-text` blocks to serve as individual slides.
-
-![slider-layout-group demo](https://user-images.githubusercontent.com/27777263/89814281-46665b80-db19-11ea-9ff2-8aff60c72a73.gif)
-
-This block only expects to receive `children`, such as:
+The block therefore does not render any specific component on your store's UI and only expects to receive a `children` block list containing the desired `slider-layout` blocks. For example:
 
 ```json
 {
@@ -115,7 +118,11 @@ This block only expects to receive `children`, such as:
 }
 ```
 
-:information_source: It is **very** important that all `slider-layout` blocks inside a group receive the same configuration props, and differ only in their children. Trying to use `slider-layout` blocks with different configuration, such as each one with a different value for `itemsPerPage`, will result in unexpected behavior and is **not** supported.
+Below, you can find a practical example using three `slider-layout` blocks inside of a `slider-layout-group`. Each of those `slider-layout`s received three `rich-text` blocks as `children` to serve as individual slides:
+
+![slider-layout-group demo](https://user-images.githubusercontent.com/27777263/89814281-46665b80-db19-11ea-9ff2-8aff60c72a73.gif)
+
+:warning: ***All `slider-layout` blocks declared in the `slider-layout-group` must receive the same configuration, meaning the same props and values**. Due to implementation rules, they are only allowed to differ in their `children` block list. Notice the following: declaring `slider-layout` blocks with different configuration will result in unexpected behavior, leading to errors whose support is **not** granted by the VTEX Store Framework team.*
 
 ## Customization
 
