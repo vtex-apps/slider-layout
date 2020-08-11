@@ -102,9 +102,9 @@ Now, you are able to use all blocks exported by the `slider-layout` app. Check o
 
 ## Advanced configurations
 
-The `slider-layout-group` block is responsible for synchronizing a group of `slider-layout` blocks. 
+The `slider-layout-group` block is responsible for synchronizing the slides rendered by each one of the `slider-layout` blocks declared in it. 
 
-The block therefore does not render any specific component on your store's UI and only expects to receive a `children` block list containing the desired `slider-layout` blocks. For example:
+The `slider-layout-group`  therefore does not render any specific component on your store's UI. In turn, it is a logical block that only expects to receive a `children` block list containing the desired `slider-layout` blocks to be rendered. For example:
 
 ```json
 {
