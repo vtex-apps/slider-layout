@@ -51,6 +51,9 @@ interface AdjustContextValuesAction {
     transformMap: State['transformMap']
     slideWidth: State['slideWidth']
     newSlides: State['slides']
+    slidesPerPage: State['slidesPerPage']
+    transform: State['transform']
+    navigationStep: State['navigationStep']
   }
 }
 
@@ -142,6 +145,9 @@ function sliderContextReducer(state: State, action: Action): State {
         transformMap: action.payload.transformMap,
         slideWidth: action.payload.slideWidth,
         slides: action.payload.newSlides,
+        slidesPerPage: action.payload.slidesPerPage,
+        transform: action.payload.transform,
+        navigationStep: action.payload.navigationStep
       }
 
     default:
@@ -219,13 +225,16 @@ const SliderContextProvider: FC<SliderContextProps> = ({
         transformMap,
         newSlides,
         slideWidth,
+        slidesPerPage: resolvedSlidesPerPage,
+        transform: transformMap[0],
+        navigationStep: resolvedNavigationStep,
       },
     })
     // It's fine to disable this rule here since this effect
     // is only meant to update context values when vtex.responsive-values
     // updates its return value for `useResponsiveValue(itemsPerPage)`.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemsPerPage])
+  }, [itemsPerPage, resolvedSlidesPerPage, transformMap, resolvedNavigationStep])
 
   return (
     <SliderStateContext.Provider value={state}>
