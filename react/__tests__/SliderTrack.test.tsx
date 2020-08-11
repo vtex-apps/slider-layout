@@ -8,15 +8,17 @@ import {
   mockInitialNonInfiniteSliderState,
 } from '../__fixtures__/SliderStateContext'
 
+const mockDispatch = jest.fn()
+
+const mockedUseSliderState = useSliderState as jest.Mock
+
 jest.mock('../components/SliderContext', () => ({
   useSliderState: jest.fn(),
-  useSliderDispatch: () => jest.fn(),
+  useSliderDispatch: () => mockDispatch,
 }))
 
 describe('Basic rendering', () => {
-  ;(useSliderState as jest.Mock).mockImplementation(
-    () => mockInitialInfiniteSliderState
-  )
+  mockedUseSliderState.mockImplementation(() => mockInitialInfiniteSliderState)
 
   it('should render with correct width based on slides to render', () => {
     // slidesPerPage < totalItems
@@ -52,7 +54,7 @@ describe('Basic rendering', () => {
     )
 
     // non-infinite slider
-    ;(useSliderState as jest.Mock).mockImplementationOnce(
+    mockedUseSliderState.mockImplementationOnce(
       () => mockInitialNonInfiniteSliderState
     )
 
@@ -89,7 +91,7 @@ describe('Basic rendering', () => {
     })
 
     // non-infinite slider
-    ;(useSliderState as jest.Mock).mockImplementationOnce(
+    mockedUseSliderState.mockImplementationOnce(
       () => mockInitialNonInfiniteSliderState
     )
 
@@ -123,7 +125,7 @@ describe('Basic rendering', () => {
     expect(renderedSlides).toHaveLength(SLIDES_PER_PAGE)
 
     // non-infinite slider
-    ;(useSliderState as jest.Mock).mockImplementationOnce(
+    mockedUseSliderState.mockImplementationOnce(
       () => mockInitialNonInfiniteSliderState
     )
 
@@ -154,7 +156,7 @@ describe('Basic rendering', () => {
     expect(renderedSlides).toHaveLength(TOTAL_ITEMS)
 
     // non-infinite slider
-    ;(useSliderState as jest.Mock).mockImplementationOnce(
+    mockedUseSliderState.mockImplementationOnce(
       () => mockInitialNonInfiniteSliderState
     )
 
@@ -177,23 +179,94 @@ describe('Basic rendering', () => {
 describe('Behavior upon interaction', () => {
   it('should correct slider state after infinite loop transitions', () => {
     const TOTAL_ITEMS = 10
-    const SLIDES_PER_PAGE = 5
 
-      // This is a state where the slider is in its last page
-    ;(useSliderState as jest.Mock).mockImplementation(() => ({
+    // This is a state where the slider is in its first page clone
+    mockedUseSliderState.mockImplementation(() => ({
       ...mockInitialInfiniteSliderState,
-      currentSlide: 5,
-      transform: mockInitialInfiniteSliderState.transformMap[5],
+      currentSlide: 10,
+      transform: mockInitialInfiniteSliderState.transformMap[10],
     }))
 
-    const { queryByText } = render(
+    const { getByTestId, rerender } = render(
       <SliderTrack totalItems={TOTAL_ITEMS} infinite usePagination />
     )
 
-    // fireEvent.transitionEnd()
+    let renderedTrack = getByTestId('slider-track')
+
+    fireEvent.transitionEnd(renderedTrack)
+
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'DISABLE_TRANSITION' })
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: 'ADJUST_CURRENT_SLIDE',
+      payload: {
+        currentSlide: 0,
+        transform: mockInitialInfiniteSliderState.transformMap[0],
+      },
+    })
+
+    // This is a state where the slider is in its last page clone
+    mockedUseSliderState.mockImplementation(() => ({
+      ...mockInitialInfiniteSliderState,
+      currentSlide: -1,
+      transform: mockInitialInfiniteSliderState.transformMap[-1],
+    }))
+
+    rerender(<SliderTrack totalItems={TOTAL_ITEMS} infinite usePagination />)
+
+    renderedTrack = getByTestId('slider-track')
+    fireEvent.transitionEnd(renderedTrack)
+
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'DISABLE_TRANSITION' })
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: 'ADJUST_CURRENT_SLIDE',
+      payload: {
+        currentSlide: 5,
+        transform: mockInitialInfiniteSliderState.transformMap[5],
+      },
+    })
   })
+
+  mockedUseSliderState.mockClear()
 })
 
 describe('Accessibility', () => {
-  it.todo('should have correct aria attributes set for each slide')
+  it('should have correct aria attributes set for each slide', () => {
+    mockedUseSliderState.mockImplementation(
+      () => mockInitialInfiniteSliderState
+    )
+
+    const TOTAL_ITEMS = 10
+    const SLIDES_PER_PAGE = 5
+    const INDEXES = Array.from(new Array(10), (_, i) => i + 1)
+
+    const { getByTestId, getByLabelText } = render(
+      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite />
+    )
+
+    const renderedSliderTrack = getByTestId('slider-track')
+
+    const clones = renderedSliderTrack.querySelectorAll(
+      "[role='none presentation']"
+    )
+
+    expect(clones).toHaveLength(SLIDES_PER_PAGE * 2)
+
+    const visibleSlides = renderedSliderTrack.querySelectorAll(
+      '[aria-hidden=false]'
+    )
+
+    expect(visibleSlides).toHaveLength(SLIDES_PER_PAGE)
+
+    const nonCloneSlides = renderedSliderTrack.querySelectorAll(
+      '[aria-roledescription=slide]'
+    )
+
+    expect(nonCloneSlides).toHaveLength(TOTAL_ITEMS)
+
+    const slidesWithLabels = INDEXES.map(idx =>
+      getByLabelText(`${idx} of ${TOTAL_ITEMS}`)
+    ).filter(Boolean)
+
+    expect(slidesWithLabels).toHaveLength(TOTAL_ITEMS)
+  })
 })
