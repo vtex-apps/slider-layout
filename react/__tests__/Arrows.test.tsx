@@ -69,7 +69,7 @@ describe('Behavior upon interaction', () => {
   }))
 
   it('should go to the next page if right arrow is clicked', () => {
-    const { queryByTestId } = render(
+    const { getByTestId } = render(
       <Arrow
         infinite
         arrowSize={25}
@@ -79,18 +79,14 @@ describe('Behavior upon interaction', () => {
       />
     )
 
-    const rightArrow = queryByTestId('icon-caret-right')
-
-    if (!rightArrow) {
-      throw new Error('Could not find right arrow')
-    }
+    const rightArrow = getByTestId('icon-caret-right')
 
     fireEvent.click(rightArrow)
     expect(mockGoForward).toHaveBeenCalledTimes(1)
   })
 
   it('should go to the previous page if left arrow is clicked', () => {
-    const { queryByTestId } = render(
+    const { getByTestId } = render(
       <Arrow
         infinite
         arrowSize={25}
@@ -100,11 +96,7 @@ describe('Behavior upon interaction', () => {
       />
     )
 
-    const leftArrow = queryByTestId('icon-caret-left')
-
-    if (!leftArrow) {
-      throw new Error('Could not find left arrow')
-    }
+    const leftArrow = getByTestId('icon-caret-left')
 
     fireEvent.click(leftArrow)
     expect(mockGoBack).toHaveBeenCalledTimes(1)
