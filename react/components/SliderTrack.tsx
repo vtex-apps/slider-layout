@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef } from 'react'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderState, useSliderDispatch } from './SliderContext'
+import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 
 const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
 
@@ -110,6 +111,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
+  const groupDispatch = useSliderGroupDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 
   const { shouldRenderItem, isItemVisible } = useSliderVisibility(
@@ -147,11 +149,22 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
               transform: transformMap[0],
             },
           })
+          groupDispatch?.({
+            type: 'SLIDE',
+            payload: { currentSlide: 0, transform: transformMap[0] },
+          })
         }
 
         if (currentSlide < 0) {
           dispatch({
             type: 'ADJUST_CURRENT_SLIDE',
+            payload: {
+              currentSlide: totalItems - slidesPerPage,
+              transform: transformMap[totalItems - slidesPerPage],
+            },
+          })
+          groupDispatch?.({
+            type: 'SLIDE',
             payload: {
               currentSlide: totalItems - slidesPerPage,
               transform: transformMap[totalItems - slidesPerPage],
