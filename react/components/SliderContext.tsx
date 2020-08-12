@@ -5,7 +5,7 @@ import React, {
   FC,
   ReactNode,
   useMemo,
-  useEffect,
+  useState,
 } from 'react'
 
 import { useSliderGroupState } from '../SliderLayoutGroup'
@@ -186,6 +186,10 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 }) => {
   const sliderGroupState = useSliderGroupState()
 
+  const [prevItemsPerPage, setPrevItemsPerPage] = useState<
+    SliderContextProps['itemsPerPage']
+  >(null)
+
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage : navigationStep
 
@@ -216,13 +220,22 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     return currentMap
   }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite])
 
+  const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
+    sliderGroupState,
+  ])
+
+  const initialTransform = useMemo(
+    () =>
+      sliderGroupState?.transform ??
+      transformMap[sliderGroupState?.currentSlide ?? 0],
+    [sliderGroupState, transformMap]
+  )
+
   const [state, dispatch] = useReducer(sliderContextReducer, {
     slideWidth,
     slidesPerPage: resolvedSlidesPerPage,
-    currentSlide: sliderGroupState?.currentSlide ?? 0,
-    transform:
-      sliderGroupState?.transform ??
-      transformMap[sliderGroupState?.currentSlide ?? 0],
+    currentSlide: initialSlide,
+    transform: initialTransform,
     transformMap,
     slides: newSlides,
     navigationStep: resolvedNavigationStep,
@@ -236,7 +249,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     useSlidingTransitionEffect: false,
   })
 
-  useEffect(() => {
+  if (itemsPerPage !== prevItemsPerPage) {
     dispatch({
       type: 'ADJUST_CONTEXT_VALUES',
       payload: {
@@ -245,31 +258,25 @@ const SliderContextProvider: FC<SliderContextProps> = ({
         slideWidth,
       },
     })
-    // It's fine to disable this rule here since this effect
-    // is only meant to update context values when vtex.responsive-values
-    // updates its return value for `useResponsiveValue(itemsPerPage)`.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemsPerPage])
+    setPrevItemsPerPage(itemsPerPage)
+  }
 
-  useEffect(() => {
-    if (!sliderGroupState) {
-      return
-    }
+  if (
+    sliderGroupState &&
+    sliderGroupState.currentSlide !== state.currentSlide
+  ) {
+    const newCurrentSlide = sliderGroupState?.currentSlide ?? state.currentSlide
+    const newTransformValue =
+      sliderGroupState?.transform ?? transformMap[newCurrentSlide]
 
     dispatch({
       type: 'SYNC_SLIDER_GROUP',
       payload: {
-        currentSlide: sliderGroupState.currentSlide,
-        transform:
-          sliderGroupState.transform ??
-          transformMap[sliderGroupState.currentSlide],
+        currentSlide: newCurrentSlide,
+        transform: newTransformValue,
       },
     })
-    // This should not include transformMap, since that would cause an infinite
-    // loop, and this should only execute to sync sliders inside of a
-    // slider-layout-group.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sliderGroupState])
+  }
 
   return (
     <SliderStateContext.Provider value={state}>
