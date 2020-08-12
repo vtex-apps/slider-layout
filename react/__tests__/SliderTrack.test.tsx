@@ -21,19 +21,28 @@ describe('Basic rendering', () => {
   mockedUseSliderState.mockImplementation(() => mockInitialInfiniteSliderState)
 
   it('should render with correct width based on slides to render', () => {
+    const TOTAL_ITEMS = 10
+    const SLIDES_PER_PAGE = 5
+
     // slidesPerPage < totalItems
     const { getByTestId, rerender } = render(
-      <SliderTrack usePagination totalItems={10} infinite />
+      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite />
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
 
-    expect(renderedSliderTrack.style.width).toEqual(`${(20 * 100) / 5}%`)
+    // Since this slider is infinite, track width should be calculated
+    // based on 2 * TOTAL_ITEMS.
+    expect(renderedSliderTrack.style.width).toEqual(
+      `${(2 * TOTAL_ITEMS * 100) / SLIDES_PER_PAGE}%`
+    )
 
     // slidesPerPage === totalItems
     rerender(<SliderTrack usePagination totalItems={5} infinite />)
     renderedSliderTrack = getByTestId('slider-track')
-    expect(renderedSliderTrack.style.width).toEqual(`${(20 * 100) / 5}%`)
+    expect(renderedSliderTrack.style.width).toEqual(
+      `${(2 * TOTAL_ITEMS * 100) / SLIDES_PER_PAGE}%`
+    )
 
     // slidesPerPage > totalItems
     rerender(<SliderTrack usePagination totalItems={3} infinite />)
