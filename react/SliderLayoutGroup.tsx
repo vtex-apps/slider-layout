@@ -3,6 +3,7 @@ import React, { createContext, useReducer, useContext } from 'react'
 interface State {
   currentSlide: number
   transform?: null | number
+  isHovering: boolean
 }
 
 interface SlideAction {
@@ -13,7 +14,14 @@ interface SlideAction {
   }
 }
 
-type Action = SlideAction
+interface HoverAction {
+  type: 'HOVER'
+  payload: {
+    isHovering: boolean
+  }
+}
+
+type Action = SlideAction | HoverAction
 type Dispatch = (action: Action) => void
 
 const SliderGroupStateContext = createContext<State | undefined>(undefined)
@@ -42,6 +50,7 @@ const SliderLayoutGroup: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {
     currentSlide: 0,
     transform: null,
+    isHovering: false,
   })
 
   return (
