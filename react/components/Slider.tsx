@@ -86,7 +86,6 @@ const Slider: FC<Props> = ({
         className={`w-100 ${handles.sliderTrackContainer} ${
           shouldUsePagination ? 'overflow-hidden' : 'overflow-x-scroll'
         }`}
-        data-testid="slider-track-container"
         ref={containerRef}
       >
         <SliderTrack

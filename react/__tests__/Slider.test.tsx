@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from '@vtex/test-tools/react'
 
 import Slider from '../components/Slider'
+import { mockInitialInfiniteSliderState } from '../__fixtures__/SliderStateContext'
 
 let mockDeviceDetectorReturn = { device: 'desktop', isMobile: false }
 
@@ -14,46 +15,7 @@ jest.mock('../hooks/useTouchHandlers', () => ({
 }))
 
 jest.mock('../components/SliderContext', () => ({
-  useSliderState: () => ({
-    slideWidth: 20,
-    slidesPerPage: 5,
-    currentSlide: 0,
-    transform: 0,
-    navigationStep: 5,
-    slides: [
-      <div key={1} />,
-      <div key={2} />,
-      <div key={3} />,
-      <div key={4} />,
-      <div key={5} />,
-      <div key={6} />,
-      <div key={7} />,
-      <div key={8} />,
-      <div key={9} />,
-      <div key={10} />,
-    ],
-    transformMap: {
-      0: 0,
-      1: 20,
-      2: 40,
-      3: 60,
-      4: 80,
-    },
-    slideTransition: {
-      speed: 400,
-      delay: 0,
-      timing: '',
-    },
-    itemsPerPage: {
-      desktop: 5,
-      tablet: 5,
-      phone: 5,
-    },
-    label: 'slider',
-    totalItems: 10,
-    isPageNavigationStep: true,
-    isOnTouchMove: false,
-  }),
+  useSliderState: () => mockInitialInfiniteSliderState,
   useSliderDispatch: () => jest.fn(),
 }))
 
@@ -88,7 +50,7 @@ describe('Basic rendering', () => {
   })
 
   it('should render without pagination features and use x-scrolling if usePagination is set to false', () => {
-    const { getByTestId, queryByTestId, queryByLabelText } = render(
+    const { getByLabelText, queryByTestId, queryByLabelText } = render(
       <Slider
         totalItems={10}
         itemsPerPage={5}
@@ -101,7 +63,9 @@ describe('Basic rendering', () => {
       />
     )
 
-    const sliderTrackContainer = getByTestId('slider-track-container')
+    const renderedSlider = getByLabelText('slider')
+    const sliderTrackContainer = renderedSlider.firstChild
+
     const leftArrow = queryByTestId('icon-caret-left')
     const rightArrow = queryByTestId('icon-caret-right')
     const paginationDots = queryByLabelText('Slider pagination dots')
@@ -109,13 +73,13 @@ describe('Basic rendering', () => {
     expect(leftArrow).toBeNull()
     expect(rightArrow).toBeNull()
     expect(paginationDots).toBeNull()
-    expect(sliderTrackContainer.className.split(' ')).toContain(
-      'overflow-x-scroll'
-    )
+    expect(
+      (sliderTrackContainer as HTMLElement | null)?.className.split(' ')
+    ).toContain('overflow-x-scroll')
   })
 
   it('should render without pagination features if there are not enough slides to fill a page', () => {
-    const { getByTestId, queryByTestId, queryByLabelText } = render(
+    const { getByLabelText, queryByTestId, queryByLabelText } = render(
       <Slider
         totalItems={3}
         itemsPerPage={5}
@@ -128,7 +92,6 @@ describe('Basic rendering', () => {
       />
     )
 
-    const sliderTrackContainer = getByTestId('slider-track-container')
     const leftArrow = queryByTestId('icon-caret-left')
     const rightArrow = queryByTestId('icon-caret-right')
     const paginationDots = queryByLabelText('Slider pagination dots')
@@ -137,10 +100,13 @@ describe('Basic rendering', () => {
     expect(rightArrow).toBeNull()
     expect(paginationDots).toBeNull()
 
+    const renderedSlider = getByLabelText('slider')
+    const sliderTrackContainer = renderedSlider.firstChild
+
     // Make sure that the slider renders without x-scrolling, since usePagination is set to true
-    expect(sliderTrackContainer.className.split(' ')).not.toContain(
-      'overflow-x-scroll'
-    )
+    expect(
+      (sliderTrackContainer as HTMLElement | null)?.className.split(' ')
+    ).not.toContain('overflow-x-scroll')
   })
 
   it('should add appropriate padding in the x-axis if slider is not a full width one', () => {
