@@ -16,10 +16,7 @@ interface SlideAction {
 type Action = SlideAction
 type Dispatch = (action: Action) => void
 
-const SliderGroupStateContext = createContext<State | undefined>({
-  currentSlide: 0,
-  transform: null,
-})
+const SliderGroupStateContext = createContext<State | undefined>(undefined)
 
 const SliderGroupDispatchContext = createContext<Dispatch | undefined>(
   undefined
