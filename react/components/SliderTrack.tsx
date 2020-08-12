@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef } from 'react'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderState, useSliderDispatch } from './SliderContext'
+import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 
 const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
 
@@ -43,7 +44,7 @@ const resolveAriaAttributes = (
   }
 
   return {
-    'aria-hidden': visible,
+    'aria-hidden': !visible,
     role: 'group',
     'aria-roledescription': 'slide',
     'aria-label': `${index + 1} of ${totalItems}`,
@@ -110,6 +111,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
+  const groupDispatch = useSliderGroupDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 
   const { shouldRenderItem, isItemVisible } = useSliderVisibility(
@@ -130,8 +132,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
         transition:
           isOnTouchMove || !useSlidingTransitionEffect
             ? undefined
-            : `transform ${speed}ms ${timing}`,
-        transitionDelay: `${delay}ms`,
+            : `transform ${speed}ms ${timing} ${delay}ms`,
         transform: `translate3d(${
           isOnTouchMove ? transform : transformMap[currentSlide]
         }%, 0, 0)`,
@@ -148,11 +149,22 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
               transform: transformMap[0],
             },
           })
+          groupDispatch?.({
+            type: 'SLIDE',
+            payload: { currentSlide: 0, transform: transformMap[0] },
+          })
         }
 
         if (currentSlide < 0) {
           dispatch({
             type: 'ADJUST_CURRENT_SLIDE',
+            payload: {
+              currentSlide: totalItems - slidesPerPage,
+              transform: transformMap[totalItems - slidesPerPage],
+            },
+          })
+          groupDispatch?.({
+            type: 'SLIDE',
             payload: {
               currentSlide: totalItems - slidesPerPage,
               transform: transformMap[totalItems - slidesPerPage],

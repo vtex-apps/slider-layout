@@ -5,5 +5,9 @@
     "content": {
       "$ref": "#/definitions/SliderLayout"
     }
+  },
+  "slider-layout-group": {
+    "component": "SliderLayoutGroup",
+    "composition": "children"
   }
 }

@@ -5,8 +5,10 @@ import React, {
   FC,
   ReactNode,
   useMemo,
-  useEffect,
+  useState,
 } from 'react'
+
+import { useSliderGroupState } from '../SliderLayoutGroup'
 
 interface AdjustOnResizeAction {
   type: 'ADJUST_ON_RESIZE'
@@ -45,6 +47,14 @@ interface AdjustCurrentSlideAction {
   }
 }
 
+interface SyncSliderGroupAction {
+  type: 'SYNC_SLIDER_GROUP'
+  payload: {
+    currentSlide: number
+    transform?: number
+  }
+}
+
 interface AdjustContextValuesAction {
   type: 'ADJUST_CONTEXT_VALUES'
   payload: {
@@ -74,6 +84,7 @@ interface State extends SliderLayoutProps {
   useSlidingTransitionEffect: boolean
   transformMap: Record<number, number>
   slides: Array<Exclude<ReactNode, boolean | null | undefined>>
+  slideTransition: Exclude<SliderLayoutProps['slideTransition'], undefined>
 }
 
 interface SliderContextProps extends SliderLayoutProps {
@@ -91,6 +102,7 @@ type Action =
   | DisableTransitionAction
   | AdjustCurrentSlideAction
   | AdjustContextValuesAction
+  | SyncSliderGroupAction
 type Dispatch = (action: Action) => void
 
 const SliderStateContext = createContext<State | undefined>(undefined)
@@ -136,6 +148,14 @@ function sliderContextReducer(state: State, action: Action): State {
         transform: action.payload.transform ?? state.transform,
       }
 
+    case 'SYNC_SLIDER_GROUP':
+      return {
+        ...state,
+        currentSlide: action.payload.currentSlide,
+        transform: action.payload.transform ?? state.transform,
+        useSlidingTransitionEffect: true,
+      }
+
     case 'ADJUST_CONTEXT_VALUES':
       return {
         ...state,
@@ -164,6 +184,12 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     timing: '',
   },
 }) => {
+  const sliderGroupState = useSliderGroupState()
+
+  const [prevItemsPerPage, setPrevItemsPerPage] = useState<
+    SliderContextProps['itemsPerPage']
+  >(null)
+
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage : navigationStep
 
@@ -194,11 +220,22 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     return currentMap
   }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite])
 
+  const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
+    sliderGroupState,
+  ])
+
+  const initialTransform = useMemo(
+    () =>
+      sliderGroupState?.transform ??
+      transformMap[sliderGroupState?.currentSlide ?? 0],
+    [sliderGroupState, transformMap]
+  )
+
   const [state, dispatch] = useReducer(sliderContextReducer, {
     slideWidth,
     slidesPerPage: resolvedSlidesPerPage,
-    currentSlide: 0,
-    transform: transformMap[0],
+    currentSlide: initialSlide,
+    transform: initialTransform,
     transformMap,
     slides: newSlides,
     navigationStep: resolvedNavigationStep,
@@ -212,7 +249,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     useSlidingTransitionEffect: false,
   })
 
-  useEffect(() => {
+  if (itemsPerPage !== prevItemsPerPage) {
     dispatch({
       type: 'ADJUST_CONTEXT_VALUES',
       payload: {
@@ -221,11 +258,25 @@ const SliderContextProvider: FC<SliderContextProps> = ({
         slideWidth,
       },
     })
-    // It's fine to disable this rule here since this effect
-    // is only meant to update context values when vtex.responsive-values
-    // updates its return value for `useResponsiveValue(itemsPerPage)`.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [itemsPerPage])
+    setPrevItemsPerPage(itemsPerPage)
+  }
+
+  if (
+    sliderGroupState &&
+    sliderGroupState.currentSlide !== state.currentSlide
+  ) {
+    const newCurrentSlide = sliderGroupState?.currentSlide ?? state.currentSlide
+    const newTransformValue =
+      sliderGroupState?.transform ?? transformMap[newCurrentSlide]
+
+    dispatch({
+      type: 'SYNC_SLIDER_GROUP',
+      payload: {
+        currentSlide: newCurrentSlide,
+        transform: newTransformValue,
+      },
+    })
+  }
 
   return (
     <SliderStateContext.Provider value={state}>

@@ -1,4 +1,5 @@
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
+import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 
 export const useSliderControls = (infinite: boolean) => {
   const {
@@ -10,6 +11,7 @@ export const useSliderControls = (infinite: boolean) => {
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
+  const groupDispatch = useSliderGroupDispatch()
 
   const goBack = (step?: number) => {
     let nextSlide = 0
@@ -23,12 +25,22 @@ export const useSliderControls = (infinite: boolean) => {
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
     } else if (nextMaximumSlides < 0 && currentSlide !== 0) {
-      /** Prevent overslide */
+      /** Prevent over-slide */
       nextSlide = 0
       nextTransformValue = 0
     } else if (infinite) {
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
+    }
+
+    if (groupDispatch) {
+      groupDispatch({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: nextSlide,
+          transform: nextTransformValue,
+        },
+      })
     }
 
     dispatch({
@@ -62,6 +74,16 @@ export const useSliderControls = (infinite: boolean) => {
     } else if (infinite) {
       nextSlide = currentSlide + activeNavigationStep
       nextTransformValue = transformMap[nextSlide]
+    }
+
+    if (groupDispatch) {
+      groupDispatch({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: nextSlide,
+          transform: nextTransformValue,
+        },
+      })
     }
 
     dispatch({

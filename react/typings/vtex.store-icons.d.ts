@@ -1,5 +1,4 @@
-import { ReactElement } from 'react'
-
 declare module 'vtex.store-icons' {
-  export const IconCaret: ReactElement
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export const IconCaret: any
 }
