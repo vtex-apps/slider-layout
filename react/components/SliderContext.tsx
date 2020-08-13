@@ -116,7 +116,7 @@ function sliderContextReducer(state: State, action: Action): State {
         slidesPerPage: action.payload.slidesPerPage,
         navigationStep: action.payload.navigationStep,
         transform: action.payload.shouldCorrectItemPosition
-          ? -state.slideWidth * state.currentSlide
+          ? state.transformMap[state.currentSlide]
           : state.transform,
       }
 
@@ -225,10 +225,8 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   ])
 
   const initialTransform = useMemo(
-    () =>
-      sliderGroupState?.transform ??
-      transformMap[sliderGroupState?.currentSlide ?? 0],
-    [sliderGroupState, transformMap]
+    () => sliderGroupState?.transform ?? transformMap[initialSlide],
+    [transformMap, initialSlide, sliderGroupState]
   )
 
   const [state, dispatch] = useReducer(sliderContextReducer, {
