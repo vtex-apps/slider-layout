@@ -64,6 +64,7 @@ interface AdjustContextValuesAction {
     slidesPerPage: State['slidesPerPage']
     transform: State['transform']
     navigationStep: State['navigationStep']
+    totalItems: State['totalItems']
   }
 }
 
@@ -168,6 +169,7 @@ function sliderContextReducer(state: State, action: Action): State {
         slidesPerPage: action.payload.slidesPerPage,
         transform: action.payload.transform,
         navigationStep: action.payload.navigationStep,
+        totalItems: action.payload.totalItems,
       }
 
     default:
@@ -192,9 +194,14 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 }) => {
   const sliderGroupState = useSliderGroupState()
 
-  const [prevItemsPerPage, setPrevItemsPerPage] = useState<
-    SliderContextProps['itemsPerPage']
-  >(null)
+  // This enables us to support dynamic slider-layouts
+  const [prevProps, setPrevProps] = useState<{
+    itemsPerPage: SliderContextProps['itemsPerPage'] | null
+    totalItems: SliderContextProps['totalItems'] | null
+  }>({
+    itemsPerPage: null,
+    totalItems: null,
+  })
 
   const resolvedNavigationStep =
     navigationStep === 'page' ? itemsPerPage : navigationStep
@@ -253,7 +260,10 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     useSlidingTransitionEffect: false,
   })
 
-  if (itemsPerPage !== prevItemsPerPage) {
+  if (
+    itemsPerPage !== prevProps.itemsPerPage ||
+    totalItems !== prevProps.totalItems
+  ) {
     dispatch({
       type: 'ADJUST_CONTEXT_VALUES',
       payload: {
@@ -261,11 +271,12 @@ const SliderContextProvider: FC<SliderContextProps> = ({
         newSlides,
         slideWidth,
         slidesPerPage: resolvedSlidesPerPage,
-        transform: transformMap[0],
+        transform: transformMap[state.currentSlide],
         navigationStep: resolvedNavigationStep,
+        totalItems,
       },
     })
-    setPrevItemsPerPage(itemsPerPage)
+    setPrevProps({ itemsPerPage, totalItems })
   }
 
   if (
