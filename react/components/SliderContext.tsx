@@ -97,6 +97,7 @@ interface SliderContextProps extends SliderLayoutProps {
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   slides: Array<Exclude<ReactNode, boolean | null | undefined>>
+  centerMode: boolean
 }
 
 type Action =
@@ -186,6 +187,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   slides,
   infinite = false,
   itemsPerPage,
+  centerMode,
   slideTransition = {
     speed: 400,
     delay: 0,
@@ -219,19 +221,26 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
   const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
-  const slideWidth = useMemo(() => 100 / newSlides.length, [newSlides.length])
+  const slideWidth = useMemo(
+    () => 100 / ((centerMode ? 2 : 1) * newSlides.length),
+    [newSlides.length, centerMode]
+  )
 
   const transformMap = useMemo(() => {
     const currentMap: Record<number, number> = {}
 
     newSlides.forEach((_, idx) => {
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
+      const transformValue = centerMode
+        ? -(1.25 * slideWidth * idx) + (slideWidth * 3) / 8
+        : -(slideWidth * idx)
+      // const transformValue = -(slideWidth * idx)
 
-      currentMap[currIdx] = -(slideWidth * idx)
+      currentMap[currIdx] = transformValue
     })
 
     return currentMap
-  }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite])
+  }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite, centerMode])
 
   const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
     sliderGroupState,
