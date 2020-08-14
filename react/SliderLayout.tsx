@@ -7,7 +7,7 @@ import Slider from './components/Slider'
 import { SliderContextProvider } from './components/SliderContext'
 
 const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
-  SliderLayoutSiteEditorProps> = ({
+  SliderLayoutSiteEditorProps & { centerMode?: boolean }> = ({
   totalItems,
   infinite = false,
   showNavigationArrows = 'always',
@@ -16,6 +16,7 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   fullWidth = true,
   arrowSize = 25,
   children,
+  centerMode = false,
   itemsPerPage = {
     desktop: 5,
     tablet: 3,
@@ -35,9 +36,11 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
       slides={slides}
       totalItems={totalSlides}
       itemsPerPage={responsiveItemsPerPage}
+      centerMode={centerMode}
       {...contextProps}
     >
       <Slider
+        centerMode={centerMode}
         infinite={infinite}
         showNavigationArrows={showNavigationArrows}
         showPaginationDots={showPaginationDots}
