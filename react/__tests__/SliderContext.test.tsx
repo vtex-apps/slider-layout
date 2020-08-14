@@ -1,3 +1,7 @@
+import { renderHook } from '@vtex/test-tools/react'
+
+import { useSliderDispatch, useSliderState } from '../components/SliderContext'
+
 describe('Initialization', () => {
   it.todo(
     'should correctly resolve initial navigationStep based on received props'
@@ -25,6 +29,24 @@ describe('Reducer actions', () => {
   it.todo('ADJUST_CONTEXT_VALUES')
 })
 
-describe('Hooks', () => {
-  it.todo('should throw an error when used outside SliderContext')
+describe('useSliderState and useSliderDispatch hooks', () => {
+  it('should throw an error when used outside SliderContext', () => {
+    const { result: sliderStateResult } = renderHook(() => useSliderState())
+
+    const expectedUseStateError = new Error(
+      'useSliderState must be used within a SliderContextProvider'
+    )
+
+    expect(sliderStateResult.error).toEqual(expectedUseStateError)
+
+    const { result: sliderDispatchResult } = renderHook(() =>
+      useSliderDispatch()
+    )
+
+    const expectedUseDispatchError = new Error(
+      'useSliderDispatch must be used within a SliderContextProvider'
+    )
+
+    expect(sliderDispatchResult.error).toEqual(expectedUseDispatchError)
+  })
 })
