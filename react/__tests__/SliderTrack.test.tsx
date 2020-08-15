@@ -89,12 +89,13 @@ describe('Basic rendering', () => {
       // first SLIDES_PER_PAGE elements are a copy of the slider's last page,
       // and the last SLIDES_PER_PAGE elements are a copy of the first page.
       if (idx >= TOTAL_ITEMS + SLIDES_PER_PAGE || idx < SLIDES_PER_PAGE) {
-        expect((element as Element).getAttribute('data-index')).toBeNull()
+        expect(element).not.toHaveAttribute('data-index')
 
         return
       }
 
-      expect((element as Element).getAttribute('data-index')).toEqual(
+      expect(element).toHaveAttribute(
+        'data-index',
         `${idx + 1 - SLIDES_PER_PAGE}`
       )
     })
@@ -111,9 +112,7 @@ describe('Basic rendering', () => {
     renderedSliderTrack = getByTestId('slider-track')
 
     renderedSliderTrack.childNodes.forEach((element, idx) => {
-      expect((element as Element).getAttribute('data-index')).toEqual(
-        `${idx + 1}`
-      )
+      expect(element).toHaveAttribute('data-index', `${idx + 1}`)
     })
   })
 

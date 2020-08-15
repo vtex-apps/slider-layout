@@ -43,10 +43,10 @@ describe('Basic rendering', () => {
     const rightArrow = getByTestId('icon-caret-right')
     const paginationDots = getByLabelText('Slider pagination dots')
 
-    expect(expectedCarouselRole).toBeDefined()
-    expect(leftArrow).toBeDefined()
-    expect(rightArrow).toBeDefined()
-    expect(paginationDots).toBeDefined()
+    expect(expectedCarouselRole).toBeInTheDocument()
+    expect(leftArrow).toBeInTheDocument()
+    expect(rightArrow).toBeInTheDocument()
+    expect(paginationDots).toBeInTheDocument()
   })
 
   it('should render without pagination features and use x-scrolling if usePagination is set to false', () => {
@@ -70,12 +70,10 @@ describe('Basic rendering', () => {
     const rightArrow = queryByTestId('icon-caret-right')
     const paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeNull()
-    expect(rightArrow).toBeNull()
-    expect(paginationDots).toBeNull()
-    expect(
-      (sliderTrackContainer as HTMLElement | null)?.className.split(' ')
-    ).toContain('overflow-x-scroll')
+    expect(leftArrow).not.toBeInTheDocument()
+    expect(rightArrow).not.toBeInTheDocument()
+    expect(paginationDots).not.toBeInTheDocument()
+    expect(sliderTrackContainer).toHaveClass('overflow-x-scroll')
   })
 
   it('should render without pagination features if there are not enough slides to fill a page', () => {
@@ -96,17 +94,15 @@ describe('Basic rendering', () => {
     const rightArrow = queryByTestId('icon-caret-right')
     const paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeNull()
-    expect(rightArrow).toBeNull()
-    expect(paginationDots).toBeNull()
+    expect(leftArrow).not.toBeInTheDocument()
+    expect(rightArrow).not.toBeInTheDocument()
+    expect(paginationDots).not.toBeInTheDocument()
 
     const renderedSlider = getByLabelText('slider')
     const sliderTrackContainer = renderedSlider.firstChild
 
     // Make sure that the slider renders without x-scrolling, since usePagination is set to true
-    expect(
-      (sliderTrackContainer as HTMLElement | null)?.className.split(' ')
-    ).not.toContain('overflow-x-scroll')
+    expect(sliderTrackContainer).not.toHaveClass('overflow-x-scroll')
   })
 
   it('should add appropriate padding in the x-axis if slider is not a full width one', () => {
@@ -124,11 +120,11 @@ describe('Basic rendering', () => {
     )
 
     const sliderSectionElement = getByLabelText('slider')
-    const { paddingLeft } = sliderSectionElement.style
-    const { paddingRight } = sliderSectionElement.style
 
-    expect(paddingLeft).toEqual('50px')
-    expect(paddingRight).toEqual('50px')
+    expect(sliderSectionElement).toHaveStyle({
+      paddingLeft: '50px',
+      paddingRight: '50px',
+    })
   })
 })
 
@@ -154,9 +150,9 @@ describe('Behavior upon interaction', () => {
     let rightArrow = queryByTestId('icon-caret-right')
     let paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeTruthy()
-    expect(rightArrow).toBeTruthy()
-    expect(paginationDots).toBeTruthy()
+    expect(leftArrow).toBeInTheDocument()
+    expect(rightArrow).toBeInTheDocument()
+    expect(paginationDots).toBeInTheDocument()
 
     // 'desktopOnly'
     rerender(
@@ -176,9 +172,9 @@ describe('Behavior upon interaction', () => {
     rightArrow = queryByTestId('icon-caret-right')
     paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeNull()
-    expect(rightArrow).toBeNull()
-    expect(paginationDots).toBeNull()
+    expect(leftArrow).not.toBeInTheDocument()
+    expect(rightArrow).not.toBeInTheDocument()
+    expect(paginationDots).not.toBeInTheDocument()
 
     // 'always'
     rerender(
@@ -198,9 +194,9 @@ describe('Behavior upon interaction', () => {
     rightArrow = queryByTestId('icon-caret-right')
     paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeTruthy()
-    expect(rightArrow).toBeTruthy()
-    expect(paginationDots).toBeTruthy()
+    expect(leftArrow).toBeInTheDocument()
+    expect(rightArrow).toBeInTheDocument()
+    expect(paginationDots).toBeInTheDocument()
 
     // 'never'
     rerender(
@@ -220,9 +216,9 @@ describe('Behavior upon interaction', () => {
     rightArrow = queryByTestId('icon-caret-right')
     paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeNull()
-    expect(rightArrow).toBeNull()
-    expect(paginationDots).toBeNull()
+    expect(leftArrow).not.toBeInTheDocument()
+    expect(rightArrow).not.toBeInTheDocument()
+    expect(paginationDots).not.toBeInTheDocument()
   })
 
   it('should correctly toggle arrows and pagination dots visibility on desktop devices', () => {
@@ -246,9 +242,9 @@ describe('Behavior upon interaction', () => {
     let rightArrow = queryByTestId('icon-caret-right')
     let paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeNull()
-    expect(rightArrow).toBeNull()
-    expect(paginationDots).toBeNull()
+    expect(leftArrow).not.toBeInTheDocument()
+    expect(rightArrow).not.toBeInTheDocument()
+    expect(paginationDots).not.toBeInTheDocument()
 
     // 'desktopOnly'
     rerender(
@@ -268,9 +264,9 @@ describe('Behavior upon interaction', () => {
     rightArrow = queryByTestId('icon-caret-right')
     paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeTruthy()
-    expect(rightArrow).toBeTruthy()
-    expect(paginationDots).toBeTruthy()
+    expect(leftArrow).toBeInTheDocument()
+    expect(rightArrow).toBeInTheDocument()
+    expect(paginationDots).toBeInTheDocument()
 
     // 'always'
     rerender(
@@ -290,9 +286,9 @@ describe('Behavior upon interaction', () => {
     rightArrow = queryByTestId('icon-caret-right')
     paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeTruthy()
-    expect(rightArrow).toBeTruthy()
-    expect(paginationDots).toBeTruthy()
+    expect(leftArrow).toBeInTheDocument()
+    expect(rightArrow).toBeInTheDocument()
+    expect(paginationDots).toBeInTheDocument()
 
     // 'never'
     rerender(
@@ -312,8 +308,8 @@ describe('Behavior upon interaction', () => {
     rightArrow = queryByTestId('icon-caret-right')
     paginationDots = queryByLabelText('Slider pagination dots')
 
-    expect(leftArrow).toBeNull()
-    expect(rightArrow).toBeNull()
-    expect(paginationDots).toBeNull()
+    expect(leftArrow).not.toBeInTheDocument()
+    expect(rightArrow).not.toBeInTheDocument()
+    expect(paginationDots).not.toBeInTheDocument()
   })
 })

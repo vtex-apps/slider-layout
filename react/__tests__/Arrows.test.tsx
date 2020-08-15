@@ -7,6 +7,8 @@ import Arrow from '../components/Arrow'
 const mockGoForward = jest.fn()
 const mockGoBack = jest.fn()
 
+const mockedUseSliderState = useSliderState as jest.Mock
+
 jest.mock('../components/SliderContext', () => ({
   useSliderState: jest.fn(),
 }))
@@ -25,7 +27,7 @@ beforeEach(() => {
 })
 
 describe('Accessibility', () => {
-  ;(useSliderState as jest.Mock).mockImplementation(() => ({
+  mockedUseSliderState.mockImplementation(() => ({
     currentSlide: 0,
     slidesPerPage: 5,
     navigationStep: 5,
@@ -62,7 +64,7 @@ describe('Accessibility', () => {
 })
 
 describe('Behavior upon interaction', () => {
-  ;(useSliderState as jest.Mock).mockImplementation(() => ({
+  mockedUseSliderState.mockImplementation(() => ({
     currentSlide: 0,
     slidesPerPage: 5,
     navigationStep: 5,
@@ -120,7 +122,7 @@ describe('Behavior upon interaction', () => {
   })
 
   it('should not go forward on click if if the slider is not infinite and right-end is reached', () => {
-    ;(useSliderState as jest.Mock).mockImplementation(() => ({
+    mockedUseSliderState.mockImplementation(() => ({
       currentSlide: 5,
       slidesPerPage: 5,
       navigationStep: 5,
