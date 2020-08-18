@@ -11,7 +11,7 @@ interface Props {
   totalItems: number
   infinite: boolean
   usePagination: boolean
-  centerMode: boolean
+  centerMode: SliderLayoutProps['centerMode']
 }
 
 const resolveAriaAttributes = (
@@ -70,12 +70,12 @@ const SliderTrack: FC<Props> = ({
   const groupDispatch = useSliderGroupDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 
-  const { shouldRenderItem, isItemVisible } = useSliderVisibility(
+  const { shouldRenderItem, isItemVisible } = useSliderVisibility({
     currentSlide,
     slidesPerPage,
     totalItems,
-    centerMode
-  )
+    centerMode,
+  })
 
   const trackWidth =
     slidesPerPage <= totalItems
@@ -86,7 +86,7 @@ const SliderTrack: FC<Props> = ({
     <div
       data-testid="slider-track"
       className={`${handles.sliderTrack} flex ${
-        centerMode ? '' : 'justify-around'
+        centerMode !== 'disabled' ? '' : 'justify-around'
       } relative pa0 ma0`}
       style={{
         transition:
@@ -142,8 +142,10 @@ const SliderTrack: FC<Props> = ({
         const adjustedIndex = index - (infinite ? slidesPerPage : 0)
         const slideContainerStyles = {
           width: `${slideWidth}%`,
-          marginLeft: centerMode ? `${slideWidth / 8}%` : undefined,
-          marginRight: centerMode ? `${slideWidth / 8}%` : undefined,
+          marginLeft:
+            centerMode !== 'disabled' ? `${slideWidth / 8}%` : undefined,
+          marginRight:
+            centerMode !== 'disabled' ? `${slideWidth / 8}%` : undefined,
         }
 
         return (
@@ -168,7 +170,6 @@ const SliderTrack: FC<Props> = ({
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
             >
-              {/* {child} */}
               {!usePagination || shouldRenderItem(adjustedIndex) ? child : null}
             </div>
           </div>

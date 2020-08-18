@@ -11,7 +11,7 @@ export const useTouchHandlers = ({
   centerMode,
 }: {
   infinite: boolean
-  centerMode: boolean
+  centerMode: SliderLayoutProps['centerMode']
 }) => {
   const dispatch = useSliderDispatch()
   const { transform } = useSliderState()
@@ -34,7 +34,8 @@ export const useTouchHandlers = ({
 
     const newTransform =
       touchState.touchInitialTransform +
-      touchMoveDelta / ((centerMode ? 2 : 1) * TOUCH_MOVE_DAMPING)
+      touchMoveDelta /
+        ((centerMode !== 'disabled' ? 2 : 1) * TOUCH_MOVE_DAMPING)
 
     dispatch({
       type: 'TOUCH',

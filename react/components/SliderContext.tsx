@@ -68,7 +68,7 @@ interface AdjustContextValuesAction {
   }
 }
 
-interface State extends SliderLayoutProps {
+interface State extends Partial<SliderLayoutProps> {
   /** Width of each slide */
   slideWidth: number
   /** Number of slides to show per page */
@@ -97,7 +97,6 @@ interface SliderContextProps extends SliderLayoutProps {
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   slides: Array<Exclude<ReactNode, boolean | null | undefined>>
-  centerMode: boolean
 }
 
 type Action =
@@ -222,7 +221,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
   const slideWidth = useMemo(
-    () => 100 / ((centerMode ? 2 : 1) * newSlides.length),
+    () => 100 / ((centerMode !== 'disabled' ? 2 : 1) * newSlides.length),
     [newSlides.length, centerMode]
   )
 
@@ -231,10 +230,11 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
     newSlides.forEach((_, idx) => {
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
-      const transformValue = centerMode
-        ? -(1.25 * slideWidth * idx) + (slideWidth * 3) / 8
-        : -(slideWidth * idx)
-      // const transformValue = -(slideWidth * idx)
+      const transformValue =
+        centerMode !== 'disabled'
+          ? -(1.25 * slideWidth * idx) +
+            (centerMode === 'center' ? (slideWidth * 3) / 8 : 0)
+          : -(slideWidth * idx)
 
       currentMap[currIdx] = transformValue
     })

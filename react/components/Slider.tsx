@@ -13,7 +13,7 @@ import PaginationDots from './PaginationDots'
 interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
   itemsPerPage: number
-  centerMode: boolean
+  centerMode: SliderLayoutProps['centerMode']
 }
 
 const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const

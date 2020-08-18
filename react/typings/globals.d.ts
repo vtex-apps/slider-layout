@@ -34,5 +34,6 @@ declare global {
     }
     navigationStep?: number | 'page'
     itemsPerPage?: MaybeResponsiveValue<number>
+    centerMode?: 'center' | 'to-the-left' | 'disabled'
   }
 }
