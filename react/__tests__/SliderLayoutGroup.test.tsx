@@ -10,9 +10,15 @@ import { useResponsiveValue } from 'vtex.responsive-values'
 import SliderLayoutGroup from '../SliderLayoutGroup'
 import SliderLayout from '../SliderLayout'
 
-const mockedUseResponsiveValue = useResponsiveValue as jest.Mock<number>
+const mockedUseResponsiveValue = useResponsiveValue as jest.Mock<
+  number | string
+>
 
-mockedUseResponsiveValue.mockImplementation(() => 1)
+mockedUseResponsiveValue.mockImplementation(args => {
+  if (typeof args === 'string') return args
+
+  return 1
+})
 
 test('should move all sliders in a group together', () => {
   const { container } = render(
