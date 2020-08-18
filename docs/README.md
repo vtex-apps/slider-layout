@@ -76,6 +76,7 @@ Now, you are able to use all blocks exported by the `slider-layout` app. Check o
 | `autoplay`  | `object` | Controls the autoplay feature behavior. For more on this, check out the `autoplay` object section below.   | `undefined` |
 | `fullWidth`            | `boolean` | Whether the slides should occupy the full page width, making the arrows appear on top of them (`true`) or not (`false`). |`true` |
 | `arrowSize`            | `number` / `object`   | Slider arrows size (height and width) in pixels. This is a responsive prop, which means you can pass to it an object with different values for each breakpoint (`desktop`, `tablet`, and `phone`).  | `25`  |
+| `centerMode`            | `enum` / `object`   | Whether or not slider elements should be centered, meaning that user will be able to see a peak of the previous and next slides. Available values are: `'center'`, which is the behavior just described; `'to-the-left'`, which will align sliders to the left side, showing a peak of only the next slide, but not the previous one; `'disabled'`, disables the feature and renders the slider in the usual way. This is a responsive prop, which means you can pass to it an object with different values for each breakpoint (`desktop`, `mobile`, `tablet`, and `phone`).  | `'disabled'`  |
 
 - **`itemsPerPage` object**
 
@@ -143,7 +144,6 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 | `paginationDotsContainer` |
 | `paginationDot`           |
 | `paginationDot--isActive` |
-
 
 <!-- DOCS-IGNORE:start -->
 
