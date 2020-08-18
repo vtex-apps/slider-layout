@@ -204,10 +204,10 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     totalItems: null,
   })
 
-  const resolvedNavigationStep =
+  const resolvedNavigationStep: number =
     navigationStep === 'page' ? itemsPerPage : navigationStep
 
-  const resolvedSlidesPerPage =
+  const resolvedSlidesPerPage: number =
     totalItems <= itemsPerPage ? totalItems : itemsPerPage
 
   const postRenderedSlides = infinite
@@ -221,8 +221,13 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
   const slideWidth = useMemo(
-    () => 100 / ((centerMode !== 'disabled' ? 2 : 1) * newSlides.length),
-    [newSlides.length, centerMode]
+    () =>
+      100 /
+      ((centerMode !== 'disabled'
+        ? (resolvedSlidesPerPage + 1) / resolvedSlidesPerPage
+        : 1) *
+        newSlides.length),
+    [newSlides.length, centerMode, resolvedSlidesPerPage]
   )
 
   const transformMap = useMemo(() => {
@@ -232,7 +237,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
       const transformValue =
         centerMode !== 'disabled'
-          ? -(1.25 * slideWidth * idx) +
+          ? -((1 + 1 / (4 * resolvedSlidesPerPage)) * slideWidth * idx) +
             (centerMode === 'center' ? (slideWidth * 3) / 8 : 0)
           : -(slideWidth * idx)
 
