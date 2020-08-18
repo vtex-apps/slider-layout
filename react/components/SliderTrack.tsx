@@ -143,9 +143,13 @@ const SliderTrack: FC<Props> = ({
         const slideContainerStyles = {
           width: `${slideWidth}%`,
           marginLeft:
-            centerMode !== 'disabled' ? `${slideWidth / 8}%` : undefined,
+            centerMode !== 'disabled'
+              ? `${slideWidth / (8 * slidesPerPage)}%`
+              : undefined,
           marginRight:
-            centerMode !== 'disabled' ? `${slideWidth / 8}%` : undefined,
+            centerMode !== 'disabled'
+              ? `${slideWidth / (8 * slidesPerPage)}%`
+              : undefined,
         }
 
         return (
