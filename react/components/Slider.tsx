@@ -32,18 +32,19 @@ const Slider: FC<Props> = ({
   const { isMobile } = useDevice()
   const { label = 'slider', slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
-  const controls = `${label
-    .toLowerCase()
-    .trim()
-    .replace(/ /g, '-')}-items`
-
-  useAutoplay(infinite, containerRef)
-  useScreenResize(infinite, itemsPerPage)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
   })
 
+  useAutoplay(infinite, containerRef)
+  useScreenResize(infinite, itemsPerPage)
+
   const shouldBeStaticList = slidesPerPage >= totalItems
+
+  const controls = `${label
+    .toLowerCase()
+    .trim()
+    .replace(/ /g, '-')}-items`
 
   const shouldShowArrows = Boolean(
     (showNavigationArrows === 'always' ||
@@ -73,7 +74,6 @@ const Slider: FC<Props> = ({
       onTouchStart={touchStartHandler}
       onTouchEnd={touchEndHandler}
       onTouchMove={touchMoveHandler}
-      aria-roledescription="carousel"
       aria-label={label}
       style={{
         WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,

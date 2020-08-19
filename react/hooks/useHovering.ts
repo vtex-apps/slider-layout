@@ -35,10 +35,12 @@ const useHovering = (ref: React.RefObject<HTMLDivElement>) => {
     return () => {
       const { current } = ref
 
-      if (current) {
-        current.removeEventListener('mouseenter', onMouseEnter)
-        current.removeEventListener('mouseleave', onMouseLeave)
+      if (!current) {
+        return
       }
+
+      current.removeEventListener('mouseenter', onMouseEnter)
+      current.removeEventListener('mouseleave', onMouseLeave)
     }
   }, [ref, groupDispatch])
 

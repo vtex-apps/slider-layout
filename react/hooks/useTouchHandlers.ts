@@ -48,7 +48,7 @@ export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
         goForward()
       }
     } else {
-      // Ignore the swipe if the SWIPE_THRESHOLD is not reached
+      // Ignore the swipe if SWIPE_THRESHOLD is not reached
       dispatch({
         type: 'TOUCH',
         payload: {

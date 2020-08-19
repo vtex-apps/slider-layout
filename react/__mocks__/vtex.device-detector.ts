@@ -1,1 +1,1 @@
-export const useDevice = () => 'desktop'
+export const useDevice = () => ({ device: 'desktop', isMobile: false })
