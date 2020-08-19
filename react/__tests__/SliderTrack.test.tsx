@@ -26,7 +26,12 @@ describe('Basic rendering', () => {
 
     // slidesPerPage < totalItems
     const { getByTestId, rerender } = render(
-      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={TOTAL_ITEMS}
+        infinite
+      />
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
@@ -38,14 +43,28 @@ describe('Basic rendering', () => {
     )
 
     // slidesPerPage === totalItems
-    rerender(<SliderTrack usePagination totalItems={5} infinite />)
+    rerender(
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={5}
+        infinite
+      />
+    )
     renderedSliderTrack = getByTestId('slider-track')
     expect(renderedSliderTrack.style.width).toEqual(
       `${(2 * TOTAL_ITEMS * 100) / SLIDES_PER_PAGE}%`
     )
 
     // slidesPerPage > totalItems
-    rerender(<SliderTrack usePagination totalItems={3} infinite />)
+    rerender(
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={3}
+        infinite
+      />
+    )
     renderedSliderTrack = getByTestId('slider-track')
     expect(renderedSliderTrack.style.width).toEqual('100%')
   })
@@ -53,7 +72,12 @@ describe('Basic rendering', () => {
   it('should render with correct translate3d(x, y, z), set to the initial slide', () => {
     // infinite slider
     const { getByTestId, rerender } = render(
-      <SliderTrack usePagination totalItems={10} infinite />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={10}
+        infinite
+      />
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
@@ -67,7 +91,14 @@ describe('Basic rendering', () => {
       () => mockInitialNonInfiniteSliderState
     )
 
-    rerender(<SliderTrack usePagination totalItems={10} infinite={false} />)
+    rerender(
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={10}
+        infinite={false}
+      />
+    )
 
     renderedSliderTrack = getByTestId('slider-track')
     expect(renderedSliderTrack.style.transform).toEqual(`translate3d(0%, 0, 0)`)
@@ -79,7 +110,12 @@ describe('Basic rendering', () => {
 
     // infinite slider
     const { getByTestId, rerender } = render(
-      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={TOTAL_ITEMS}
+        infinite
+      />
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
@@ -106,7 +142,12 @@ describe('Basic rendering', () => {
     )
 
     rerender(
-      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite={false} />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={TOTAL_ITEMS}
+        infinite={false}
+      />
     )
 
     renderedSliderTrack = getByTestId('slider-track')
@@ -123,7 +164,12 @@ describe('Basic rendering', () => {
 
     // infinite slider
     const { rerender, queryByText } = render(
-      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={TOTAL_ITEMS}
+        infinite
+      />
     )
 
     let renderedSlides = INDEXES.map(idx =>
@@ -138,7 +184,12 @@ describe('Basic rendering', () => {
     )
 
     rerender(
-      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite={false} />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={TOTAL_ITEMS}
+        infinite={false}
+      />
     )
 
     renderedSlides = INDEXES.map(idx =>
@@ -154,7 +205,12 @@ describe('Basic rendering', () => {
 
     // infinite slider
     const { rerender, queryByText } = render(
-      <SliderTrack usePagination={false} totalItems={TOTAL_ITEMS} infinite />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination={false}
+        totalItems={TOTAL_ITEMS}
+        infinite
+      />
     )
 
     let renderedSlides = INDEXES.map(idx =>
@@ -170,6 +226,7 @@ describe('Basic rendering', () => {
 
     rerender(
       <SliderTrack
+        centerMode="disabled"
         usePagination={false}
         totalItems={TOTAL_ITEMS}
         infinite={false}
@@ -196,7 +253,12 @@ describe('Behavior upon interaction', () => {
     }))
 
     const { getByTestId, rerender } = render(
-      <SliderTrack totalItems={TOTAL_ITEMS} infinite usePagination />
+      <SliderTrack
+        centerMode="disabled"
+        totalItems={TOTAL_ITEMS}
+        infinite
+        usePagination
+      />
     )
 
     let renderedTrack = getByTestId('slider-track')
@@ -219,7 +281,14 @@ describe('Behavior upon interaction', () => {
       transform: mockInitialInfiniteSliderState.transformMap[-1],
     }))
 
-    rerender(<SliderTrack totalItems={TOTAL_ITEMS} infinite usePagination />)
+    rerender(
+      <SliderTrack
+        centerMode="disabled"
+        totalItems={TOTAL_ITEMS}
+        infinite
+        usePagination
+      />
+    )
 
     renderedTrack = getByTestId('slider-track')
     fireEvent.transitionEnd(renderedTrack)
@@ -248,7 +317,12 @@ describe('Accessibility', () => {
     const INDEXES = Array.from(new Array(10), (_, i) => i + 1)
 
     const { getByTestId, getByLabelText } = render(
-      <SliderTrack usePagination totalItems={TOTAL_ITEMS} infinite />
+      <SliderTrack
+        centerMode="disabled"
+        usePagination
+        totalItems={TOTAL_ITEMS}
+        infinite
+      />
     )
 
     const renderedSliderTrack = getByTestId('slider-track')
