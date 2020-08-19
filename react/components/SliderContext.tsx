@@ -220,26 +220,47 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
   const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
-  const slideWidth = useMemo(
-    () =>
-      100 /
-      ((centerMode !== 'disabled'
-        ? (resolvedSlidesPerPage + 1) / resolvedSlidesPerPage
-        : 1) *
-        newSlides.length),
-    [newSlides.length, centerMode, resolvedSlidesPerPage]
-  )
+  const slideWidth = useMemo(() => {
+    const baseSlideWidth = 100 / newSlides.length
+
+    let resultingSlideWidth = baseSlideWidth
+
+    if (centerMode !== 'disabled') {
+      resultingSlideWidth =
+        (resolvedSlidesPerPage / (resolvedSlidesPerPage + 1)) * baseSlideWidth
+    }
+
+    return resultingSlideWidth
+  }, [newSlides.length, centerMode, resolvedSlidesPerPage])
 
   const transformMap = useMemo(() => {
     const currentMap: Record<number, number> = {}
 
     newSlides.forEach((_, idx) => {
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
-      const transformValue =
-        centerMode !== 'disabled'
-          ? -((1 + 1 / (4 * resolvedSlidesPerPage)) * slideWidth * idx) +
-            (centerMode === 'center' ? (slideWidth * 3) / 8 : 0)
-          : -(slideWidth * idx)
+      let transformValue = -(slideWidth * idx)
+
+      if (centerMode !== 'disabled') {
+        // This represents the new value for each transformValue taking into
+        // account the changes made to slideWidth's value due to the fact that
+        // centerMode is enabled.
+        const adjustedTransformValue = -(
+          (1 + 1 / (4 * resolvedSlidesPerPage)) *
+          slideWidth *
+          idx
+        )
+
+        transformValue = adjustedTransformValue
+
+        if (centerMode === 'center') {
+          // This is a correction factor to center the slides when centerMode
+          // is enabled and set to 'center'.
+          const transformCenterCorrection =
+            centerMode === 'center' ? (slideWidth * 3) / 8 : 0
+
+          transformValue += transformCenterCorrection
+        }
+      }
 
       currentMap[currIdx] = transformValue
     })
