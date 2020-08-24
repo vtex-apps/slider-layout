@@ -4,8 +4,15 @@ import { useSliderControls } from './useSliderControls'
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
 const SWIPE_THRESHOLD = 75
+const TOUCH_MOVE_DAMPING = 25
 
-export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
+export const useTouchHandlers = ({
+  infinite,
+  centerMode,
+}: {
+  infinite: boolean
+  centerMode: SliderLayoutProps['centerMode']
+}) => {
   const dispatch = useSliderDispatch()
   const { transform } = useSliderState()
   const { goForward, goBack } = useSliderControls(infinite)
@@ -25,7 +32,10 @@ export const useTouchHandlers = ({ infinite }: { infinite: boolean }) => {
     const currentX = e.touches[0].clientX
     const touchMoveDelta = currentX - touchState.touchStartX
 
-    const newTransform = touchState.touchInitialTransform + touchMoveDelta / 25
+    const newTransform =
+      touchState.touchInitialTransform +
+      touchMoveDelta /
+        ((centerMode !== 'disabled' ? 2 : 1) * TOUCH_MOVE_DAMPING)
 
     dispatch({
       type: 'TOUCH',

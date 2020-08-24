@@ -5,25 +5,38 @@ const isSlideVisible = ({
   currentSlide,
   slidesToShow,
   totalItems,
+  centerMode,
 }: {
   index: number
   currentSlide: number
   slidesToShow: number
   totalItems: number
+  centerMode: SliderLayoutProps['centerMode']
 }): boolean => {
   const isClonedSlide = currentSlide < 0 || currentSlide >= totalItems
+  let isVisible = index >= currentSlide && index < currentSlide + slidesToShow
 
-  return (
-    (index >= currentSlide && index < currentSlide + slidesToShow) ||
-    isClonedSlide
-  )
+  if (centerMode !== 'disabled') {
+    isVisible =
+      isVisible ||
+      (index + 1 >= currentSlide && index + 1 < currentSlide + slidesToShow) ||
+      (index - 1 >= currentSlide && index - 1 < currentSlide + slidesToShow)
+  }
+
+  return isVisible || isClonedSlide
 }
 
-export const useSliderVisibility = (
-  currentSlide: number,
-  slidesPerPage: number,
+export const useSliderVisibility = ({
+  currentSlide,
+  slidesPerPage,
+  totalItems,
+  centerMode,
+}: {
+  currentSlide: number
+  slidesPerPage: number
   totalItems: number
-) => {
+  centerMode: SliderLayoutProps['centerMode']
+}) => {
   /** Keeps track of slides that have been visualized before.
    * We want to keep rendering them because the issue is mostly rendering
    * slides that might never be viewed; On the other hand, hiding slides
@@ -42,6 +55,7 @@ export const useSliderVisibility = (
       currentSlide,
       slidesToShow: slidesPerPage,
       totalItems,
+      centerMode,
     })
 
   const shouldRenderItem = (index: number) => {

@@ -68,7 +68,7 @@ interface AdjustContextValuesAction {
   }
 }
 
-interface State extends SliderLayoutProps {
+interface State extends Partial<SliderLayoutProps> {
   /** Width of each slide */
   slideWidth: number
   /** Number of slides to show per page */
@@ -186,6 +186,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   slides,
   infinite = false,
   itemsPerPage,
+  centerMode,
   slideTransition = {
     speed: 400,
     delay: 0,
@@ -203,10 +204,10 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     totalItems: null,
   })
 
-  const resolvedNavigationStep =
+  const resolvedNavigationStep: number =
     navigationStep === 'page' ? itemsPerPage : navigationStep
 
-  const resolvedSlidesPerPage =
+  const resolvedSlidesPerPage: number =
     totalItems <= itemsPerPage ? totalItems : itemsPerPage
 
   const postRenderedSlides = infinite
@@ -219,19 +220,53 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
   const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
 
-  const slideWidth = useMemo(() => 100 / newSlides.length, [newSlides.length])
+  const slideWidth = useMemo(() => {
+    const baseSlideWidth = 100 / newSlides.length
+
+    let resultingSlideWidth = baseSlideWidth
+
+    if (centerMode !== 'disabled') {
+      resultingSlideWidth =
+        (resolvedSlidesPerPage / (resolvedSlidesPerPage + 1)) * baseSlideWidth
+    }
+
+    return resultingSlideWidth
+  }, [newSlides.length, centerMode, resolvedSlidesPerPage])
 
   const transformMap = useMemo(() => {
     const currentMap: Record<number, number> = {}
 
     newSlides.forEach((_, idx) => {
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
+      let transformValue = -(slideWidth * idx)
 
-      currentMap[currIdx] = -(slideWidth * idx)
+      if (centerMode !== 'disabled') {
+        // This represents the new value for each transformValue taking into
+        // account the changes made to slideWidth's value due to the fact that
+        // centerMode is enabled.
+        const adjustedTransformValue = -(
+          (1 + 1 / (4 * resolvedSlidesPerPage)) *
+          slideWidth *
+          idx
+        )
+
+        transformValue = adjustedTransformValue
+
+        if (centerMode === 'center') {
+          // This is a correction factor to center the slides when centerMode
+          // is enabled and set to 'center'.
+          const transformCenterCorrection =
+            centerMode === 'center' ? (slideWidth * 3) / 8 : 0
+
+          transformValue += transformCenterCorrection
+        }
+      }
+
+      currentMap[currIdx] = transformValue
     })
 
     return currentMap
-  }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite])
+  }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite, centerMode])
 
   const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
     sliderGroupState,

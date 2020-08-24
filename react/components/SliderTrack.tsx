@@ -11,6 +11,7 @@ interface Props {
   totalItems: number
   infinite: boolean
   usePagination: boolean
+  centerMode: SliderLayoutProps['centerMode']
 }
 
 const resolveAriaAttributes = (
@@ -47,7 +48,12 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   return ''
 }
 
-const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
+const SliderTrack: FC<Props> = ({
+  totalItems,
+  infinite,
+  usePagination,
+  centerMode,
+}) => {
   const {
     slideWidth,
     slidesPerPage,
@@ -64,11 +70,12 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
   const groupDispatch = useSliderGroupDispatch()
   const handles = useCssHandles(CSS_HANDLES)
 
-  const { shouldRenderItem, isItemVisible } = useSliderVisibility(
+  const { shouldRenderItem, isItemVisible } = useSliderVisibility({
     currentSlide,
     slidesPerPage,
-    totalItems
-  )
+    totalItems,
+    centerMode,
+  })
 
   const trackWidth =
     slidesPerPage <= totalItems
@@ -78,7 +85,9 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
   return (
     <div
       data-testid="slider-track"
-      className={`${handles.sliderTrack} flex justify-around relative pa0 ma0`}
+      className={`${handles.sliderTrack} flex ${
+        centerMode !== 'disabled' ? '' : 'justify-around'
+      } relative pa0 ma0`}
       style={{
         transition:
           isOnTouchMove || !useSlidingTransitionEffect
@@ -131,6 +140,17 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
         // in the left, to enable the infinite loop effect in case infinite
         // is set to true.
         const adjustedIndex = index - (infinite ? slidesPerPage : 0)
+        const slideContainerStyles = {
+          width: `${slideWidth}%`,
+          marginLeft:
+            centerMode !== 'disabled'
+              ? `${slideWidth / (8 * slidesPerPage)}%`
+              : undefined,
+          marginRight:
+            centerMode !== 'disabled'
+              ? `${slideWidth / (8 * slidesPerPage)}%`
+              : undefined,
+        }
 
         return (
           <div
@@ -149,9 +169,7 @@ const SliderTrack: FC<Props> = ({ totalItems, infinite, usePagination }) => {
                 ? adjustedIndex + 1
                 : undefined
             }
-            style={{
-              width: `${slideWidth}%`,
-            }}
+            style={slideContainerStyles}
           >
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}

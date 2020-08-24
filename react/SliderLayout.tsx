@@ -16,6 +16,7 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   fullWidth = true,
   arrowSize = 25,
   children,
+  centerMode = 'disabled',
   itemsPerPage = {
     desktop: 5,
     tablet: 3,
@@ -27,7 +28,10 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
   const responsiveItemsPerPage = useResponsiveValue(itemsPerPage)
+  const responsiveCenterMode = useResponsiveValue(centerMode)
   const slides = React.Children.toArray(children).concat(list)
+  // Force fullWidth mode when centerMode is on
+  const resolvedFullWidth = fullWidth || responsiveCenterMode !== 'disabled'
 
   return (
     <SliderContextProvider
@@ -35,15 +39,17 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
       slides={slides}
       totalItems={totalSlides}
       itemsPerPage={responsiveItemsPerPage}
+      centerMode={responsiveCenterMode}
       {...contextProps}
     >
       <Slider
+        centerMode={responsiveCenterMode}
         infinite={infinite}
         showNavigationArrows={showNavigationArrows}
         showPaginationDots={showPaginationDots}
         totalItems={totalSlides}
         usePagination={usePagination}
-        fullWidth={fullWidth}
+        fullWidth={resolvedFullWidth}
         arrowSize={responsiveArrowIconSize}
         itemsPerPage={responsiveItemsPerPage}
       >
