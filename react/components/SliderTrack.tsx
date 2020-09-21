@@ -55,6 +55,7 @@ const SliderTrack: FC<Props> = ({
   infinite,
   usePagination,
   centerMode,
+  totalItems,
   children,
 }) => {
   const {
@@ -66,7 +67,6 @@ const SliderTrack: FC<Props> = ({
     slideTransition: { speed, timing, delay },
     transformMap,
     transform,
-    totalItems,
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
