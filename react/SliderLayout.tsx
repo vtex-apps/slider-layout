@@ -36,7 +36,6 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   return (
     <SliderContextProvider
       infinite={infinite}
-      slides={slides}
       totalItems={totalSlides}
       itemsPerPage={responsiveItemsPerPage}
       centerMode={responsiveCenterMode}
@@ -53,7 +52,7 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
         arrowSize={responsiveArrowIconSize}
         itemsPerPage={responsiveItemsPerPage}
       >
-        {children}
+        {slides}
       </Slider>
     </SliderContextProvider>
   )

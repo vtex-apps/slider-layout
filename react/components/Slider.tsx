@@ -1,4 +1,4 @@
-import React, { FC, useRef, Fragment } from 'react'
+import React, { FC, useRef, Fragment, ReactNode } from 'react'
 import { useDevice } from 'vtex.device-detector'
 import { useCssHandles } from 'vtex.css-handles'
 
@@ -14,6 +14,9 @@ interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
   itemsPerPage: number
   centerMode: SliderLayoutProps['centerMode']
+  // This type comes from React itself. It is the return type for
+  // React.Children.toArray().
+  children?: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
 const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const

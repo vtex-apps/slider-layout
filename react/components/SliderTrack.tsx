@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import { useSliderState, useSliderDispatch } from './SliderContext'
@@ -12,6 +12,9 @@ interface Props {
   infinite: boolean
   usePagination: boolean
   centerMode: SliderLayoutProps['centerMode']
+  // This type comes from React itself. It is the return type for
+  // React.Children.toArray().
+  children?: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
 const resolveAriaAttributes = (
@@ -49,10 +52,10 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
 }
 
 const SliderTrack: FC<Props> = ({
-  totalItems,
   infinite,
   usePagination,
   centerMode,
+  children,
 }) => {
   const {
     slideWidth,
@@ -61,9 +64,9 @@ const SliderTrack: FC<Props> = ({
     isOnTouchMove,
     useSlidingTransitionEffect,
     slideTransition: { speed, timing, delay },
-    slides,
     transformMap,
     transform,
+    totalItems,
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
@@ -76,6 +79,14 @@ const SliderTrack: FC<Props> = ({
     totalItems,
     centerMode,
   })
+
+  const postRenderedSlides =
+    infinite && children ? children.slice(0, slidesPerPage) : []
+
+  const preRenderedSlides =
+    infinite && children ? children.slice(children.length - slidesPerPage) : []
+
+  const slides = preRenderedSlides.concat(children ?? [], postRenderedSlides)
 
   const trackWidth =
     slidesPerPage <= totalItems
