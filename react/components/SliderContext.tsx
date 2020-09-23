@@ -222,7 +222,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const transformMap = useMemo(() => {
     const currentMap: Record<number, number> = {}
 
-    Array.from(Array(newTotalItems).keys()).forEach(idx => {
+    for (let idx = 0; idx < newTotalItems; ++idx) {
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
       let transformValue = -(slideWidth * idx)
 
@@ -249,7 +249,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
       }
 
       currentMap[currIdx] = transformValue
-    })
+    }
 
     return currentMap
   }, [slideWidth, newTotalItems, resolvedSlidesPerPage, infinite, centerMode])
