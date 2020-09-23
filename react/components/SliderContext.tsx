@@ -199,9 +199,11 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const [prevProps, setPrevProps] = useState<{
     itemsPerPage: SliderContextProps['itemsPerPage'] | null
     totalItems: SliderContextProps['totalItems'] | null
+    slides: SliderContextProps['slides'] | null
   }>({
     itemsPerPage: null,
     totalItems: null,
+    slides: null,
   })
 
   const resolvedNavigationStep: number =
@@ -297,7 +299,8 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
   if (
     itemsPerPage !== prevProps.itemsPerPage ||
-    totalItems !== prevProps.totalItems
+    totalItems !== prevProps.totalItems ||
+    slides !== prevProps.slides
   ) {
     dispatch({
       type: 'ADJUST_CONTEXT_VALUES',
@@ -311,7 +314,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
         totalItems,
       },
     })
-    setPrevProps({ itemsPerPage, totalItems })
+    setPrevProps({ itemsPerPage, slides, totalItems })
   }
 
   if (
