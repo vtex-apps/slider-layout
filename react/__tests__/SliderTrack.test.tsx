@@ -4,6 +4,7 @@ import { render, fireEvent } from '@vtex/test-tools/react'
 import SliderTrack from '../components/SliderTrack'
 import { useSliderState } from '../components/SliderContext'
 import {
+  mockInitialSlides,
   mockInitialInfiniteSliderState,
   mockInitialNonInfiniteSliderState,
 } from '../__fixtures__/SliderStateContext'
@@ -31,7 +32,9 @@ describe('Basic rendering', () => {
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
@@ -44,12 +47,9 @@ describe('Basic rendering', () => {
 
     // slidesPerPage === totalItems
     rerender(
-      <SliderTrack
-        centerMode="disabled"
-        usePagination
-        totalItems={5}
-        infinite
-      />
+      <SliderTrack centerMode="disabled" usePagination totalItems={5} infinite>
+        {mockInitialSlides}
+      </SliderTrack>
     )
     renderedSliderTrack = getByTestId('slider-track')
     expect(renderedSliderTrack.style.width).toEqual(
@@ -58,12 +58,9 @@ describe('Basic rendering', () => {
 
     // slidesPerPage > totalItems
     rerender(
-      <SliderTrack
-        centerMode="disabled"
-        usePagination
-        totalItems={3}
-        infinite
-      />
+      <SliderTrack centerMode="disabled" usePagination totalItems={3} infinite>
+        {mockInitialSlides}
+      </SliderTrack>
     )
     renderedSliderTrack = getByTestId('slider-track')
     expect(renderedSliderTrack.style.width).toEqual('100%')
@@ -72,12 +69,9 @@ describe('Basic rendering', () => {
   it('should render with correct translate3d(x, y, z), set to the initial slide', () => {
     // infinite slider
     const { getByTestId, rerender } = render(
-      <SliderTrack
-        centerMode="disabled"
-        usePagination
-        totalItems={10}
-        infinite
-      />
+      <SliderTrack centerMode="disabled" usePagination totalItems={10} infinite>
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
@@ -97,7 +91,9 @@ describe('Basic rendering', () => {
         usePagination
         totalItems={10}
         infinite={false}
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     renderedSliderTrack = getByTestId('slider-track')
@@ -115,7 +111,9 @@ describe('Basic rendering', () => {
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     let renderedSliderTrack = getByTestId('slider-track')
@@ -147,7 +145,9 @@ describe('Basic rendering', () => {
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite={false}
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     renderedSliderTrack = getByTestId('slider-track')
@@ -169,7 +169,9 @@ describe('Basic rendering', () => {
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     let renderedSlides = INDEXES.map(idx =>
@@ -189,7 +191,9 @@ describe('Basic rendering', () => {
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite={false}
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     renderedSlides = INDEXES.map(idx =>
@@ -204,18 +208,20 @@ describe('Basic rendering', () => {
     const INDEXES = Array.from(new Array(10), (_, i) => i + 1)
 
     // infinite slider
-    const { rerender, queryByText } = render(
+    const { rerender, queryByText, queryAllByText } = render(
       <SliderTrack
         centerMode="disabled"
         usePagination={false}
         totalItems={TOTAL_ITEMS}
         infinite
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
-    let renderedSlides = INDEXES.map(idx =>
-      queryByText(`I am a slide. My index is ${idx}`)
-    ).filter(Boolean)
+    let renderedSlides: Array<HTMLElement | null | void> = INDEXES.map(idx =>
+      expect(queryAllByText(`I am a slide. My index is ${idx}`)).toHaveLength(2)
+    )
 
     expect(renderedSlides).toHaveLength(TOTAL_ITEMS)
 
@@ -230,7 +236,9 @@ describe('Basic rendering', () => {
         usePagination={false}
         totalItems={TOTAL_ITEMS}
         infinite={false}
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     renderedSlides = INDEXES.map(idx =>
@@ -258,7 +266,9 @@ describe('Behavior upon interaction', () => {
         totalItems={TOTAL_ITEMS}
         infinite
         usePagination
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     let renderedTrack = getByTestId('slider-track')
@@ -287,7 +297,9 @@ describe('Behavior upon interaction', () => {
         totalItems={TOTAL_ITEMS}
         infinite
         usePagination
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     renderedTrack = getByTestId('slider-track')
@@ -322,7 +334,9 @@ describe('Accessibility', () => {
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
-      />
+      >
+        {mockInitialSlides}
+      </SliderTrack>
     )
 
     const renderedSliderTrack = getByTestId('slider-track')

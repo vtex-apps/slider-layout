@@ -3,7 +3,6 @@ import React, {
   useReducer,
   useContext,
   FC,
-  ReactNode,
   useMemo,
   useState,
 } from 'react'
@@ -60,7 +59,6 @@ interface AdjustContextValuesAction {
   payload: {
     transformMap: State['transformMap']
     slideWidth: State['slideWidth']
-    newSlides: State['slides']
     slidesPerPage: State['slidesPerPage']
     transform: State['transform']
     navigationStep: State['navigationStep']
@@ -87,16 +85,12 @@ interface State extends Partial<SliderLayoutProps> {
   isOnTouchMove: boolean
   useSlidingTransitionEffect: boolean
   transformMap: Record<number, number>
-  slides: Array<Exclude<ReactNode, boolean | null | undefined>>
   slideTransition: Exclude<SliderLayoutProps['slideTransition'], undefined>
 }
 
 interface SliderContextProps extends SliderLayoutProps {
   totalItems: number
   infinite: SliderLayoutSiteEditorProps['infinite']
-  // This type comes from React itself. It is the return type for
-  // React.Children.toArray().
-  slides: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
 type Action =
@@ -165,7 +159,6 @@ function sliderContextReducer(state: State, action: Action): State {
         ...state,
         transformMap: action.payload.transformMap,
         slideWidth: action.payload.slideWidth,
-        slides: action.payload.newSlides,
         slidesPerPage: action.payload.slidesPerPage,
         transform: action.payload.transform,
         navigationStep: action.payload.navigationStep,
@@ -183,7 +176,6 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   totalItems,
   label = 'slider',
   navigationStep = 'page',
-  slides,
   infinite = false,
   itemsPerPage,
   centerMode,
@@ -210,18 +202,12 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   const resolvedSlidesPerPage: number =
     totalItems <= itemsPerPage ? totalItems : itemsPerPage
 
-  const postRenderedSlides = infinite
-    ? slides.slice(0, resolvedSlidesPerPage)
-    : []
+  const hiddenSlides = infinite ? resolvedSlidesPerPage * 2 : 0
 
-  const preRenderedSlides = infinite
-    ? slides.slice(slides.length - resolvedSlidesPerPage)
-    : []
-
-  const newSlides = preRenderedSlides.concat(slides, postRenderedSlides)
+  const newTotalItems = hiddenSlides + totalItems
 
   const slideWidth = useMemo(() => {
-    const baseSlideWidth = 100 / newSlides.length
+    const baseSlideWidth = 100 / newTotalItems
 
     let resultingSlideWidth = baseSlideWidth
 
@@ -231,12 +217,12 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     }
 
     return resultingSlideWidth
-  }, [newSlides.length, centerMode, resolvedSlidesPerPage])
+  }, [newTotalItems, centerMode, resolvedSlidesPerPage])
 
   const transformMap = useMemo(() => {
     const currentMap: Record<number, number> = {}
 
-    newSlides.forEach((_, idx) => {
+    for (let idx = 0; idx < newTotalItems; ++idx) {
       const currIdx = infinite ? idx - resolvedSlidesPerPage : idx
       let transformValue = -(slideWidth * idx)
 
@@ -263,10 +249,10 @@ const SliderContextProvider: FC<SliderContextProps> = ({
       }
 
       currentMap[currIdx] = transformValue
-    })
+    }
 
     return currentMap
-  }, [slideWidth, newSlides, resolvedSlidesPerPage, infinite, centerMode])
+  }, [slideWidth, newTotalItems, resolvedSlidesPerPage, infinite, centerMode])
 
   const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
     sliderGroupState,
@@ -283,7 +269,6 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     currentSlide: initialSlide,
     transform: initialTransform,
     transformMap,
-    slides: newSlides,
     navigationStep: resolvedNavigationStep,
     slideTransition,
     itemsPerPage,
@@ -303,7 +288,6 @@ const SliderContextProvider: FC<SliderContextProps> = ({
       type: 'ADJUST_CONTEXT_VALUES',
       payload: {
         transformMap,
-        newSlides,
         slideWidth,
         slidesPerPage: resolvedSlidesPerPage,
         transform: transformMap[state.currentSlide],

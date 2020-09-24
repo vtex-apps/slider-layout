@@ -1,5 +1,18 @@
 import React from 'react'
 
+export const mockInitialSlides = [
+  <div key={1}>I am a slide. My index is 1</div>,
+  <div key={2}>I am a slide. My index is 2</div>,
+  <div key={3}>I am a slide. My index is 3</div>,
+  <div key={4}>I am a slide. My index is 4</div>,
+  <div key={5}>I am a slide. My index is 5</div>,
+  <div key={6}>I am a slide. My index is 6</div>,
+  <div key={7}>I am a slide. My index is 7</div>,
+  <div key={8}>I am a slide. My index is 8</div>,
+  <div key={9}>I am a slide. My index is 9</div>,
+  <div key={10}>I am a slide. My index is 10</div>,
+]
+
 export const mockInitialInfiniteSliderState = {
   slideWidth: 5,
   slidesPerPage: 5,
@@ -27,28 +40,6 @@ export const mockInitialInfiniteSliderState = {
     '-2': -15,
     '-1': -20,
   },
-  slides: [
-    <div key={-1}>I am a slide. My index is -1</div>,
-    <div key={-2}>I am a slide. My index is -2</div>,
-    <div key={-3}>I am a slide. My index is -3</div>,
-    <div key={-4}>I am a slide. My index is -4</div>,
-    <div key={-5}>I am a slide. My index is -5</div>,
-    <div key={1}>I am a slide. My index is 1</div>,
-    <div key={2}>I am a slide. My index is 2</div>,
-    <div key={3}>I am a slide. My index is 3</div>,
-    <div key={4}>I am a slide. My index is 4</div>,
-    <div key={5}>I am a slide. My index is 5</div>,
-    <div key={6}>I am a slide. My index is 6</div>,
-    <div key={7}>I am a slide. My index is 7</div>,
-    <div key={8}>I am a slide. My index is 8</div>,
-    <div key={9}>I am a slide. My index is 9</div>,
-    <div key={10}>I am a slide. My index is 10</div>,
-    <div key={11}>I am a slide. My index is 11</div>,
-    <div key={12}>I am a slide. My index is 12</div>,
-    <div key={13}>I am a slide. My index is 13</div>,
-    <div key={14}>I am a slide. My index is 14</div>,
-    <div key={15}>I am a slide. My index is 15</div>,
-  ],
   navigationStep: 5,
   slideTransition: {
     speed: 400,
@@ -80,18 +71,6 @@ export const mockInitialNonInfiniteSliderState = {
     '8': -80,
     '9': -90,
   },
-  slides: [
-    <div key={1}>I am a slide. My index is 1</div>,
-    <div key={2}>I am a slide. My index is 2</div>,
-    <div key={3}>I am a slide. My index is 3</div>,
-    <div key={4}>I am a slide. My index is 4</div>,
-    <div key={5}>I am a slide. My index is 5</div>,
-    <div key={6}>I am a slide. My index is 6</div>,
-    <div key={7}>I am a slide. My index is 7</div>,
-    <div key={8}>I am a slide. My index is 8</div>,
-    <div key={9}>I am a slide. My index is 9</div>,
-    <div key={10}>I am a slide. My index is 10</div>,
-  ],
   navigationStep: 5,
   slideTransition: {
     speed: 400,
