@@ -53,12 +53,15 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
     totalItems
   )
 
-  const handleDotClick = (event: React.KeyboardEvent | React.MouseEvent, index: number) => {
+  const handleDotClick = (
+    event: React.KeyboardEvent | React.MouseEvent,
+    index: number
+  ) => {
     // Considering that each pagination dot represents a page, pageDelta
     // represents how many pages did the user "skip" by clicking in the dot.
     if (event) {
-      event.stopPropagation();
-      event.preventDefault();
+      event.stopPropagation()
+      event.preventDefault()
     }
 
     const pageDelta =
@@ -94,8 +97,8 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
             }}
             key={index}
             tabIndex={index}
-            onKeyDown={(event) => handleDotClick(event, index)}
-            onClick={(event) => handleDotClick(event, index)}
+            onKeyDown={event => handleDotClick(event, index)}
+            onClick={event => handleDotClick(event, index)}
             role="button"
             aria-controls={controls}
             aria-label={`Dot ${index + 1} of ${slideIndexes.length}`}

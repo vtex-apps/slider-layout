@@ -43,8 +43,8 @@ const Arrow: FC<Props> = ({
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     if (event) {
-      event.stopPropagation();
-      event.preventDefault();
+      event.stopPropagation()
+      event.preventDefault()
     }
 
     if (orientation === 'left') {
