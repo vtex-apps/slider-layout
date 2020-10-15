@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Left arrow becoming disabled before reaching the first page when props `infinite` is false, `itemsPerPage` is greater than one and the number of items is odd. 
 
 ## [0.15.1] - 2020-09-24
 ### Fixed
