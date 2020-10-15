@@ -25,12 +25,12 @@ const Arrow: FC<Props> = ({
   infinite,
   arrowSize,
 }) => {
-  const { currentSlide, slidesPerPage, navigationStep } = useSliderState()
+  const { currentSlide, slidesPerPage } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
 
   const handles = useCssHandles(CSS_HANDLES)
 
-  const isLeftEndReach = !(currentSlide - (navigationStep || 1) >= 0)
+  const isLeftEndReach = !(currentSlide - 1 >= 0)
   const isRightEndReach = !(currentSlide + 1 + slidesPerPage <= totalItems)
   const disabled =
     !infinite &&
