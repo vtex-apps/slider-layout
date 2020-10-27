@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Fixed
-- Be able to click the navigation buttons when they're placed inside a link (prevent event bubbling)
+- Navigation controls would not work when the `slider` was placed inside an `<a>` tag. This is the case if you were to place a `slider-layout` inside of a `product-summary`.
 
 ## [0.15.1] - 2020-09-24
 ### Fixed
