@@ -57,13 +57,13 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
     event: React.KeyboardEvent | React.MouseEvent,
     index: number
   ) => {
-    // Considering that each pagination dot represents a page, pageDelta
-    // represents how many pages did the user "skip" by clicking in the dot.
     if (event) {
       event.stopPropagation()
       event.preventDefault()
     }
 
+    // Considering that each pagination dot represents a page, pageDelta
+    // represents how many pages did the user "skip" by clicking in the dot.
     const pageDelta =
       index - getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
 
