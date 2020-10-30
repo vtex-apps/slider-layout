@@ -40,8 +40,13 @@ const Arrow: FC<Props> = ({
   useKeyboardArrows(goBack, goForward)
 
   function handleArrowClick(
-    _: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
+    if (event) {
+      event.stopPropagation()
+      event.preventDefault()
+    }
+
     if (orientation === 'left') {
       goBack()
     }

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Left arrow becoming disabled before reaching the first page when props `infinite` is false, `itemsPerPage` is greater than one and the number of items is odd. 
 
+## [0.15.2] - 2020-10-29
+### Fixed
+- Navigation controls would not work when the `slider` was placed inside an `<a>` tag. This is the case if you were to place a `slider-layout` inside of a `product-summary`.
+
 ## [0.15.1] - 2020-09-24
 ### Fixed
 - Slides not re-rendering on prop change
