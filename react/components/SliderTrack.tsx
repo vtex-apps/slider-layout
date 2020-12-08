@@ -171,10 +171,10 @@ const SliderTrack: FC<Props> = ({
               adjustedIndex,
               totalItems
             )}
-            className={`${applyModifiers(
-              handles.slide,
-              getFirstOrLastVisible(slidesPerPage, adjustedIndex)
-            )} flex relative`}
+            className={`${applyModifiers(handles.slide, [
+              getFirstOrLastVisible(slidesPerPage, adjustedIndex),
+              isItemVisible(adjustedIndex) ? 'visible' : 'hidden',
+            ])} flex relative`}
             data-index={
               adjustedIndex >= 0 && adjustedIndex < totalItems
                 ? adjustedIndex + 1
