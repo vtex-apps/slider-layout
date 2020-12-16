@@ -131,19 +131,21 @@ In order to apply CSS customizations in this and other blocks, follow the instru
 
 | CSS Handles               |
 | ------------------------- |
-| `sliderLayoutContainer`   |
-| `sliderTrackContainer`    |
-| `sliderTrack`             |
-| `slide`                   |
+| `paginationDot--isActive` |
+| `paginationDot`           |
+| `paginationDotsContainer` |
 | `slide--firstVisible`     |
+| `slide--hidden`           |
 | `slide--lastVisible`      |
+| `slide--visible`          |
 | `slideChildrenContainer`  |
+| `slide`                   |
+| `sliderArrows`            |
+| `sliderLayoutContainer`   |
 | `sliderLeftArrow`         |
 | `sliderRightArrow`        |
-| `sliderArrows`            |
-| `paginationDotsContainer` |
-| `paginationDot`           |
-| `paginationDot--isActive` |
+| `sliderTrackContainer`    |
+| `sliderTrack`             |
 
 <!-- DOCS-IGNORE:start -->
 
