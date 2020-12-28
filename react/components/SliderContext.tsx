@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
+import { ResponsiveValuesTypes } from 'vtex.responsive-values'
 
 import { useSliderGroupState } from '../SliderLayoutGroup'
 
@@ -66,6 +67,35 @@ interface AdjustContextValuesAction {
   }
 }
 
+export interface SliderLayoutSiteEditorProps {
+  infinite?: boolean
+  showNavigationArrows?: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
+  showPaginationDots?: 'mobileOnly' | 'desktopOnly' | 'always' | 'never'
+  usePagination?: boolean
+  fullWidth?: boolean
+  arrowSize?: ResponsiveValuesTypes.ResponsiveValue<number>
+}
+
+export interface SliderLayoutProps {
+  totalItems?: number
+  label?: string
+  slideTransition?: {
+    /** Transition speed in ms */
+    speed: number
+    /** Transition delay in ms */
+    delay: number
+    timing: string
+  }
+  autoplay?: {
+    /** Timeout duration in ms */
+    timeout: number
+    stopOnHover?: boolean
+  }
+  navigationStep?: number | 'page'
+  itemsPerPage?: ResponsiveValuesTypes.ResponsiveValue<number>
+  centerMode?: 'center' | 'to-the-left' | 'disabled'
+}
+
 interface State extends Partial<SliderLayoutProps> {
   /** Width of each slide */
   slideWidth: number
@@ -90,6 +120,7 @@ interface State extends Partial<SliderLayoutProps> {
 
 interface SliderContextProps extends SliderLayoutProps {
   totalItems: number
+  itemsPerPage: number
   infinite: SliderLayoutSiteEditorProps['infinite']
 }
 

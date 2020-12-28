@@ -1,7 +1,11 @@
 import React, { FC, ReactNode } from 'react'
 import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
-import { useSliderState, useSliderDispatch } from './SliderContext'
+import {
+  useSliderState,
+  useSliderDispatch,
+  SliderLayoutProps,
+} from './SliderContext'
 import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 import { useSliderVisibility } from '../hooks/useSliderVisibility'
 
@@ -71,7 +75,7 @@ const SliderTrack: FC<Props> = ({
 
   const dispatch = useSliderDispatch()
   const groupDispatch = useSliderGroupDispatch()
-  const handles = useCssHandles(CSS_HANDLES)
+  const { handles } = useCssHandles(CSS_HANDLES)
 
   const { shouldRenderItem, isItemVisible } = useSliderVisibility({
     currentSlide,

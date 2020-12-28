@@ -44,7 +44,7 @@ const getSlideIndices = (
 const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   const { slidesPerPage, currentSlide, navigationStep } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
-  const handles = useCssHandles(CSS_HANDLES)
+  const { handles } = useCssHandles(CSS_HANDLES)
   const passVisibleSlides = navigationStep === slidesPerPage
 
   const slideIndexes = getSlideIndices(

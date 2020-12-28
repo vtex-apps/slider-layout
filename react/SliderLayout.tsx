@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { defineMessages } from 'react-intl'
 import { useListContext } from 'vtex.list-context'
 import { useResponsiveValue } from 'vtex.responsive-values'
 
 import Slider from './components/Slider'
-import { SliderContextProvider } from './components/SliderContext'
+import {
+  SliderContextProvider,
+  SliderLayoutProps,
+  SliderLayoutSiteEditorProps,
+} from './components/SliderContext'
 
-const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
-  SliderLayoutSiteEditorProps> = ({
+function SliderLayout({
   totalItems,
   infinite = false,
   showNavigationArrows = 'always',
@@ -23,7 +26,7 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
     phone: 1,
   },
   ...contextProps
-}) => {
+}: PropsWithChildren<SliderLayoutProps & SliderLayoutSiteEditorProps>) {
   const list = useListContext()?.list ?? []
   const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)

@@ -1,7 +1,11 @@
 import { useState } from 'react'
 
 import { useSliderControls } from './useSliderControls'
-import { useSliderDispatch, useSliderState } from '../components/SliderContext'
+import {
+  SliderLayoutProps,
+  useSliderDispatch,
+  useSliderState,
+} from '../components/SliderContext'
 
 const SWIPE_THRESHOLD = 75
 const TOUCH_MOVE_DAMPING = 25

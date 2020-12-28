@@ -5,12 +5,17 @@ import { useCssHandles } from 'vtex.css-handles'
 import { useScreenResize } from '../hooks/useScreenResize'
 import { useTouchHandlers } from '../hooks/useTouchHandlers'
 import { useAutoplay } from '../hooks/useAutoplay'
-import { useSliderState } from './SliderContext'
+import {
+  SliderLayoutProps,
+  SliderLayoutSiteEditorProps,
+  useSliderState,
+} from './SliderContext'
 import SliderTrack from './SliderTrack'
 import Arrow from './Arrow'
 import PaginationDots from './PaginationDots'
 
 interface Props extends SliderLayoutSiteEditorProps {
+  arrowSize: number
   totalItems: number
   itemsPerPage: number
   centerMode: SliderLayoutProps['centerMode']
@@ -33,7 +38,7 @@ const Slider: FC<Props> = ({
   itemsPerPage,
   centerMode,
 }) => {
-  const handles = useCssHandles(CSS_HANDLES)
+  const { handles } = useCssHandles(CSS_HANDLES)
   const { isMobile } = useDevice()
   const { label = 'slider', slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
