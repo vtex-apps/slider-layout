@@ -1,7 +1,8 @@
 import React from 'react'
 import { render, fireEvent } from '@vtex/test-tools/react'
 
-import PaginationDots from '../components/PaginationDots'
+import PaginationDots, { CSS_HANDLES } from '../components/PaginationDots'
+import { useContextCssHandles } from '../modules/cssHandles'
 
 const mockGoForward = jest.fn()
 const mockGoBack = jest.fn()
@@ -40,6 +41,23 @@ jest.mock('../hooks/useSliderControls', () => {
     }),
   }
 })
+
+jest.mock('../modules/cssHandles', () => ({
+  useContextCssHandles: jest.fn(),
+}))
+
+const mockedUseContextCssHandles = useContextCssHandles as jest.Mock<
+  ReturnType<typeof useContextCssHandles>
+>
+
+mockedUseContextCssHandles.mockImplementation(() => ({
+  handles: CSS_HANDLES.reduce<Record<string, string>>((acc, handle) => {
+    acc[handle] = handle
+
+    return acc
+  }, {}),
+  withModifiers: (handle, modifier) => `${handle} ${handle}--${modifier}`,
+}))
 
 describe('Basic rendering', () => {
   it('should render the correct number of pagination dots based on the number of slider pages', () => {

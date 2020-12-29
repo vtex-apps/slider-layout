@@ -1,6 +1,5 @@
 import React, { FC, useRef, Fragment, ReactNode } from 'react'
 import { useDevice } from 'vtex.device-detector'
-import { useCssHandles } from 'vtex.css-handles'
 
 import { useScreenResize } from '../hooks/useScreenResize'
 import { useTouchHandlers } from '../hooks/useTouchHandlers'
@@ -10,9 +9,14 @@ import {
   SliderLayoutSiteEditorProps,
   useSliderState,
 } from './SliderContext'
-import SliderTrack from './SliderTrack'
-import Arrow from './Arrow'
-import PaginationDots from './PaginationDots'
+import SliderTrack, {
+  CSS_HANDLES as SliderTrackCssHandles,
+} from './SliderTrack'
+import Arrow, { CSS_HANDLES as ArrowCssHandles } from './Arrow'
+import PaginationDots, {
+  CSS_HANDLES as PaginationDotsCssHandles,
+} from './PaginationDots'
+import { useContextCssHandles } from '../modules/cssHandles'
 
 interface Props extends SliderLayoutSiteEditorProps {
   arrowSize: number
@@ -24,7 +28,13 @@ interface Props extends SliderLayoutSiteEditorProps {
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
-const CSS_HANDLES = ['sliderLayoutContainer', 'sliderTrackContainer'] as const
+export const CSS_HANDLES = [
+  'sliderLayoutContainer',
+  'sliderTrackContainer',
+  ...SliderTrackCssHandles,
+  ...ArrowCssHandles,
+  ...PaginationDotsCssHandles,
+] as const
 
 const Slider: FC<Props> = ({
   children,
@@ -38,7 +48,7 @@ const Slider: FC<Props> = ({
   itemsPerPage,
   centerMode,
 }) => {
-  const { handles } = useCssHandles(CSS_HANDLES)
+  const { handles } = useContextCssHandles()
   const { isMobile } = useDevice()
   const { label = 'slider', slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)

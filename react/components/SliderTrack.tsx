@@ -1,5 +1,4 @@
 import React, { FC, ReactNode } from 'react'
-import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
 import {
   useSliderState,
@@ -8,8 +7,13 @@ import {
 } from './SliderContext'
 import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 import { useSliderVisibility } from '../hooks/useSliderVisibility'
+import { useContextCssHandles } from '../modules/cssHandles'
 
-const CSS_HANDLES = ['sliderTrack', 'slide', 'slideChildrenContainer'] as const
+export const CSS_HANDLES = [
+  'sliderTrack',
+  'slide',
+  'slideChildrenContainer',
+] as const
 
 interface Props {
   totalItems: number
@@ -75,7 +79,7 @@ const SliderTrack: FC<Props> = ({
 
   const dispatch = useSliderDispatch()
   const groupDispatch = useSliderGroupDispatch()
-  const { handles } = useCssHandles(CSS_HANDLES)
+  const { handles, withModifiers } = useContextCssHandles()
 
   const { shouldRenderItem, isItemVisible } = useSliderVisibility({
     currentSlide,
@@ -175,7 +179,7 @@ const SliderTrack: FC<Props> = ({
               adjustedIndex,
               totalItems
             )}
-            className={`${applyModifiers(handles.slide, [
+            className={`${withModifiers('slide', [
               getFirstOrLastVisible(slidesPerPage, adjustedIndex),
               isItemVisible(adjustedIndex) ? 'visible' : 'hidden',
             ])} flex relative`}

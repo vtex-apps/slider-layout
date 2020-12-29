@@ -1,8 +1,9 @@
 import React from 'react'
 import { render } from '@vtex/test-tools/react'
 
-import Slider from '../components/Slider'
+import Slider, { CSS_HANDLES } from '../components/Slider'
 import { mockInitialInfiniteSliderState } from '../__fixtures__/SliderStateContext'
+import { useContextCssHandles } from '../modules/cssHandles'
 
 let mockDeviceDetectorReturn = { device: 'desktop', isMobile: false }
 
@@ -21,6 +22,23 @@ jest.mock('../components/SliderContext', () => ({
 
 jest.mock('vtex.device-detector', () => ({
   useDevice: jest.fn(() => mockDeviceDetectorReturn),
+}))
+
+jest.mock('../modules/cssHandles', () => ({
+  useContextCssHandles: jest.fn(),
+}))
+
+const mockedUseContextCssHandles = useContextCssHandles as jest.Mock<
+  ReturnType<typeof useContextCssHandles>
+>
+
+mockedUseContextCssHandles.mockImplementation(() => ({
+  handles: CSS_HANDLES.reduce<Record<string, string>>((acc, handle) => {
+    acc[handle] = handle
+
+    return acc
+  }, {}),
+  withModifiers: (handle, modifier) => `${handle} ${handle}--${modifier}`,
 }))
 
 describe('Basic rendering', () => {
