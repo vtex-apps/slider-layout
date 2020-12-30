@@ -3,6 +3,7 @@ import { render } from '@vtex/test-tools/react'
 
 import Slider, { CSS_HANDLES } from '../components/Slider'
 import { mockInitialInfiniteSliderState } from '../__fixtures__/SliderStateContext'
+import { mockedUseContextCssHandlesFn } from '../__fixtures__/CssHandlesHelper'
 import { useContextCssHandles } from '../modules/cssHandles'
 
 let mockDeviceDetectorReturn = { device: 'desktop', isMobile: false }
@@ -32,14 +33,9 @@ const mockedUseContextCssHandles = useContextCssHandles as jest.Mock<
   ReturnType<typeof useContextCssHandles>
 >
 
-mockedUseContextCssHandles.mockImplementation(() => ({
-  handles: CSS_HANDLES.reduce<Record<string, string>>((acc, handle) => {
-    acc[handle] = handle
-
-    return acc
-  }, {}),
-  withModifiers: (handle, modifier) => `${handle} ${handle}--${modifier}`,
-}))
+mockedUseContextCssHandles.mockImplementation(() =>
+  mockedUseContextCssHandlesFn(CSS_HANDLES)
+)
 
 describe('Basic rendering', () => {
   it('should render complete slider, with arrows and pagination dots on default settings', () => {

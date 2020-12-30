@@ -9,6 +9,7 @@ import {
   mockInitialNonInfiniteSliderState,
 } from '../__fixtures__/SliderStateContext'
 import { useContextCssHandles } from '../modules/cssHandles'
+import { mockedUseContextCssHandlesFn } from '../__fixtures__/CssHandlesHelper'
 
 const mockDispatch = jest.fn()
 
@@ -27,14 +28,9 @@ const mockedUseContextCssHandles = useContextCssHandles as jest.Mock<
   ReturnType<typeof useContextCssHandles>
 >
 
-mockedUseContextCssHandles.mockImplementation(() => ({
-  handles: CSS_HANDLES.reduce<Record<string, string>>((acc, handle) => {
-    acc[handle] = handle
-
-    return acc
-  }, {}),
-  withModifiers: (handle, modifier) => `${handle} ${handle}--${modifier}`,
-}))
+mockedUseContextCssHandles.mockImplementation(() =>
+  mockedUseContextCssHandlesFn(CSS_HANDLES)
+)
 
 describe('Basic rendering', () => {
   mockedUseSliderState.mockImplementation(() => mockInitialInfiniteSliderState)
