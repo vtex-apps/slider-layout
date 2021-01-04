@@ -93,7 +93,9 @@ export interface SliderLayoutProps {
   }
   navigationStep?: number | 'page'
   itemsPerPage?: ResponsiveValuesTypes.ResponsiveValue<number>
-  centerMode?: 'center' | 'to-the-left' | 'disabled'
+  centerMode?: ResponsiveValuesTypes.ResponsiveValue<
+    'center' | 'to-the-left' | 'disabled'
+  >
 }
 
 interface State extends Partial<SliderLayoutProps> {
