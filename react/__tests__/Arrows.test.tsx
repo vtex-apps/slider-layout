@@ -2,7 +2,9 @@ import React, { Fragment } from 'react'
 import { render, fireEvent } from '@vtex/test-tools/react'
 
 import { useSliderState } from '../components/SliderContext'
-import Arrow from '../components/Arrow'
+import Arrow, { CSS_HANDLES } from '../components/Arrow'
+import { useContextCssHandles } from '../modules/cssHandles'
+import { mockedUseContextCssHandlesFn } from '../__fixtures__/CssHandlesHelper'
 
 const mockGoForward = jest.fn()
 const mockGoBack = jest.fn()
@@ -19,6 +21,18 @@ jest.mock('../hooks/useSliderControls', () => ({
     goBack: mockGoBack,
   }),
 }))
+
+jest.mock('../modules/cssHandles', () => ({
+  useContextCssHandles: jest.fn(),
+}))
+
+const mockedUseContextCssHandles = useContextCssHandles as jest.Mock<
+  ReturnType<typeof useContextCssHandles>
+>
+
+mockedUseContextCssHandles.mockImplementation(() =>
+  mockedUseContextCssHandlesFn(CSS_HANDLES)
+)
 
 beforeEach(() => {
   mockGoForward.mockClear()

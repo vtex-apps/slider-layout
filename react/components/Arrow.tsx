@@ -1,10 +1,10 @@
 import React, { memo, FC, ReactNode } from 'react'
 import { IconCaret } from 'vtex.store-icons'
-import { useCssHandles } from 'vtex.css-handles'
 
 import { useSliderState } from './SliderContext'
 import useKeyboardArrows from '../hooks/useKeyboardArrows'
 import { useSliderControls } from '../hooks/useSliderControls'
+import { useContextCssHandles } from '../modules/cssHandles'
 
 interface Props {
   custom?: ReactNode
@@ -15,7 +15,11 @@ interface Props {
   arrowSize: number
 }
 
-const CSS_HANDLES = ['sliderLeftArrow', 'sliderRightArrow', 'sliderArrows']
+export const CSS_HANDLES = [
+  'sliderLeftArrow',
+  'sliderRightArrow',
+  'sliderArrows',
+] as const
 
 const Arrow: FC<Props> = ({
   custom,
@@ -25,17 +29,17 @@ const Arrow: FC<Props> = ({
   infinite,
   arrowSize,
 }) => {
-  const { currentSlide, slidesPerPage, navigationStep } = useSliderState()
+  const { currentSlide, slidesPerPage } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
 
-  const handles = useCssHandles(CSS_HANDLES)
+  const { handles } = useContextCssHandles()
 
-  const isLeftEndReach = !(currentSlide - (navigationStep || 1) >= 0)
-  const isRightEndReach = !(currentSlide + 1 + slidesPerPage <= totalItems)
+  const isLeftEndReached = currentSlide === 0
+  const isRightEndReached = !(currentSlide + 1 + slidesPerPage <= totalItems)
   const disabled =
     !infinite &&
-    ((orientation === 'left' && isLeftEndReach) ||
-      (orientation === 'right' && isRightEndReach))
+    ((orientation === 'left' && isLeftEndReached) ||
+      (orientation === 'right' && isRightEndReached))
 
   useKeyboardArrows(goBack, goForward)
 

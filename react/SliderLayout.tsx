@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import { defineMessages } from 'react-intl'
+import { CssHandlesTypes, useCssHandles } from 'vtex.css-handles'
 import { useListContext } from 'vtex.list-context'
 import { useResponsiveValue } from 'vtex.responsive-values'
 
-import Slider from './components/Slider'
-import { SliderContextProvider } from './components/SliderContext'
+import Slider, { CSS_HANDLES as SliderCssHandles } from './components/Slider'
+import {
+  SliderContextProvider,
+  SliderLayoutProps,
+  SliderLayoutSiteEditorProps,
+} from './components/SliderContext'
+import { CssHandlesProvider } from './modules/cssHandles'
 
-const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
-  SliderLayoutSiteEditorProps> = ({
+export const CSS_HANDLES = SliderCssHandles
+
+interface Props {
+  /** Used to override default CSS handles */
+  classes?: CssHandlesTypes.CustomClasses<typeof CSS_HANDLES>
+}
+
+function SliderLayout({
   totalItems,
   infinite = false,
   showNavigationArrows = 'always',
@@ -22,8 +34,10 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
     tablet: 3,
     phone: 1,
   },
+  classes,
   ...contextProps
-}) => {
+}: PropsWithChildren<SliderLayoutProps & SliderLayoutSiteEditorProps & Props>) {
+  const { handles, withModifiers } = useCssHandles(CSS_HANDLES, { classes })
   const list = useListContext()?.list ?? []
   const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
@@ -34,27 +48,29 @@ const SliderLayout: StorefrontFunctionComponent<SliderLayoutProps &
   const resolvedFullWidth = fullWidth || responsiveCenterMode !== 'disabled'
 
   return (
-    <SliderContextProvider
-      infinite={infinite}
-      totalItems={totalSlides}
-      itemsPerPage={responsiveItemsPerPage}
-      centerMode={responsiveCenterMode}
-      {...contextProps}
-    >
-      <Slider
-        centerMode={responsiveCenterMode}
+    <CssHandlesProvider handles={handles} withModifiers={withModifiers}>
+      <SliderContextProvider
         infinite={infinite}
-        showNavigationArrows={showNavigationArrows}
-        showPaginationDots={showPaginationDots}
         totalItems={totalSlides}
-        usePagination={usePagination}
-        fullWidth={resolvedFullWidth}
-        arrowSize={responsiveArrowIconSize}
         itemsPerPage={responsiveItemsPerPage}
+        centerMode={responsiveCenterMode}
+        {...contextProps}
       >
-        {slides}
-      </Slider>
-    </SliderContextProvider>
+        <Slider
+          centerMode={responsiveCenterMode}
+          infinite={infinite}
+          showNavigationArrows={showNavigationArrows}
+          showPaginationDots={showPaginationDots}
+          totalItems={totalSlides}
+          usePagination={usePagination}
+          fullWidth={resolvedFullWidth}
+          arrowSize={responsiveArrowIconSize}
+          itemsPerPage={responsiveItemsPerPage}
+        >
+          {slides}
+        </Slider>
+      </SliderContextProvider>
+    </CssHandlesProvider>
   )
 }
 

@@ -1,6 +1,6 @@
 import React, { memo, FC } from 'react'
-import { useCssHandles, applyModifiers } from 'vtex.css-handles'
 
+import { useContextCssHandles } from '../modules/cssHandles'
 import { useSliderState } from './SliderContext'
 import { useSliderControls } from '../hooks/useSliderControls'
 
@@ -12,7 +12,7 @@ interface Props {
   infinite: boolean
 }
 
-const CSS_HANDLES = ['paginationDotsContainer', 'paginationDot'] as const
+export const CSS_HANDLES = ['paginationDotsContainer', 'paginationDot'] as const
 
 const getSelectedDot = (
   passVisibleSlides: boolean,
@@ -44,7 +44,7 @@ const getSlideIndices = (
 const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   const { slidesPerPage, currentSlide, navigationStep } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
-  const handles = useCssHandles(CSS_HANDLES)
+  const { handles, withModifiers } = useContextCssHandles()
   const passVisibleSlides = navigationStep === slidesPerPage
 
   const slideIndexes = getSlideIndices(
@@ -85,8 +85,8 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
 
         return (
           <div
-            className={`${applyModifiers(
-              handles.paginationDot,
+            className={`${withModifiers(
+              'paginationDot',
               isActive ? 'isActive' : ''
             )} ${
               isActive ? 'bg-emphasis' : 'bg-muted-3'

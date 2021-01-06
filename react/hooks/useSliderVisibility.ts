@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+import { SliderLayoutProps } from '../components/SliderContext'
+
 const isSlideVisible = ({
   index,
   currentSlide,

@@ -1,13 +1,15 @@
 import React from 'react'
 import { render, fireEvent } from '@vtex/test-tools/react'
 
-import SliderTrack from '../components/SliderTrack'
+import SliderTrack, { CSS_HANDLES } from '../components/SliderTrack'
 import { useSliderState } from '../components/SliderContext'
 import {
   mockInitialSlides,
   mockInitialInfiniteSliderState,
   mockInitialNonInfiniteSliderState,
 } from '../__fixtures__/SliderStateContext'
+import { useContextCssHandles } from '../modules/cssHandles'
+import { mockedUseContextCssHandlesFn } from '../__fixtures__/CssHandlesHelper'
 
 const mockDispatch = jest.fn()
 
@@ -17,6 +19,18 @@ jest.mock('../components/SliderContext', () => ({
   useSliderState: jest.fn(),
   useSliderDispatch: () => mockDispatch,
 }))
+
+jest.mock('../modules/cssHandles', () => ({
+  useContextCssHandles: jest.fn(),
+}))
+
+const mockedUseContextCssHandles = useContextCssHandles as jest.Mock<
+  ReturnType<typeof useContextCssHandles>
+>
+
+mockedUseContextCssHandles.mockImplementation(() =>
+  mockedUseContextCssHandlesFn(CSS_HANDLES)
+)
 
 describe('Basic rendering', () => {
   mockedUseSliderState.mockImplementation(() => mockInitialInfiniteSliderState)
