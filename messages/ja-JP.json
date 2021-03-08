@@ -1,0 +1,9 @@
+{
+  "admin/editor.slider-layout.title": "スライダーレイアウト",
+  "admin/editor.slider-layout.infinite": "上限なし",
+  "admin/editor.slider-layout.showNavigation": "方向矢印を表示する",
+  "admin/editor.slider-layout.showPaginationDots": "ページネーションドットを表示する",
+  "admin/editor.slider-layout.usePagination": "ページネーションを使う",
+  "admin/editor.slider-layout.sliderFullWidth": "全幅",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "スライドが最大幅を埋め、最上部に矢印が表示されるようにするかどうかを制御します。"
+}

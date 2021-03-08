@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- I18n Ro.
+- I18n Ro and Jp.
+
+### Fixed
+
+- Crowdin configuration file.
+
 ## [0.17.0] - 2021-01-06
 ### Added
 - Prop `classes` to SliderLayout.
