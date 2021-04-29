@@ -1,0 +1,9 @@
+{
+  "admin/editor.slider-layout.title": "Disposition du curseur",
+  "admin/editor.slider-layout.infinite": "Infini",
+  "admin/editor.slider-layout.showNavigation": "Afficher les flèches de navigation",
+  "admin/editor.slider-layout.showPaginationDots": "Afficher les points de pagination",
+  "admin/editor.slider-layout.usePagination": "Utiliser la pagination",
+  "admin/editor.slider-layout.sliderFullWidth": "Largeur totale",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Vérifie si les diapos doivent ou non remplir toute la largeur disponible, en faisant apparaître les flèches au-dessus d’elles."
+}
