@@ -1,0 +1,9 @@
+{
+  "admin/editor.slider-layout.title": "Schuifregelaar layout",
+  "admin/editor.slider-layout.infinite": "Oneindig",
+  "admin/editor.slider-layout.showNavigation": "Toon navigatiepijlen",
+  "admin/editor.slider-layout.showPaginationDots": "Toon pagineringstippen",
+  "admin/editor.slider-layout.usePagination": "Gebruik paginering",
+  "admin/editor.slider-layout.sliderFullWidth": "Volledige breedte",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Bepaalt of de dia's de volledige beschikbare breedte moeten vullen, waardoor de pijlen erboven verschijnen."
+}
