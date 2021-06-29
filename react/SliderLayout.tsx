@@ -29,6 +29,7 @@ function SliderLayout({
   arrowSize = 25,
   children,
   centerMode = 'disabled',
+  centerModeSlidesGap = undefined,
   itemsPerPage = {
     desktop: 5,
     tablet: 3,
@@ -54,10 +55,12 @@ function SliderLayout({
         totalItems={totalSlides}
         itemsPerPage={responsiveItemsPerPage}
         centerMode={responsiveCenterMode}
+        centerModeSlidesGap={centerModeSlidesGap}
         {...contextProps}
       >
         <Slider
           centerMode={responsiveCenterMode}
+          centerModeSlidesGap={centerModeSlidesGap}
           infinite={infinite}
           showNavigationArrows={showNavigationArrows}
           showPaginationDots={showPaginationDots}
