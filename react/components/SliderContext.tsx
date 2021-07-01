@@ -96,7 +96,7 @@ export interface SliderLayoutProps {
   centerMode?: ResponsiveValuesTypes.ResponsiveValue<
     'center' | 'to-the-left' | 'disabled'
   >
-  centerModeSlidesGap?: number | undefined
+  centerModeSlidesGap?: number
 }
 
 interface State extends Partial<SliderLayoutProps> {
