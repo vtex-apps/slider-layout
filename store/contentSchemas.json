@@ -3,6 +3,21 @@
     "SliderLayout": {
       "type": "object",
       "properties": {
+        "autoplay": {
+          "title": "admin/editor.slider-layout.autoplay",
+          "properties": {
+            "timeout": {
+              "title": "admin/editor.slider-layout.timeout",
+              "type": "number",
+              "default": 0
+            },
+            "stopOnHover": {
+              "default": false,
+              "title": "admin/editor.slider-layout.stopOnHover",
+              "type": "boolean"
+            }
+          }
+        },
         "infinite": {
           "default": true,
           "title": "admin/editor.slider-layout.infinite",
