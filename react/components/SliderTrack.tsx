@@ -20,6 +20,7 @@ interface Props {
   infinite: boolean
   usePagination: boolean
   centerMode: SliderLayoutProps['centerMode']
+  centerModeSlidesGap: SliderLayoutProps['centerModeSlidesGap']
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
@@ -63,6 +64,7 @@ const SliderTrack: FC<Props> = ({
   infinite,
   usePagination,
   centerMode,
+  centerModeSlidesGap,
   totalItems,
   children,
 }) => {
@@ -162,12 +164,20 @@ const SliderTrack: FC<Props> = ({
         const slideContainerStyles = {
           width: `${slideWidth}%`,
           marginLeft:
-            centerMode !== 'disabled'
+            centerMode !== 'disabled' && !centerModeSlidesGap
               ? `${slideWidth / (8 * slidesPerPage)}%`
               : undefined,
           marginRight:
-            centerMode !== 'disabled'
+            centerMode !== 'disabled' && !centerModeSlidesGap
               ? `${slideWidth / (8 * slidesPerPage)}%`
+              : undefined,
+          paddingLeft:
+            centerMode !== 'disabled' && centerModeSlidesGap
+              ? centerModeSlidesGap / 2
+              : undefined,
+          paddingRight:
+            centerMode !== 'disabled' && centerModeSlidesGap
+              ? centerModeSlidesGap / 2
               : undefined,
         }
 

@@ -77,6 +77,7 @@ Now, you are able to use all blocks exported by the `slider-layout` app. Check o
 | `fullWidth`            | `boolean` | Whether the slides should occupy the full page width, making the arrows appear on top of them (`true`) or not (`false`). |`true` |
 | `arrowSize`            | `number` / `object`   | Slider arrows size (height and width) in pixels. This is a responsive prop, which means you can pass to it an object with different values for each breakpoint (`desktop`, `mobile`, `tablet`, and `phone`).  | `25`  |
 | `centerMode`            | `enum` / `object`   | Defines the slider elements positioning on the screen. Possible values are: `center` (elements are centered, allowing users to see a peek of the previous and next slides), `to-the-left` (align elements to the left side, allowing users to see a peek of the next slide, but not the previous one), and `disabled` (disables the feature, rendering elements on the whole screen without taking a peek in the previous and next slides). Notice: This is a responsive prop, which means you can pass to it an object with different values for each breakpoint (`desktop`, `mobile`, `tablet`, and `phone`).  | `disabled`  |
+| `centerModeSlidesGap`   | `number` | Number of pixels between slides when `centerMode` is set to `center` or `to-the-left`. | `undefined`  |
 
 - **`itemsPerPage` object**
 

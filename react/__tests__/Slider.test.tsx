@@ -42,6 +42,7 @@ describe('Basic rendering', () => {
     const { getByTestId, getByLabelText } = render(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="always"
@@ -68,6 +69,7 @@ describe('Basic rendering', () => {
     const { getByLabelText, queryByTestId, queryByLabelText } = render(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="always"
@@ -96,6 +98,7 @@ describe('Basic rendering', () => {
     const { getByLabelText, queryByTestId, queryByLabelText } = render(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={3}
         itemsPerPage={5}
         showNavigationArrows="always"
@@ -126,6 +129,7 @@ describe('Basic rendering', () => {
     const { getByLabelText } = render(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="always"
@@ -154,6 +158,7 @@ describe('Behavior upon interaction', () => {
     const { queryByTestId, queryByLabelText, rerender } = render(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="mobileOnly"
@@ -177,6 +182,7 @@ describe('Behavior upon interaction', () => {
     rerender(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="desktopOnly"
@@ -200,6 +206,7 @@ describe('Behavior upon interaction', () => {
     rerender(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="always"
@@ -223,6 +230,7 @@ describe('Behavior upon interaction', () => {
     rerender(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="never"
@@ -250,6 +258,7 @@ describe('Behavior upon interaction', () => {
     const { queryByTestId, queryByLabelText, rerender } = render(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="mobileOnly"
@@ -273,6 +282,7 @@ describe('Behavior upon interaction', () => {
     rerender(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="desktopOnly"
@@ -296,6 +306,7 @@ describe('Behavior upon interaction', () => {
     rerender(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="always"
@@ -319,6 +330,7 @@ describe('Behavior upon interaction', () => {
     rerender(
       <Slider
         centerMode="disabled"
+        centerModeSlidesGap={undefined}
         totalItems={10}
         itemsPerPage={5}
         showNavigationArrows="never"
