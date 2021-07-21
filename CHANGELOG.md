@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - New `centerModeSlidesGap` prop.
 
+## [0.19.2] - 2021-07-15
+
+### Fixed
+
+- Broken link in documentation
+
 ## [0.19.1] - 2021-06-17
 
 ### Fixed
