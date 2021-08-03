@@ -29,7 +29,7 @@ function SliderLayout({
   arrowSize = 25,
   children,
   centerMode = 'disabled',
-  centerModeSlidesGap = undefined,
+  centerModeSlidesGap,
   itemsPerPage = {
     desktop: 5,
     tablet: 3,
