@@ -249,7 +249,8 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     if (centerMode !== 'disabled') {
       resultingSlideWidth =
         (resolvedSlidesPerPage / (resolvedSlidesPerPage + 1)) * baseSlideWidth
-      if(centerMode !== 'center' && centerModeSlidesGap) {
+
+      if (centerMode === 'to-the-left' && centerModeSlidesGap) {
         resultingSlideWidth =
           baseSlideWidth * resolvedSlidesPerPage / (resolvedSlidesPerPage + 1 / 2)
       }
