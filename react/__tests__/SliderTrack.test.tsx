@@ -43,7 +43,6 @@ describe('Basic rendering', () => {
     const { getByTestId, rerender } = render(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
@@ -62,7 +61,7 @@ describe('Basic rendering', () => {
 
     // slidesPerPage === totalItems
     rerender(
-      <SliderTrack centerMode="disabled" centerModeSlidesGap={undefined} usePagination totalItems={5} infinite>
+      <SliderTrack centerMode="disabled" usePagination totalItems={5} infinite>
         {mockInitialSlides}
       </SliderTrack>
     )
@@ -73,7 +72,7 @@ describe('Basic rendering', () => {
 
     // slidesPerPage > totalItems
     rerender(
-      <SliderTrack centerMode="disabled" centerModeSlidesGap={undefined} usePagination totalItems={3} infinite>
+      <SliderTrack centerMode="disabled" usePagination totalItems={3} infinite>
         {mockInitialSlides}
       </SliderTrack>
     )
@@ -84,7 +83,7 @@ describe('Basic rendering', () => {
   it('should render with correct translate3d(x, y, z), set to the initial slide', () => {
     // infinite slider
     const { getByTestId, rerender } = render(
-      <SliderTrack centerMode="disabled" centerModeSlidesGap={undefined} usePagination totalItems={10} infinite>
+      <SliderTrack centerMode="disabled" usePagination totalItems={10} infinite>
         {mockInitialSlides}
       </SliderTrack>
     )
@@ -103,7 +102,6 @@ describe('Basic rendering', () => {
     rerender(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={10}
         infinite={false}
@@ -124,7 +122,6 @@ describe('Basic rendering', () => {
     const { getByTestId, rerender } = render(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
@@ -159,7 +156,6 @@ describe('Basic rendering', () => {
     rerender(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite={false}
@@ -184,7 +180,6 @@ describe('Basic rendering', () => {
     const { rerender, queryByText } = render(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite
@@ -207,7 +202,6 @@ describe('Basic rendering', () => {
     rerender(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite={false}
@@ -231,7 +225,6 @@ describe('Basic rendering', () => {
     const { rerender, queryByText, queryAllByText } = render(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination={false}
         totalItems={TOTAL_ITEMS}
         infinite
@@ -254,7 +247,6 @@ describe('Basic rendering', () => {
     rerender(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination={false}
         totalItems={TOTAL_ITEMS}
         infinite={false}
@@ -285,7 +277,6 @@ describe('Behavior upon interaction', () => {
     const { getByTestId, rerender } = render(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         totalItems={TOTAL_ITEMS}
         infinite
         usePagination
@@ -317,7 +308,6 @@ describe('Behavior upon interaction', () => {
     rerender(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         totalItems={TOTAL_ITEMS}
         infinite
         usePagination
@@ -355,7 +345,6 @@ describe('Accessibility', () => {
     const { getByTestId, getByLabelText } = render(
       <SliderTrack
         centerMode="disabled"
-        centerModeSlidesGap={undefined}
         usePagination
         totalItems={TOTAL_ITEMS}
         infinite

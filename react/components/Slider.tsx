@@ -23,7 +23,7 @@ interface Props extends SliderLayoutSiteEditorProps {
   totalItems: number
   itemsPerPage: number
   centerMode: SliderLayoutProps['centerMode']
-  centerModeSlidesGap: SliderLayoutProps['centerModeSlidesGap']
+  centerModeSlidesGap?: SliderLayoutProps['centerModeSlidesGap']
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
