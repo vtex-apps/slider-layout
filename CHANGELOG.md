@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Fixed
-- `SliderTrack`: prevent duplicate images with `analyticsProperties`
+- `SliderTrack`: prevent duplicate images with `analyticsProperties: provide` on infinite mode.
 
 ## [0.19.2] - 2021-07-15
 
