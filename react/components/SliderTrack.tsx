@@ -64,12 +64,10 @@ const removeAnalyticsProperties = (children: ReactElement[]) => {
     React.Children.map(children, child =>
       typeof child === 'string' || typeof child === 'number'
         ? child
-        : cloneElement<{ analyticsProperties?: string }>(child, {
+        : cloneElement(child, {
             ...child.props,
-            // This prevent to trigger twice the promoView events
-            ...(child.props?.analyticsProperties
-              ? { analyticsProperties: 'none' }
-              : {}),
+            // Tells the component it is being duplicated. Each component should handle it
+            __isDuplicated: true,
           })
     )
   )

@@ -6,8 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Fixed
-- `SliderTrack`: prevent duplicate images with `analyticsProperties: provide` on infinite mode.
+### Added
+- `SliderTrack`: Pass `__isDuplicated` prop to duplicated child.
 
 ## [0.19.2] - 2021-07-15
 
