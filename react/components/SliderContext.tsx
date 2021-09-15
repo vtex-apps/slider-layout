@@ -252,7 +252,8 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
       if (centerMode === 'to-the-left' && centerModeSlidesGap) {
         resultingSlideWidth =
-          baseSlideWidth * resolvedSlidesPerPage / (resolvedSlidesPerPage + 1 / 2)
+          (baseSlideWidth * resolvedSlidesPerPage) /
+          (resolvedSlidesPerPage + 1 / 2)
       }
     }
 
@@ -287,20 +288,26 @@ const SliderContextProvider: FC<SliderContextProps> = ({
           transformValue += transformCenterCorrection
         }
 
-        if(centerModeSlidesGap) {
+        if (centerModeSlidesGap) {
           transformValue =
             centerMode === 'center'
               ? -(slideWidth * (idx - 1 / 2))
               : -(slideWidth * idx)
         }
-
       }
 
       currentMap[currIdx] = transformValue
     }
 
     return currentMap
-  }, [slideWidth, newTotalItems, resolvedSlidesPerPage, infinite, centerMode, centerModeSlidesGap])
+  }, [
+    slideWidth,
+    newTotalItems,
+    resolvedSlidesPerPage,
+    infinite,
+    centerMode,
+    centerModeSlidesGap,
+  ])
 
   const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
     sliderGroupState,
