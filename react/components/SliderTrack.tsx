@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import React, { cloneElement, FC, ReactElement, ReactNode } from 'react'
 
 import {
   useSliderState,
@@ -60,6 +60,20 @@ const getFirstOrLastVisible = (slidesPerPage: number, index: number) => {
   return ''
 }
 
+const removeAnalyticsProperties = (children: ReactElement[]) => {
+  return React.Children.toArray(
+    React.Children.map(children, child =>
+      typeof child === 'string' || typeof child === 'number'
+        ? child
+        : cloneElement(child, {
+            ...child.props,
+            // Tells the component it is being duplicated. Each component should handle it
+            __isDuplicated: true,
+          })
+    )
+  )
+}
+
 const SliderTrack: FC<Props> = ({
   infinite,
   usePagination,
@@ -91,10 +105,19 @@ const SliderTrack: FC<Props> = ({
   })
 
   const postRenderedSlides =
-    infinite && children ? children.slice(0, slidesPerPage) : []
+    infinite && children
+      ? removeAnalyticsProperties(children as ReactElement[]).slice(
+          0,
+          slidesPerPage
+        )
+      : []
 
   const preRenderedSlides =
-    infinite && children ? children.slice(children.length - slidesPerPage) : []
+    infinite && children
+      ? removeAnalyticsProperties(children as ReactElement[]).slice(
+          children.length - slidesPerPage
+        )
+      : []
 
   const slides = preRenderedSlides.concat(children ?? [], postRenderedSlides)
 
