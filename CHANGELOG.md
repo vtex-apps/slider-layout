@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - I18n Bg and Ds (pseudo-language to implement in-context tool).
 
+### Fixed
+- I18n Es and It. 
+
 ## [0.20.0] - 2021-09-15
 ### Added
 - `SliderTrack`: Pass `__isDuplicated` prop to duplicated child.
