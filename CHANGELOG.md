@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - New `centerModeSlidesGap` prop.
 
+
 ## [0.20.0] - 2021-09-15
 ### Added
 - `SliderTrack`: Pass `__isDuplicated` prop to duplicated child.
