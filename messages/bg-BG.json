@@ -1,0 +1,9 @@
+{
+  "admin/editor.slider-layout.title": "Оформление на слайдера",
+  "admin/editor.slider-layout.infinite": "Безкрайно",
+  "admin/editor.slider-layout.showNavigation": "Показване на навигационни стрелки",
+  "admin/editor.slider-layout.showPaginationDots": "Показване на точки за страниране",
+  "admin/editor.slider-layout.usePagination": "Използване на страниране",
+  "admin/editor.slider-layout.sliderFullWidth": "Пълна ширина",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Контролира дали слайдовете да изпълват цялата налична ширина, а стрелките да се виждат върху тях."
+}
