@@ -96,6 +96,7 @@ export interface SliderLayoutProps {
   centerMode?: ResponsiveValuesTypes.ResponsiveValue<
     'center' | 'to-the-left' | 'disabled'
   >
+  centerModeSlidesGap?: number
 }
 
 interface State extends Partial<SliderLayoutProps> {
@@ -217,6 +218,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     delay: 0,
     timing: '',
   },
+  centerModeSlidesGap,
 }) => {
   const sliderGroupState = useSliderGroupState()
 
@@ -247,10 +249,16 @@ const SliderContextProvider: FC<SliderContextProps> = ({
     if (centerMode !== 'disabled') {
       resultingSlideWidth =
         (resolvedSlidesPerPage / (resolvedSlidesPerPage + 1)) * baseSlideWidth
+
+      if (centerMode === 'to-the-left' && centerModeSlidesGap) {
+        resultingSlideWidth =
+          (baseSlideWidth * resolvedSlidesPerPage) /
+          (resolvedSlidesPerPage + 1 / 2)
+      }
     }
 
     return resultingSlideWidth
-  }, [newTotalItems, centerMode, resolvedSlidesPerPage])
+  }, [newTotalItems, centerMode, centerModeSlidesGap, resolvedSlidesPerPage])
 
   const transformMap = useMemo(() => {
     const currentMap: Record<number, number> = {}
@@ -279,13 +287,27 @@ const SliderContextProvider: FC<SliderContextProps> = ({
 
           transformValue += transformCenterCorrection
         }
+
+        if (centerModeSlidesGap) {
+          transformValue =
+            centerMode === 'center'
+              ? -(slideWidth * (idx - 1 / 2))
+              : -(slideWidth * idx)
+        }
       }
 
       currentMap[currIdx] = transformValue
     }
 
     return currentMap
-  }, [slideWidth, newTotalItems, resolvedSlidesPerPage, infinite, centerMode])
+  }, [
+    slideWidth,
+    newTotalItems,
+    resolvedSlidesPerPage,
+    infinite,
+    centerMode,
+    centerModeSlidesGap,
+  ])
 
   const initialSlide = useMemo(() => sliderGroupState?.currentSlide ?? 0, [
     sliderGroupState,
