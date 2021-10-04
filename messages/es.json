@@ -5,5 +5,5 @@
   "admin/editor.slider-layout.showPaginationDots": "Mostrar puntos de paginación",
   "admin/editor.slider-layout.usePagination": "Usar paginación",
   "admin/editor.slider-layout.sliderFullWidth": "Anchura completa",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controle si las diapositivas deben ocupar la anchura completa y hacer que las flechas desaparezcan encima de ellas."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controla si las diapositivas deben ocupar la anchura completa y hacer que las flechas desaparezcan encima de ellas."
 }
