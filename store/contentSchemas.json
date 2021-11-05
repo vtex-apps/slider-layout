@@ -10,13 +10,23 @@
         },
         "showNavigationArrows": {
           "default": "always",
-          "enum": ["mobileOnly", "desktopOnly", "always", "never"],
+          "enum": [
+            "mobileOnly",
+            "desktopOnly",
+            "always",
+            "never"
+          ],
           "title": "admin/editor.slider-layout.showNavigation",
           "type": "string"
         },
         "showPaginationDots": {
           "default": "always",
-          "enum": ["mobileOnly", "desktopOnly", "always", "never"],
+          "enum": [
+            "mobileOnly",
+            "desktopOnly",
+            "always",
+            "never"
+          ],
           "title": "admin/editor.slider-layout.showPaginationDots",
           "type": "string"
         },
@@ -30,6 +40,21 @@
           "title": "admin/editor.slider-layout.sliderFullWidth",
           "description": "admin/editor.slider-layout.sliderFullWidthDescription",
           "type": "boolean"
+        },
+        "autoplay": {
+          "title": "admin/editor.slider-layout.autoplay",
+          "properties": {
+            "timeout": {
+              "title": "admin/editor.slider-layout.timeout",
+              "type": "number",
+              "default": 0
+            },
+            "stopOnHover": {
+              "default": false,
+              "title": "admin/editor.slider-layout.stopOnHover",
+              "type": "boolean"
+            }
+          }
         }
       }
     }

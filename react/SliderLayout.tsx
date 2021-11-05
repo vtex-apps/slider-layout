@@ -106,6 +106,18 @@ const messages = defineMessages({
     id: 'admin/editor.slider-layout.sliderFullWidthDescription',
     defaultMessage: '',
   },
+  sliderAutoplay: {
+    id: 'admin/editor.slider-layout.autoplay',
+    defaultMessage: '',
+  },
+  sliderTimeout: {
+    id: 'admin/editor.slider-layout.timeout',
+    defaultMessage: '',
+  },
+  sliderStopOnHover: {
+    id: 'admin/editor.slider-layout.stopOnHover',
+    defaultMessage: '',
+  }
 })
 
 SliderLayout.schema = {

@@ -5,5 +5,8 @@
   "admin/editor.slider-layout.showPaginationDots": "페이지 번호 점 표시",
   "admin/editor.slider-layout.usePagination": "페이지 번호 사용",
   "admin/editor.slider-layout.sliderFullWidth": "전체 넓이",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "슬라이드가 사용 가능한 전체 너비를 채워, 화살표가 맨 위에 나타나는지 여부를 제어합니다."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "슬라이드가 사용 가능한 전체 너비를 채워, 화살표가 맨 위에 나타나는지 여부를 제어합니다.",
+  "admin/editor.slider-layout.autoplay": "Autoplay",
+  "admin/editor.slider-layout.stopOnHover": "Autoplay's Stop on hover",
+  "admin/editor.slider-layout.timeout": "Autoplay's Timeout"
 }

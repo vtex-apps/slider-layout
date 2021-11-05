@@ -5,5 +5,8 @@
   "admin/editor.slider-layout.showPaginationDots": "Mostrar indicadores de paginação",
   "admin/editor.slider-layout.usePagination": "Usar paginação",
   "admin/editor.slider-layout.sliderFullWidth": "Largura completa",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controla se os slides devem ou não ocupar toda a largura disponível, fazendo as setas aparecerem sobre eles."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controla se os slides devem ou não ocupar toda a largura disponível, fazendo as setas aparecerem sobre eles.",
+  "admin/editor.slider-layout.autoplay": "Autoplay",
+  "admin/editor.slider-layout.stopOnHover": "Autoplay's Stop on hover",
+  "admin/editor.slider-layout.timeout": "Autoplay's Timeout"
 }
