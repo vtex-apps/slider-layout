@@ -5,8 +5,8 @@
   "admin/editor.slider-layout.showPaginationDots": "Mostrar puntos de paginación",
   "admin/editor.slider-layout.usePagination": "Usar paginación",
   "admin/editor.slider-layout.sliderFullWidth": "Anchura completa",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controle si las diapositivas deben ocupar la anchura completa y hacer que las flechas desaparezcan encima de ellas.",
-  "admin/editor.slider-layout.autoplay": "Autoplay",
-  "admin/editor.slider-layout.stopOnHover": "Autoplay's Stop on hover",
-  "admin/editor.slider-layout.timeout": "Autoplay's Timeout"
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controla si los slides deben o no ocupar todo el ancho disponible, haciendo que las flechas aparezcan encima de ellos.",
+  "admin/editor.slider-layout.autoplay": "Reproducción automática",
+  "admin/editor.slider-layout.stopOnHover": "Parar reproducción automática al pasar el cursor",
+  "admin/editor.slider-layout.timeout": "Timeout de reproducción automática"
 }
