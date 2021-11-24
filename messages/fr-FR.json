@@ -6,7 +6,7 @@
   "admin/editor.slider-layout.usePagination": "Utiliser la pagination",
   "admin/editor.slider-layout.sliderFullWidth": "Largeur totale",
   "admin/editor.slider-layout.sliderFullWidthDescription": "Vérifie si les diapos doivent ou non remplir toute la largeur disponible, en faisant apparaître les flèches au-dessus d’elles.",
-  "admin/editor.slider-layout.autoplay": "Autoplay",
-  "admin/editor.slider-layout.stopOnHover": "Autoplay's Stop on hover",
-  "admin/editor.slider-layout.timeout": "Autoplay's Timeout"
+  "admin/editor.slider-layout.autoplay": "Lecture automatique",
+  "admin/editor.slider-layout.stopOnHover": "Arrêt de la lecture automatique au survol",
+  "admin/editor.slider-layout.timeout": "Délai de lecture automatique"
 }
