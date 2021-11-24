@@ -5,8 +5,8 @@
   "admin/editor.slider-layout.showPaginationDots": "Mostra punti di impaginazione",
   "admin/editor.slider-layout.usePagination": "Utilizza impaginazione",
   "admin/editor.slider-layout.sliderFullWidth": "Larghezza massima",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controlla se le diapositive debbano occupare o meno l'intera larghezza disponibile, facendo in modo che le frecce appaiano su di esse.",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controlla se le diapositive debbano riempire o meno l'intera larghezza disponibile, facendo in modo che le frecce appaiano su di esse.",
   "admin/editor.slider-layout.autoplay": "Autoplay",
-  "admin/editor.slider-layout.stopOnHover": "Autoplay's Stop on hover",
-  "admin/editor.slider-layout.timeout": "Autoplay's Timeout"
+  "admin/editor.slider-layout.stopOnHover": "Ferma autoplay al passaggio del mouse",
+  "admin/editor.slider-layout.timeout": "Timeout dell'autoplay"
 }
