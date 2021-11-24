@@ -5,5 +5,8 @@
   "admin/editor.slider-layout.showPaginationDots": "crwdns133762:0crwdne133762:0",
   "admin/editor.slider-layout.usePagination": "crwdns133764:0crwdne133764:0",
   "admin/editor.slider-layout.sliderFullWidth": "crwdns133766:0crwdne133766:0",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "crwdns133768:0crwdne133768:0"
+  "admin/editor.slider-layout.sliderFullWidthDescription": "crwdns133768:0crwdne133768:0",
+  "admin/editor.slider-layout.autoplay": "Autoplay",
+  "admin/editor.slider-layout.stopOnHover": "Autoplay's Stop on hover",
+  "admin/editor.slider-layout.timeout": "Autoplay's Timeout"
 }
