@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Spanish translation.
+
+### Removed
+- Pseudolanguage.
+
 ## [0.22.0] - 2021-09-30
+
 ### Added
 - `centerModeSlidesGap` prop.
 
