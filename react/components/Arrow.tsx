@@ -13,6 +13,7 @@ interface Props {
   totalItems: number
   infinite: boolean
   arrowSize: number
+  useKeyboardArrow: boolean
 }
 
 export const CSS_HANDLES = [
@@ -28,6 +29,7 @@ const Arrow: FC<Props> = ({
   totalItems,
   infinite,
   arrowSize,
+  useKeyboardArrow
 }) => {
   const { currentSlide, slidesPerPage } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
@@ -41,7 +43,7 @@ const Arrow: FC<Props> = ({
     ((orientation === 'left' && isLeftEndReached) ||
       (orientation === 'right' && isRightEndReached))
 
-  useKeyboardArrows(goBack, goForward)
+  useKeyboardArrow && useKeyboardArrows(goBack, goForward)
 
   function handleArrowClick(
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

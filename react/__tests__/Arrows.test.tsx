@@ -60,6 +60,7 @@ describe('Accessibility', () => {
           totalItems={20}
           orientation="left"
           controls="slider-items"
+          useKeyboardArrow
         />
         <Arrow
           infinite
@@ -67,6 +68,7 @@ describe('Accessibility', () => {
           totalItems={20}
           orientation="right"
           controls="slider-items"
+          useKeyboardArrow
         />
       </Fragment>
     )
@@ -92,6 +94,7 @@ describe('Behavior upon interaction', () => {
         totalItems={20}
         orientation="right"
         controls="slider-items"
+        useKeyboardArrow
       />
     )
 
@@ -109,6 +112,7 @@ describe('Behavior upon interaction', () => {
         totalItems={20}
         orientation="left"
         controls="slider-items"
+        useKeyboardArrow
       />
     )
 
@@ -126,6 +130,7 @@ describe('Behavior upon interaction', () => {
         totalItems={10}
         orientation="left"
         controls="slider-items"
+        useKeyboardArrow
       />
     )
 
@@ -149,6 +154,7 @@ describe('Behavior upon interaction', () => {
         totalItems={10}
         orientation="right"
         controls="slider-items"
+        useKeyboardArrow
       />
     )
 

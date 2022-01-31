@@ -50,6 +50,7 @@ describe('Basic rendering', () => {
         fullWidth
         infinite
         usePagination
+        useKeyboardArrow
       />
     )
 
@@ -76,6 +77,7 @@ describe('Basic rendering', () => {
         arrowSize={25}
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -104,6 +106,7 @@ describe('Basic rendering', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -134,6 +137,7 @@ describe('Basic rendering', () => {
         arrowSize={25}
         usePagination
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -162,6 +166,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -185,6 +190,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -208,6 +214,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -231,6 +238,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -258,6 +266,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -281,6 +290,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -304,6 +314,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 
@@ -327,6 +338,7 @@ describe('Behavior upon interaction', () => {
         usePagination
         fullWidth
         infinite
+        useKeyboardArrow
       />
     )
 

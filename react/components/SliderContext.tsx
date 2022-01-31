@@ -97,6 +97,7 @@ export interface SliderLayoutProps {
     'center' | 'to-the-left' | 'disabled'
   >
   centerModeSlidesGap?: number
+  useKeyboardArrow?: boolean
 }
 
 interface State extends Partial<SliderLayoutProps> {
