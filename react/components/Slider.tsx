@@ -24,6 +24,7 @@ interface Props extends SliderLayoutSiteEditorProps {
   itemsPerPage: number
   centerMode: SliderLayoutProps['centerMode']
   centerModeSlidesGap?: SliderLayoutProps['centerModeSlidesGap']
+  useKeyboardArrow: boolean
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
@@ -49,6 +50,7 @@ const Slider: FC<Props> = ({
   itemsPerPage,
   centerMode,
   centerModeSlidesGap,
+  useKeyboardArrow
 }) => {
   const { handles } = useContextCssHandles()
   const { isMobile } = useDevice()
@@ -129,6 +131,7 @@ const Slider: FC<Props> = ({
             controls={controls}
             infinite={infinite}
             arrowSize={arrowSize}
+            useKeyboardArrow={useKeyboardArrow}
           />
           <Arrow
             totalItems={totalItems}
@@ -136,6 +139,7 @@ const Slider: FC<Props> = ({
             controls={controls}
             infinite={infinite}
             arrowSize={arrowSize}
+            useKeyboardArrow={useKeyboardArrow}
           />
         </Fragment>
       )}

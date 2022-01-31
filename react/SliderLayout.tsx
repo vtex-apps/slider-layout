@@ -25,6 +25,7 @@ function SliderLayout({
   showNavigationArrows = 'always',
   showPaginationDots = 'always',
   usePagination = true,
+  useKeyboardArrow = true,
   fullWidth = true,
   arrowSize = 25,
   children,
@@ -62,6 +63,7 @@ function SliderLayout({
           centerMode={responsiveCenterMode}
           centerModeSlidesGap={centerModeSlidesGap}
           infinite={infinite}
+          useKeyboardArrow={useKeyboardArrow}
           showNavigationArrows={showNavigationArrows}
           showPaginationDots={showPaginationDots}
           totalItems={totalSlides}
