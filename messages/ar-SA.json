@@ -1,0 +1,9 @@
+{
+  "admin/editor.slider-layout.title": "تصميم شريط التمرير",
+  "admin/editor.slider-layout.infinite": "بدون حدود",
+  "admin/editor.slider-layout.showNavigation": "إظهار أسهم التنقل",
+  "admin/editor.slider-layout.showPaginationDots": "إظهار نقاط تحديد الصفحات",
+  "admin/editor.slider-layout.usePagination": "استخدام تحديد الصفحات",
+  "admin/editor.slider-layout.sliderFullWidth": "العرض الكامل",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "يتحكم في ما إذا كان يجب أن تملأ الشرائح العرض المتاح بالكامل، مما يجعل الأسهم تظهر فوقها."
+}
