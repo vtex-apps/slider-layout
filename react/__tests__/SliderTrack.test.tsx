@@ -323,8 +323,8 @@ describe('Behavior upon interaction', () => {
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'ADJUST_CURRENT_SLIDE',
       payload: {
-        currentSlide: 5,
-        transform: mockInitialInfiniteSliderState.transformMap[5],
+        currentSlide: 8,
+        transform: mockInitialInfiniteSliderState.transformMap[8],
       },
     })
   })

@@ -40,7 +40,7 @@ export const mockInitialInfiniteSliderState = {
     '-2': -15,
     '-1': -20,
   },
-  navigationStep: 5,
+  navigationStep: 2,
   slideTransition: {
     speed: 400,
     delay: 0,

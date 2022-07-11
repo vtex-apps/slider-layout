@@ -84,6 +84,7 @@ const SliderTrack: FC<Props> = ({
 }) => {
   const {
     slideWidth,
+    navigationStep,
     slidesPerPage,
     currentSlide,
     isOnTouchMove,
@@ -163,8 +164,8 @@ const SliderTrack: FC<Props> = ({
           dispatch({
             type: 'ADJUST_CURRENT_SLIDE',
             payload: {
-              currentSlide: totalItems - slidesPerPage,
-              transform: transformMap[totalItems - slidesPerPage],
+              currentSlide: totalItems - navigationStep,
+              transform: transformMap[totalItems - navigationStep],
             },
           })
           groupDispatch?.({
