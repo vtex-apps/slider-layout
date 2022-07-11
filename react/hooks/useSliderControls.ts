@@ -24,13 +24,13 @@ export const useSliderControls = (infinite: boolean) => {
       /** Have more slides hidden on left */
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
-    } else if (nextMaximumSlides < 0 && currentSlide !== 0) {
-      /** Prevent over-slide */
-      nextSlide = 0
-      nextTransformValue = 0
     } else if (infinite) {
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
+    } else if (nextMaximumSlides < 0) {
+      /** Prevent over-slide */
+      nextSlide = 0
+      nextTransformValue = 0
     }
 
     if (groupDispatch) {
