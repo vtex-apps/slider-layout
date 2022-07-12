@@ -108,17 +108,52 @@ describe('useSliderControls', () => {
   })
 
   describe('goForward()', () => {
-    it.todo(
-      'should dispatch a SLIDE action to go forward exactly one page when goForward() is called with no arguments'
-    )
-    it.todo(
-      'should dispatch a SLIDE action to go forward `step` pages when goForward() is called'
-    )
-    it.todo(
-      `should prevent SLIDE action to set \`currentSlide\` to a number greater than the total slides count if the
-       slider is not an infinite one`
-    )
-    it.todo('should prevent over-sliding forwards')
+    it('should dispatch a SLIDE action to go forward exactly one page when goForward() is called with no arguments', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goForward()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 2,
+          transform: mockInitialInfiniteSliderState.transformMap[2],
+        },
+      })
+    })
+    it('should dispatch a SLIDE action to go forward `step` pages when goForward() is called', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goForward(4)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 4,
+          transform: mockInitialInfiniteSliderState.transformMap[4],
+        },
+      })
+    })
+    it(`should dispatch SLIDE action to set \`currentSlide\` to the start of the last page if slider is not an infinite one`, async () => {
+      mockSliderInitialState = mockInitialNonInfiniteSliderState
+      mockSliderInitialState.currentSlide = 7
+      const { result } = renderHook(() => useSliderControls(false))
+
+      await act(() => Promise.resolve())
+      result.current.goForward(4)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 5,
+          transform: mockInitialInfiniteSliderState.transformMap[5],
+        },
+      })
+    })
   })
 })
 
