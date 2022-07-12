@@ -1,3 +1,22 @@
+import { hooks } from '@vtex/test-tools/react'
+
+import { useSliderState } from '../components/SliderContext'
+import { useSliderControls } from '../hooks/useSliderControls'
+import { mockInitialInfiniteSliderState } from '../__fixtures__/SliderStateContext'
+
+const { renderHook, act } = hooks
+
+const mockDispatch = jest.fn()
+
+jest.mock('../components/SliderContext', () => ({
+  useSliderState: () => mockInitialInfiniteSliderState,
+  useSliderDispatch: () => mockDispatch,
+}))
+
+beforeEach(() => {
+  mockDispatch.mockClear()
+})
+
 describe('useAutoplay', () => {
   it.todo('should call goForward() after the correct interval')
   it.todo('should stop if user is hovering the slider')
@@ -36,12 +55,35 @@ describe('useScreenResize', () => {
 
 describe('useSliderControls', () => {
   describe('goBack()', () => {
-    it.todo(
-      'should dispatch a SLIDE action to go back exactly one page when goBack() is called with no arguments'
-    )
-    it.todo(
-      'should dispatch a SLIDE action to go back `step` pages when goBack() is called'
-    )
+    it('should dispatch a SLIDE action to go back the navigationStep when goBack() is called with no arguments', async () => {
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goBack()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: -2,
+          transform: mockInitialInfiniteSliderState.transformMap[-2],
+        },
+      })
+    })
+
+    it('should dispatch a SLIDE action to go back `step` pages when goBack() is called', async () => {
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goBack(3)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: -3,
+          transform: mockInitialInfiniteSliderState.transformMap[-3],
+        },
+      })
+    })
     it.todo(
       'should prevent SLIDE action to set `currentSlide` to a negative number if the slider is not an infinite one'
     )
