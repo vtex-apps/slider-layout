@@ -1,15 +1,18 @@
 import { hooks } from '@vtex/test-tools/react'
 
-import { useSliderState } from '../components/SliderContext'
 import { useSliderControls } from '../hooks/useSliderControls'
-import { mockInitialInfiniteSliderState } from '../__fixtures__/SliderStateContext'
+import {
+  mockInitialInfiniteSliderState,
+  mockInitialNonInfiniteSliderState,
+} from '../__fixtures__/SliderStateContext'
 
 const { renderHook, act } = hooks
 
 const mockDispatch = jest.fn()
+let mockSliderInitialState: any
 
 jest.mock('../components/SliderContext', () => ({
-  useSliderState: () => mockInitialInfiniteSliderState,
+  useSliderState: () => mockSliderInitialState,
   useSliderDispatch: () => mockDispatch,
 }))
 
@@ -56,6 +59,7 @@ describe('useScreenResize', () => {
 describe('useSliderControls', () => {
   describe('goBack()', () => {
     it('should dispatch a SLIDE action to go back the navigationStep when goBack() is called with no arguments', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
       const { result } = renderHook(() => useSliderControls(true))
 
       await act(() => Promise.resolve())
@@ -71,6 +75,7 @@ describe('useSliderControls', () => {
     })
 
     it('should dispatch a SLIDE action to go back `step` pages when goBack() is called', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
       const { result } = renderHook(() => useSliderControls(true))
 
       await act(() => Promise.resolve())
@@ -84,10 +89,22 @@ describe('useSliderControls', () => {
         },
       })
     })
-    it.todo(
-      'should prevent SLIDE action to set `currentSlide` to a negative number if the slider is not an infinite one'
-    )
-    it.todo('should prevent over-sliding backwards')
+
+    it('should prevent SLIDE action to set `currentSlide` to a negative number if the slider is not an infinite one', async () => {
+      mockSliderInitialState = mockInitialNonInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(false))
+
+      await act(() => Promise.resolve())
+      result.current.goBack()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 0,
+          transform: 0,
+        },
+      })
+    })
   })
 
   describe('goForward()', () => {

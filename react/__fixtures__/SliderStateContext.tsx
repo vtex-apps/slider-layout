@@ -71,7 +71,7 @@ export const mockInitialNonInfiniteSliderState = {
     '8': -80,
     '9': -90,
   },
-  navigationStep: 5,
+  navigationStep: 2,
   slideTransition: {
     speed: 400,
     delay: 0,
