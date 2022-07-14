@@ -65,7 +65,7 @@ export const useSliderControls = (infinite: boolean) => {
       /** There are some slides hidden on the right */
       nextSlide = currentSlide + activeNavigationStep
       nextTransformValue = transformMap[nextSlide]
-    } else if (currentSlide < totalItems - slidesPerPage) {
+    } else if (!infinite || currentSlide < totalItems - slidesPerPage) {
       /** Prevent over-slide */
       nextSlide = totalItems - slidesPerPage
       nextTransformValue = transformMap[nextSlide]
