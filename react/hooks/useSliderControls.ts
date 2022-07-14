@@ -24,13 +24,14 @@ export const useSliderControls = (infinite: boolean) => {
       /** Have more slides hidden on left */
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
-    } else if (infinite) {
-      nextSlide = nextMaximumSlides
-      nextTransformValue = transformMap[nextSlide]
-    } else if (nextMaximumSlides < 0) {
+    } else if (currentSlide !== 0) {
       /** Prevent over-slide */
       nextSlide = 0
       nextTransformValue = 0
+    } else if (infinite) {
+      /** Have more slides hidden on left */
+      nextSlide = nextMaximumSlides
+      nextTransformValue = transformMap[nextSlide]
     }
 
     if (groupDispatch) {
@@ -64,15 +65,12 @@ export const useSliderControls = (infinite: boolean) => {
       /** There are some slides hidden on the right */
       nextSlide = currentSlide + activeNavigationStep
       nextTransformValue = transformMap[nextSlide]
-    } else if (infinite) {
-      nextSlide = currentSlide + activeNavigationStep
-      nextTransformValue = transformMap[nextSlide]
-    } else if (
-      nextMaximumSlides > totalItems &&
-      currentSlide !== totalItems - slidesPerPage
-    ) {
+    } else if (currentSlide < totalItems - slidesPerPage) {
       /** Prevent over-slide */
       nextSlide = totalItems - slidesPerPage
+      nextTransformValue = transformMap[nextSlide]
+    } else if (infinite) {
+      nextSlide = currentSlide + activeNavigationStep
       nextTransformValue = transformMap[nextSlide]
     }
 

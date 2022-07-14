@@ -149,15 +149,15 @@ const SliderTrack: FC<Props> = ({
           dispatch({
             type: 'ADJUST_CURRENT_SLIDE',
             payload: {
-              currentSlide: currentSlide - totalItems,
-              transform: transformMap[currentSlide - totalItems],
+              currentSlide: 0,
+              transform: transformMap[0],
             },
           })
           groupDispatch?.({
             type: 'SLIDE',
             payload: {
-              currentSlide: currentSlide - totalItems,
-              transform: transformMap[currentSlide - totalItems],
+              currentSlide: 0,
+              transform: transformMap[0],
             },
           })
         }
