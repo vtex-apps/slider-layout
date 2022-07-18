@@ -1,3 +1,25 @@
+import { hooks } from '@vtex/test-tools/react'
+
+import { useSliderControls } from '../hooks/useSliderControls'
+import {
+  mockInitialInfiniteSliderState,
+  mockInitialNonInfiniteSliderState,
+} from '../__fixtures__/SliderStateContext'
+
+const { renderHook, act } = hooks
+
+const mockDispatch = jest.fn()
+let mockSliderInitialState: any
+
+jest.mock('../components/SliderContext', () => ({
+  useSliderState: () => mockSliderInitialState,
+  useSliderDispatch: () => mockDispatch,
+}))
+
+beforeEach(() => {
+  mockDispatch.mockClear()
+})
+
 describe('useAutoplay', () => {
   it.todo('should call goForward() after the correct interval')
   it.todo('should stop if user is hovering the slider')
@@ -36,30 +58,102 @@ describe('useScreenResize', () => {
 
 describe('useSliderControls', () => {
   describe('goBack()', () => {
-    it.todo(
-      'should dispatch a SLIDE action to go back exactly one page when goBack() is called with no arguments'
-    )
-    it.todo(
-      'should dispatch a SLIDE action to go back `step` pages when goBack() is called'
-    )
-    it.todo(
-      'should prevent SLIDE action to set `currentSlide` to a negative number if the slider is not an infinite one'
-    )
-    it.todo('should prevent over-sliding backwards')
+    it('should dispatch a SLIDE action to go back the navigationStep when goBack() is called with no arguments', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goBack()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: -2,
+          transform: mockInitialInfiniteSliderState.transformMap[-2],
+        },
+      })
+    })
+
+    it('should dispatch a SLIDE action to go back `step` pages when goBack() is called', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goBack(3)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: -3,
+          transform: mockInitialInfiniteSliderState.transformMap[-3],
+        },
+      })
+    })
+
+    it('should prevent SLIDE action to set `currentSlide` to a negative number if the slider is not an infinite one', async () => {
+      mockSliderInitialState = mockInitialNonInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(false))
+
+      await act(() => Promise.resolve())
+      result.current.goBack()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 0,
+          transform: 0,
+        },
+      })
+    })
   })
 
   describe('goForward()', () => {
-    it.todo(
-      'should dispatch a SLIDE action to go forward exactly one page when goForward() is called with no arguments'
-    )
-    it.todo(
-      'should dispatch a SLIDE action to go forward `step` pages when goForward() is called'
-    )
-    it.todo(
-      `should prevent SLIDE action to set \`currentSlide\` to a number greater than the total slides count if the
-       slider is not an infinite one`
-    )
-    it.todo('should prevent over-sliding forwards')
+    it('should dispatch a SLIDE action to go forward exactly one page when goForward() is called with no arguments', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goForward()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 2,
+          transform: mockInitialInfiniteSliderState.transformMap[2],
+        },
+      })
+    })
+    it('should dispatch a SLIDE action to go forward `step` pages when goForward() is called', async () => {
+      mockSliderInitialState = mockInitialInfiniteSliderState
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goForward(4)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 4,
+          transform: mockInitialInfiniteSliderState.transformMap[4],
+        },
+      })
+    })
+    it(`should dispatch SLIDE action to set \`currentSlide\` to the start of the last page if slider is not an infinite one`, async () => {
+      mockSliderInitialState = mockInitialNonInfiniteSliderState
+      mockSliderInitialState.currentSlide = 7
+      const { result } = renderHook(() => useSliderControls(false))
+
+      await act(() => Promise.resolve())
+      result.current.goForward(4)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 5,
+          transform: mockInitialInfiniteSliderState.transformMap[5],
+        },
+      })
+    })
   })
 })
 

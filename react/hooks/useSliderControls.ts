@@ -24,11 +24,12 @@ export const useSliderControls = (infinite: boolean) => {
       /** Have more slides hidden on left */
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
-    } else if (nextMaximumSlides < 0 && currentSlide !== 0) {
+    } else if (currentSlide !== 0) {
       /** Prevent over-slide */
       nextSlide = 0
       nextTransformValue = 0
     } else if (infinite) {
+      /** Have more slides hidden on left */
       nextSlide = nextMaximumSlides
       nextTransformValue = transformMap[nextSlide]
     }
@@ -64,10 +65,7 @@ export const useSliderControls = (infinite: boolean) => {
       /** There are some slides hidden on the right */
       nextSlide = currentSlide + activeNavigationStep
       nextTransformValue = transformMap[nextSlide]
-    } else if (
-      nextMaximumSlides > totalItems &&
-      currentSlide !== totalItems - slidesPerPage
-    ) {
+    } else if (!infinite || currentSlide < totalItems - slidesPerPage) {
       /** Prevent over-slide */
       nextSlide = totalItems - slidesPerPage
       nextTransformValue = transformMap[nextSlide]

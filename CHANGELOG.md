@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Infinite behavior when `navigationStep` is defined.
+
 ## [0.22.1] - 2021-12-17
 
 ### Fixed
