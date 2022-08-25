@@ -1,0 +1,9 @@
+{
+  "admin/editor.slider-layout.title": "滑塊佈局",
+  "admin/editor.slider-layout.infinite": "無限",
+  "admin/editor.slider-layout.showNavigation": "顯示導航箭頭",
+  "admin/editor.slider-layout.showPaginationDots": "顯示分頁圓點",
+  "admin/editor.slider-layout.usePagination": "使用分頁",
+  "admin/editor.slider-layout.sliderFullWidth": "全寬",
+  "admin/editor.slider-layout.sliderFullWidthDescription": "控制滑塊是否應填滿全部可用寬度，使箭頭顯示在幻燈片頂部。"
+}
