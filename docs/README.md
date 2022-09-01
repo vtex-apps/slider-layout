@@ -14,7 +14,7 @@ Slider Layout is a flexible solution for building sliders of blocks within VTEX 
 
 ## Integration with Google Analytics Enhanced Ecommerce
 
-Slider layout also gives you the possibility to integrate your component with the [Google Analytics Enhanced Ecommerce feature](https://developers.google.com/analytics/devguides/collection/ua/gtm/enhanced-ecommerce). With this integration, you will be able to set up your promotion’s ID, name, and position on the [Site Editor](https://help.vtex.com/en/tutorial/site-editor-overview--299Dbeb9mFczUTyNQ9xPe1) to be shown on a Google Analytics dashboard. To do so, you must go to your store’s Admin, click Store Setup > CMS > Site Editor and open the image configurations of the internal promotion you want to track.
+Slider layout also gives you the possibility to integrate your component with the [Google Analytics Enhanced Ecommerce feature](https://developers.google.com/analytics/devguides/collection/ua/gtm/enhanced-ecommerce). With this integration, you will be able to set up your promotion’s ID, name, and position on the [Site Editor](https://help.vtex.com/en/tutorial/site-editor-overview--299Dbeb9mFczUTyNQ9xPe1) to be shown on a Google Analytics dashboard. To do so, you must go to your store’s Admin, click **Store Setup > CMS > Site Editor** and open the image configurations of the internal promotion you want to track.
 
 ![](https://user-images.githubusercontent.com/32786712/188009083-b1a1eca3-9f59-4186-80bf-bb49e99dc364.png)
 
