@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Information about Google Analytics Enhanced Ecommerce feature.
+
 ## [0.22.2] - 2022-07-18
 
 ### Fixed
