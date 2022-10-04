@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.3.1] - 2022-10-04
+
+### Fixed
+
+- Issue Slider Selector SKUs in shelfs with slider
+
+## [0.0.2] - 2022-10-04
+
 ## [0.23.0] - 2022-09-14
 
 ### Added
