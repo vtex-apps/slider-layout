@@ -40,11 +40,11 @@ function SliderLayout({
 }: PropsWithChildren<SliderLayoutProps & SliderLayoutSiteEditorProps & Props>) {
   const { handles, withModifiers } = useCssHandles(CSS_HANDLES, { classes })
   const list = useListContext()?.list ?? []
-  const totalSlides = totalItems ?? React.Children.count(children) + list.length
+  const totalSlides = totalItems ?? (children as any).length > 0 ? React.Children.count(children) : list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
   const responsiveItemsPerPage = useResponsiveValue(itemsPerPage)
   const responsiveCenterMode = useResponsiveValue(centerMode)
-  const slides = React.Children.toArray(children).concat(list)
+  const slides = (children as any).length > 0 ? React.Children.toArray(children) : React.Children.toArray(list)
   // Force fullWidth mode when centerMode is on
   const resolvedFullWidth = fullWidth || responsiveCenterMode !== 'disabled'
 
