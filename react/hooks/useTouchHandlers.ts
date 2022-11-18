@@ -33,6 +33,7 @@ export const useTouchHandlers = ({
   }
 
   const onTouchMove = (e: React.TouchEvent) => {
+    e.stopPropagation()
     const currentX = e.touches[0].clientX
     const touchMoveDelta = currentX - touchState.touchStartX
 
@@ -48,6 +49,7 @@ export const useTouchHandlers = ({
   }
 
   const onTouchEnd = (e: React.TouchEvent) => {
+    e.stopPropagation()
     const endX = e.changedTouches[0].clientX
     const delta = endX - touchState.touchStartX
 
