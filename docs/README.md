@@ -38,7 +38,7 @@ Now, you are able to use all blocks exported by the `slider-layout` app. Check o
 
 | Block name            | Description                                                                                                                                                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `slider-layout`       | ![https://img.shields.io/badge/-Mandatory-red](https://cdn.jsdelivr.net/gh/vtexdocs/dev-portal-content@main/images/vtex-slider-layout-2.png) Builds sliders of blocks for your store through its `children` list blocks. |
+| `slider-layout`       | ![https://img.shields.io/badge/-Mandatory-red](https://img.shields.io/badge/-Mandatory-red) Builds sliders of blocks for your store through its `children` list blocks. |
 | `slider-layout-group` | Enables you to keep a group of `slider-layout` blocks in sync with each other. For more on this, check out the Advanced configurations section below.                                                                    |
 
 2. Add the `slider-layout` block to your template. For example:
@@ -130,7 +130,7 @@ The `slider-layout-group` therefore does not render any specific component on yo
 
 Below, you can find a practical example using three `slider-layout` blocks inside of a `slider-layout-group`. Each of those `slider-layout`s received three `rich-text` blocks as `children` to serve as individual slides:
 
-![slider-layout-group demo](https://cdn.jsdelivr.net/gh/vtexdocs/dev-portal-content@main/images/vtex-slider-layout-3.gif)
+![slider-layout-group demo](https://user-images.githubusercontent.com/27777263/89814281-46665b80-db19-11ea-9ff2-8aff60c72a73.gif)
 
 > ⚠️ All `slider-layout` blocks declared in the `slider-layout-group` must receive the same configuration, meaning the same props and values**. Due to implementation rules, they are only allowed to differ in their `children` block list. Notice the following: declaring `slider-layout` blocks with different configuration will result in unexpected behavior, leading to errors whose support is **not** granted by the VTEX Store Framework team.
 
