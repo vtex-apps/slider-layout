@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.24.3] - 2023-05-05
+### Fixed
+- `README.md` section about `Integration with Google Analytics Enhanced Ecommerce`.
+
 ## [0.24.2] - 2023-04-25
 ### Fixed
 - Updated readme.md according to task LOC-10480.
