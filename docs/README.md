@@ -12,13 +12,16 @@ Slider Layout is a flexible solution for building block sliders in VTEX Store Fr
 
 > _To use the Slider layout as a substitute for the [Carousel app](https://github.com/vtex-apps/carousel), read the [Building a Carousel through lists and Slider Layout](https://developers.vtex.com/docs/guides/vtex-io-documentation-building-a-carousel-using-slider-layout) documentation._
 
-## Integration with Google Analytics Enhanced Ecommerce
+## Google Analytics 4 Integration
 
-Slider Layout also allows you to integrate your component with [Google Analytics Enhanced Ecommerce](https://developers.google.com/analytics/devguides/collection/ua/gtm/enhanced-ecommerce). This integration allows you to set the ID, name, and position of your promotion on [Site Editor](https://help.vtex.com/en/tutorial/site-editor-overview--299Dbeb9mFczUTyNQ9xPe1) to be shown on a Google Analytics dashboard.
+Slider Layout enables you to integrate your component with [Google Analytics 4](https://developers.google.com/analytics/devguides/collection/ga4). 
+The integration happens through the [`GA4 view_promotion`](https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_promotion) event, which is typically associated with the promotion banners carousel displayed by the Slider Layout.
 
-To do so, go to your store Admin, click **Store Setup > CMS > Site Editor**, and open the image settings of the internal promotion you want to track. These settings are displayed on the right side of the page.
+By integrating with Google Analytics 4, you can set the `Product ID` and `Product Name`, and position of your promotion on [Site Editor](https://help.vtex.com/en/tutorial/site-editor-overview--299Dbeb9mFczUTyNQ9xPe1) to be shown on a Google Analytics dashboard.
 
-![](https://cdn.jsdelivr.net/gh/vtexdocs/dev-portal-content@main/images/vtex-slider-layout-1.png)
+To set this up, go to the VTEX Admin, access **Storefront > Site Editor**, and open the image settings of the internal promotion you want to track. These settings are displayed on the right side of the page.
+
+![ga4-in-site-editor](https://vtexhelp.vtexassets.com/assets/docs/src/gtm-site-editor___bc52365aafad63deb5bfed1d74f307c0.png)
 
 > For more information about managing your page content, read [Managing page and template content](https://help.vtex.com/en/tutorial/managing-page-and-template-content--3tMbx6HXy4Fy5r9EhboG37).
 
