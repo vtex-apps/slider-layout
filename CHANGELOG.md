@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Addedd
+- Added translation for the Dropdown options on props `showNavigationArrows` and `showPaginationDots`
+
 ## [0.24.3] - 2023-05-08
 
 ### Fixed
