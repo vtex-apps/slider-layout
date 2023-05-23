@@ -107,15 +107,18 @@ const messages = defineMessages({
     defaultMessage: '',
   },
   sliderNavigationAndPaginationPropertyMobileOnly: {
-    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly',
+    id:
+      'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly',
     defaultMessage: '',
   },
   sliderNavigationAndPaginationPropertyDesktopOnly: {
-    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly',
+    id:
+      'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly',
     defaultMessage: '',
   },
   sliderNavigationAndPaginationPropertyAlways: {
-    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways',
+    id:
+      'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways',
     defaultMessage: '',
   },
   sliderNavigationAndPaginationPropertyNever: {
