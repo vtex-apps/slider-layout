@@ -5,5 +5,9 @@
   "admin/editor.slider-layout.showPaginationDots": "Mostrar indicadores de paginação",
   "admin/editor.slider-layout.usePagination": "Usar paginação",
   "admin/editor.slider-layout.sliderFullWidth": "Largura completa",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controla se os slides devem ou não ocupar toda a largura disponível, fazendo as setas aparecerem sobre eles."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controla se os slides devem ou não ocupar toda a largura disponível, fazendo as setas aparecerem sobre eles.",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Apenas Mobile",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Apenas Desktop",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Sempre",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Nunca"
 }

@@ -106,6 +106,22 @@ const messages = defineMessages({
     id: 'admin/editor.slider-layout.sliderFullWidthDescription',
     defaultMessage: '',
   },
+  sliderNavigationAndPaginationPropertyMobileOnly: {
+    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly',
+    defaultMessage: '',
+  },
+  sliderNavigationAndPaginationPropertyDesktopOnly: {
+    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly',
+    defaultMessage: '',
+  },
+  sliderNavigationAndPaginationPropertyAlways: {
+    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways',
+    defaultMessage: '',
+  },
+  sliderNavigationAndPaginationPropertyNever: {
+    id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever',
+    defaultMessage: '',
+  },
 })
 
 SliderLayout.schema = {

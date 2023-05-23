@@ -5,5 +5,9 @@
   "admin/editor.slider-layout.showPaginationDots": "Show pagination dots",
   "admin/editor.slider-layout.usePagination": "Use pagination",
   "admin/editor.slider-layout.sliderFullWidth": "Full width",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controls whether the slides should fill the full available width, making the arrows appear on top of them."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controls whether the slides should fill the full available width, making the arrows appear on top of them.",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Mobile Only",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Desktop Only",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Always",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Never"
 }
