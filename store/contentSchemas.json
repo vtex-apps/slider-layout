@@ -11,12 +11,24 @@
         "showNavigationArrows": {
           "default": "always",
           "enum": ["mobileOnly", "desktopOnly", "always", "never"],
+          "enumNames": [
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly",
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly",
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways",
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever"
+          ],
           "title": "admin/editor.slider-layout.showNavigation",
           "type": "string"
         },
         "showPaginationDots": {
           "default": "always",
           "enum": ["mobileOnly", "desktopOnly", "always", "never"],
+          "enumNames": [
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly",
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly",
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways",
+            "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever"
+          ],
           "title": "admin/editor.slider-layout.showPaginationDots",
           "type": "string"
         },

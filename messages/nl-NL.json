@@ -5,5 +5,9 @@
   "admin/editor.slider-layout.showPaginationDots": "Toon pagineringstippen",
   "admin/editor.slider-layout.usePagination": "Gebruik paginering",
   "admin/editor.slider-layout.sliderFullWidth": "Volledige breedte",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Bepaalt of de dia's de volledige beschikbare breedte moeten vullen, waardoor de pijlen erboven verschijnen."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Bepaalt of de dia's de volledige beschikbare breedte moeten vullen, waardoor de pijlen erboven verschijnen.",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Alleen mobiel",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Alleen desktop",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Altijd",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Nooit"
 }
