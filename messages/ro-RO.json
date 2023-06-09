@@ -5,5 +5,9 @@
   "admin/editor.slider-layout.showPaginationDots": "Arată punctele de paginație",
   "admin/editor.slider-layout.usePagination": "Folosește paginația",
   "admin/editor.slider-layout.sliderFullWidth": "Lățime completă",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Controlează dacă slide-urile trebuie sau nu să ocupe întreaga lățime disponibilă, făcând ca săgețile să apară deasupra lor."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Controlează dacă slide-urile trebuie sau nu să ocupe întreaga lățime disponibilă, făcând ca săgețile să apară deasupra lor.",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Doar pentru mobil",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Doar pentru desktop",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Mereu",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Niciodată"
 }
