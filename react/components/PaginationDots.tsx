@@ -7,7 +7,6 @@ import { useSliderControls } from '../hooks/useSliderControls'
 const DOTS_DEFAULT_SIZE = 0.625
 
 interface Props {
-  controls: string
   totalItems: number
   infinite: boolean
 }
@@ -41,7 +40,7 @@ const getSlideIndices = (
       ]
     : []
 
-const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
+const PaginationDots: FC<Props> = ({ totalItems, infinite }) => {
   const { slidesPerPage, currentSlide, navigationStep } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
   const { handles, withModifiers } = useContextCssHandles()
@@ -96,11 +95,10 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
               width: `${DOTS_DEFAULT_SIZE}rem`,
             }}
             key={index}
-            tabIndex={index}
+            tabIndex={0}
             onKeyDown={event => handleDotClick(event, index)}
             onClick={event => handleDotClick(event, index)}
             role="button"
-            aria-controls={controls}
             aria-label={`Dot ${index + 1} of ${slideIndexes.length}`}
             data-testid="paginationDot"
           />

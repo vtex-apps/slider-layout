@@ -9,7 +9,6 @@ import { useContextCssHandles } from '../modules/cssHandles'
 interface Props {
   custom?: ReactNode
   orientation: 'left' | 'right'
-  controls: string
   totalItems: number
   infinite: boolean
   arrowSize: number
@@ -24,7 +23,6 @@ export const CSS_HANDLES = [
 const Arrow: FC<Props> = ({
   custom,
   orientation,
-  controls,
   totalItems,
   infinite,
   arrowSize,
@@ -71,7 +69,7 @@ const Arrow: FC<Props> = ({
       } absolute transparent ma2 flex items-center justify-center bn outline-0 pointer`}
       style={{ background: 'transparent' }}
       onClick={handleArrowClick}
-      aria-controls={controls}
+      role="button"
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}
     >
