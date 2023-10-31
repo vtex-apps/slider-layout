@@ -58,11 +58,7 @@ mockedUseContextCssHandles.mockImplementation(() =>
 describe('Basic rendering', () => {
   it('should render the correct number of pagination dots based on the number of slider pages', () => {
     const { queryAllByTestId } = render(
-      <PaginationDots
-        controls="pagination-dots-test"
-        infinite
-        totalItems={20}
-      />
+      <PaginationDots infinite totalItems={20} />
     )
 
     const numberOfPagesBasedOnTotalItems = 4
@@ -77,11 +73,7 @@ describe('Basic rendering', () => {
 describe('Accessibility', () => {
   it('should have correct aria role and label in its container', () => {
     const { queryByRole, queryByLabelText } = render(
-      <PaginationDots
-        controls="pagination-dots-test"
-        infinite
-        totalItems={20}
-      />
+      <PaginationDots infinite totalItems={20} />
     )
 
     const expectedContainerRole = 'group'
@@ -93,11 +85,7 @@ describe('Accessibility', () => {
 
   it('should have correct aria attributes in each dot', () => {
     const { queryAllByRole, queryByLabelText } = render(
-      <PaginationDots
-        controls="pagination-dots-test"
-        infinite
-        totalItems={20}
-      />
+      <PaginationDots infinite totalItems={20} />
     )
 
     const expectedDotsRole = 'button'
@@ -117,11 +105,7 @@ describe('Accessibility', () => {
 describe('Behavior upon interaction', () => {
   it('should call goForward() and goBack() methods with correct arguments as the user clicks in a dot', () => {
     const { queryAllByTestId } = render(
-      <PaginationDots
-        controls="pagination-dots-test"
-        infinite
-        totalItems={20}
-      />
+      <PaginationDots infinite totalItems={20} />
     )
 
     const renderedDots = queryAllByTestId('paginationDot')

@@ -69,7 +69,6 @@ const Arrow: FC<Props> = ({
       } absolute transparent ma2 flex items-center justify-center bn outline-0 pointer`}
       style={{ background: 'transparent' }}
       onClick={handleArrowClick}
-      role="button"
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}
     >
