@@ -54,8 +54,20 @@ describe('Accessibility', () => {
 
     const { queryAllByRole, queryByLabelText } = render(
       <Fragment>
-        <Arrow infinite arrowSize={25} totalItems={20} orientation="left" />
-        <Arrow infinite arrowSize={25} totalItems={20} orientation="right" />
+        <Arrow
+          infinite
+          arrowSize={25}
+          totalItems={20}
+          orientation="left"
+          controls="slider-items"
+        />
+        <Arrow
+          infinite
+          arrowSize={25}
+          totalItems={20}
+          orientation="right"
+          controls="slider-items"
+        />
       </Fragment>
     )
 
@@ -74,7 +86,13 @@ describe('Behavior upon interaction', () => {
 
   it('should go to the next page if right arrow is clicked', () => {
     const { getByTestId } = render(
-      <Arrow infinite arrowSize={25} totalItems={20} orientation="right" />
+      <Arrow
+        infinite
+        arrowSize={25}
+        totalItems={20}
+        orientation="right"
+        controls="slider-items"
+      />
     )
 
     const rightArrow = getByTestId('icon-caret-right')
@@ -85,7 +103,13 @@ describe('Behavior upon interaction', () => {
 
   it('should go to the previous page if left arrow is clicked', () => {
     const { getByTestId } = render(
-      <Arrow infinite arrowSize={25} totalItems={20} orientation="left" />
+      <Arrow
+        infinite
+        arrowSize={25}
+        totalItems={20}
+        orientation="left"
+        controls="slider-items"
+      />
     )
 
     const leftArrow = getByTestId('icon-caret-left')
@@ -101,6 +125,7 @@ describe('Behavior upon interaction', () => {
         arrowSize={25}
         totalItems={10}
         orientation="left"
+        controls="slider-items"
       />
     )
 
@@ -123,6 +148,7 @@ describe('Behavior upon interaction', () => {
         arrowSize={25}
         totalItems={10}
         orientation="right"
+        controls="slider-items"
       />
     )
 

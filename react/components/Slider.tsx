@@ -64,6 +64,11 @@ const Slider: FC<Props> = ({
 
   const shouldBeStaticList = slidesPerPage >= totalItems
 
+  const controls = `${label
+    .toLowerCase()
+    .trim()
+    .replace(/ /g, '-')}-items-${Math.ceil(totalItems / Math.random())}`
+
   const shouldShowArrows = Boolean(
     (showNavigationArrows === 'always' ||
       (showNavigationArrows === 'mobileOnly' && isMobile) ||
@@ -93,6 +98,7 @@ const Slider: FC<Props> = ({
       onTouchEnd={touchEndHandler}
       onTouchMove={touchMoveHandler}
       aria-label={label}
+      id={controls}
       style={{
         WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
         paddingLeft: fullWidth ? undefined : arrowSize * 2,
@@ -121,19 +127,25 @@ const Slider: FC<Props> = ({
           <Arrow
             totalItems={totalItems}
             orientation="left"
+            controls={controls}
             infinite={infinite}
             arrowSize={arrowSize}
           />
           <Arrow
             totalItems={totalItems}
             orientation="right"
+            controls={controls}
             infinite={infinite}
             arrowSize={arrowSize}
           />
         </Fragment>
       )}
       {shouldShowPaginationDots && shouldUsePagination && (
-        <PaginationDots totalItems={totalItems} infinite={infinite} />
+        <PaginationDots
+          totalItems={totalItems}
+          controls={controls}
+          infinite={infinite}
+        />
       )}
     </section>
   )
