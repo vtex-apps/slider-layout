@@ -67,7 +67,7 @@ const Slider: FC<Props> = ({
   const controls = `${label
     .toLowerCase()
     .trim()
-    .replace(/ /g, '-')}-items-${Math.ceil(totalItems / Math.random())}`
+    .replace(/ /g, '-')}-items-${Math.random().toString(36).substring(2, 9)}`
 
   const shouldShowArrows = Boolean(
     (showNavigationArrows === 'always' ||
