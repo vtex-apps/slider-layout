@@ -67,7 +67,9 @@ const Slider: FC<Props> = ({
   const controls = `${label
     .toLowerCase()
     .trim()
-    .replace(/ /g, '-')}-items`
+    .replace(/ /g, '-')}-items-${Math.random()
+    .toString(36)
+    .substring(2, 9)}`
 
   const shouldShowArrows = Boolean(
     (showNavigationArrows === 'always' ||
@@ -98,6 +100,7 @@ const Slider: FC<Props> = ({
       onTouchEnd={touchEndHandler}
       onTouchMove={touchMoveHandler}
       aria-label={label}
+      id={controls}
       style={{
         WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
         paddingLeft: fullWidth ? undefined : arrowSize * 2,
