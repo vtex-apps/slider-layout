@@ -1,13 +1,13 @@
 import React, { cloneElement, FC, ReactElement, ReactNode } from 'react'
 
-import {
-  useSliderState,
-  useSliderDispatch,
-  SliderLayoutProps,
-} from './SliderContext'
-import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 import { useSliderVisibility } from '../hooks/useSliderVisibility'
 import { useContextCssHandles } from '../modules/cssHandles'
+import { useSliderGroupDispatch } from '../SliderLayoutGroup'
+import {
+  SliderLayoutProps,
+  useSliderDispatch,
+  useSliderState,
+} from './SliderContext'
 
 export const CSS_HANDLES = [
   'sliderTrack',
@@ -190,19 +190,19 @@ const SliderTrack: FC<Props> = ({
         const slideContainerStyles = {
           width: `${slideWidth}%`,
           marginLeft:
-            centerMode !== 'disabled' && !centerModeSlidesGap
+            centerMode !== 'disabled' && centerModeSlidesGap === undefined
               ? `${slideWidth / (8 * slidesPerPage)}%`
               : undefined,
           marginRight:
-            centerMode !== 'disabled' && !centerModeSlidesGap
+            centerMode !== 'disabled' && centerModeSlidesGap === undefined
               ? `${slideWidth / (8 * slidesPerPage)}%`
               : undefined,
           paddingLeft:
-            centerMode !== 'disabled' && centerModeSlidesGap
+            centerMode !== 'disabled' && centerModeSlidesGap !== undefined
               ? centerModeSlidesGap / 2
               : undefined,
           paddingRight:
-            centerMode !== 'disabled' && centerModeSlidesGap
+            centerMode !== 'disabled' && centerModeSlidesGap !== undefined
               ? centerModeSlidesGap / 2
               : undefined,
         }

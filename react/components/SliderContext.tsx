@@ -1,9 +1,9 @@
 import React, {
-  createContext,
-  useReducer,
-  useContext,
   FC,
+  createContext,
+  useContext,
   useMemo,
+  useReducer,
   useState,
 } from 'react'
 import { ResponsiveValuesTypes } from 'vtex.responsive-values'
@@ -250,7 +250,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
       resultingSlideWidth =
         (resolvedSlidesPerPage / (resolvedSlidesPerPage + 1)) * baseSlideWidth
 
-      if (centerMode === 'to-the-left' && centerModeSlidesGap) {
+      if (centerMode === 'to-the-left' && centerModeSlidesGap !== undefined) {
         resultingSlideWidth =
           (baseSlideWidth * resolvedSlidesPerPage) /
           (resolvedSlidesPerPage + 1 / 2)
@@ -288,7 +288,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
           transformValue += transformCenterCorrection
         }
 
-        if (centerModeSlidesGap) {
+        if (centerModeSlidesGap !== undefined) {
           transformValue =
             centerMode === 'center'
               ? -(slideWidth * (idx - 1 / 2))
