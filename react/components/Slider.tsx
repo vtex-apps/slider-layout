@@ -105,6 +105,7 @@ const Slider: FC<Props> = ({
         WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
         paddingLeft: fullWidth ? undefined : arrowSize * 2,
         paddingRight: fullWidth ? undefined : arrowSize * 2,
+        touchAction: 'pan-y',
       }}
       className={`w-100 flex items-center relative ${handles.sliderLayoutContainer}`}
     >
