@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.24.5] - 2024-08-08
+
 ### Fixed
 
 - Fixed unexpected vertical scrolling when user scrolls the slider horizontally
