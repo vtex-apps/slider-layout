@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added translation for the Dropdown options on props `showNavigationArrows` and `showPaginationDots`
 - Translations for Bulgarian, German, Spanish, French, Italian, Korean, Dutch, Portuguese, Romanian and Thai.
 
+## [0.24.5] - 2024-08-08
+
+### Fixed
+
+- Fixed unexpected vertical scrolling when user scrolls the slider horizontally
+
+## [0.24.4] - 2023-11-06
+
+### Fixed
+
+- Fixed the accessibility issue of the `aria-controls`s' relationship between the slider and its controls ([reference](https://dequeuniversity.com/rules/axe/4.7/aria-valid-attr-value)).
+- Fixed the `tabindex` accessibility issue of the dots controls ([reference](https://dequeuniversity.com/rules/axe/4.7/tabindex)).
+
 ## [0.24.3] - 2023-05-08
 
 ### Fixed

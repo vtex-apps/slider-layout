@@ -96,7 +96,7 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
               width: `${DOTS_DEFAULT_SIZE}rem`,
             }}
             key={index}
-            tabIndex={index}
+            tabIndex={isActive ? 0 : -1}
             onKeyDown={event => handleDotClick(event, index)}
             onClick={event => handleDotClick(event, index)}
             role="button"
