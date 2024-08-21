@@ -5,5 +5,9 @@
   "admin/editor.slider-layout.showPaginationDots": "Показване на точки за страниране",
   "admin/editor.slider-layout.usePagination": "Използване на страниране",
   "admin/editor.slider-layout.sliderFullWidth": "Пълна ширина",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Контролира дали слайдовете да изпълват цялата налична ширина, а стрелките да се виждат върху тях."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Контролира дали слайдовете да изпълват цялата налична ширина, а стрелките да се виждат върху тях.",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Само за мобилни устройства",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Само за настолен компютър",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Винаги",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Никога"
 }

@@ -5,5 +5,9 @@
   "admin/editor.slider-layout.showPaginationDots": "Seitenumbruch-Punkte anzeigen",
   "admin/editor.slider-layout.usePagination": "Seitennavigation verwenden",
   "admin/editor.slider-layout.sliderFullWidth": "Volle Breite",
-  "admin/editor.slider-layout.sliderFullWidthDescription": "Legt fest, ob die Diapositive die volle verfügbare Breite füllen sollen, so dass die Pfeile oben auf ihnen erscheinen."
+  "admin/editor.slider-layout.sliderFullWidthDescription": "Legt fest, ob die Diapositive die volle verfügbare Breite füllen sollen, so dass die Pfeile oben auf ihnen erscheinen.",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Nur mobil",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Nur Desktop",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Immer",
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Niemals"
 }
