@@ -78,6 +78,7 @@ export interface SliderLayoutSiteEditorProps {
 
 export interface SliderLayoutProps {
   totalItems?: number
+  arialabel?:string
   label?: string
   slideTransition?: {
     /** Transition speed in ms */
@@ -207,6 +208,7 @@ function sliderContextReducer(state: State, action: Action): State {
 const SliderContextProvider: FC<SliderContextProps> = ({
   autoplay,
   children,
+  arialabel,
   totalItems,
   label = 'slider',
   navigationStep = 'page',
@@ -373,7 +375,9 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   return (
     <SliderStateContext.Provider value={state}>
       <SliderDispatchContext.Provider value={dispatch}>
+        <div aria-label={arialabel}>
         {children}
+        </div>
       </SliderDispatchContext.Provider>
     </SliderStateContext.Provider>
   )
