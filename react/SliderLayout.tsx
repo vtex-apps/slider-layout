@@ -16,12 +16,10 @@ export const CSS_HANDLES = SliderCssHandles
 
 interface Props {
   /** Used to override default CSS handles */
-  classes?: CssHandlesTypes.CustomClasses<typeof CSS_HANDLES>,
-  arialabel?:string
+  classes?: CssHandlesTypes.CustomClasses<typeof CSS_HANDLES>
 }
 
 function SliderLayout({
-  arialabel,
   totalItems,
   infinite = false,
   showNavigationArrows = 'always',
@@ -57,7 +55,6 @@ function SliderLayout({
         totalItems={totalSlides}
         itemsPerPage={responsiveItemsPerPage}
         centerMode={responsiveCenterMode}
-        arialabel={arialabel}
         centerModeSlidesGap={centerModeSlidesGap}
         {...contextProps}
       >

@@ -9,6 +9,7 @@ import React, {
 import { ResponsiveValuesTypes } from 'vtex.responsive-values'
 
 import { useSliderGroupState } from '../SliderLayoutGroup'
+import { useIntl } from 'react-intl'
 
 interface AdjustOnResizeAction {
   type: 'ADJUST_ON_RESIZE'
@@ -369,11 +370,13 @@ const SliderContextProvider: FC<SliderContextProps> = ({
       },
     })
   }
+  const intl = useIntl()
 
   return (
     <SliderStateContext.Provider value={state}>
       <SliderDispatchContext.Provider value={dispatch}>
-        <div aria-label={"Current slide is " + state.currentSlide }>
+        <div aria-label={intl.formatMessage(
+        { id: 'store/slider-layout.aria-label' }, { slide: state.currentSlide})}>
         {children}
         </div>
       </SliderDispatchContext.Provider>
