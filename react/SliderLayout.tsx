@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { defineMessages, useIntl } from 'react-intl'
+import { defineMessages } from 'react-intl'
 import { CssHandlesTypes, useCssHandles } from 'vtex.css-handles'
 import { useListContext } from 'vtex.list-context'
 import { useResponsiveValue } from 'vtex.responsive-values'
@@ -9,7 +9,6 @@ import {
   SliderContextProvider,
   SliderLayoutProps,
   SliderLayoutSiteEditorProps,
-  useSliderState,
 } from './components/SliderContext'
 import { CssHandlesProvider } from './modules/cssHandles'
 
@@ -40,8 +39,6 @@ function SliderLayout({
   ...contextProps
 }: PropsWithChildren<SliderLayoutProps & SliderLayoutSiteEditorProps & Props>) {
   const { handles, withModifiers } = useCssHandles(CSS_HANDLES, { classes })
-  const intl = useIntl()
-  const { currentSlide } = useSliderState()
   const list = useListContext()?.list ?? []
   const totalSlides = totalItems ?? React.Children.count(children) + list.length
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
@@ -62,10 +59,6 @@ function SliderLayout({
         {...contextProps}
       >
         <Slider
-          aria-label={intl.formatMessage(
-            { id: 'store/slider-layout.aria-label' },
-            { slide: currentSlide }
-          )}
           centerMode={responsiveCenterMode}
           centerModeSlidesGap={centerModeSlidesGap}
           infinite={infinite}
