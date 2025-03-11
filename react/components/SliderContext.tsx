@@ -7,7 +7,6 @@ import React, {
   useState,
 } from 'react'
 import { ResponsiveValuesTypes } from 'vtex.responsive-values'
-import { useIntl } from 'react-intl'
 
 import { useSliderGroupState } from '../SliderLayoutGroup'
 
@@ -222,7 +221,6 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   centerModeSlidesGap,
 }) => {
   const sliderGroupState = useSliderGroupState()
-  const intl = useIntl()
 
   // This enables us to support dynamic slider-layouts
   const [prevProps, setPrevProps] = useState<{
@@ -375,14 +373,7 @@ const SliderContextProvider: FC<SliderContextProps> = ({
   return (
     <SliderStateContext.Provider value={state}>
       <SliderDispatchContext.Provider value={dispatch}>
-        <div
-          aria-label={intl.formatMessage(
-            { id: 'store/slider-layout.aria-label' },
-            { slide: state.currentSlide }
-          )}
-        >
-          {children}
-        </div>
+        {children}
       </SliderDispatchContext.Provider>
     </SliderStateContext.Provider>
   )

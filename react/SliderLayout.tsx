@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { defineMessages } from 'react-intl'
+import { defineMessages, useIntl } from 'react-intl'
 import { CssHandlesTypes, useCssHandles } from 'vtex.css-handles'
 import { useListContext } from 'vtex.list-context'
 import { useResponsiveValue } from 'vtex.responsive-values'
@@ -9,6 +9,7 @@ import {
   SliderContextProvider,
   SliderLayoutProps,
   SliderLayoutSiteEditorProps,
+  useSliderState,
 } from './components/SliderContext'
 import { CssHandlesProvider } from './modules/cssHandles'
 
@@ -47,6 +48,8 @@ function SliderLayout({
   const slides = React.Children.toArray(children).concat(list)
   // Force fullWidth mode when centerMode is on
   const resolvedFullWidth = fullWidth || responsiveCenterMode !== 'disabled'
+  const intl = useIntl()
+  const state = useSliderState()
 
   return (
     <CssHandlesProvider handles={handles} withModifiers={withModifiers}>
@@ -59,6 +62,10 @@ function SliderLayout({
         {...contextProps}
       >
         <Slider
+          aria-label={intl.formatMessage(
+            { id: 'store/slider-layout.aria-label' },
+            { slide: state.currentSlide }
+          )}
           centerMode={responsiveCenterMode}
           centerModeSlidesGap={centerModeSlidesGap}
           infinite={infinite}
