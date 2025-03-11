@@ -27,11 +27,19 @@ interface Props {
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
-const resolveAriaAttributes = (
-  visible: boolean,
-  index: number,
+interface ResolveAriaAttributesProps {
+  visible: boolean
+  index: number
   totalItems: number
-) => {
+  intl: any
+}
+
+const resolveAriaAttributes = ({
+  visible,
+  index,
+  totalItems,
+  intl,
+}: ResolveAriaAttributesProps) => {
   if (index < 0 || index >= totalItems) {
     return {
       'aria-hidden': !visible,
@@ -43,7 +51,10 @@ const resolveAriaAttributes = (
     'aria-hidden': !visible,
     role: 'group',
     'aria-roledescription': 'slide',
-    'aria-label': `${index + 1} of ${totalItems}`,
+    'aria-label': `${intl.formatMessage(
+      { id: 'store/slider-layout.sliderTrack.aria-label' },
+      { slide: index + 1, total: totalItems }
+    )}`,
   }
 }
 
@@ -212,15 +223,12 @@ const SliderTrack: FC<Props> = ({
         return (
           <div
             key={adjustedIndex}
-            {...resolveAriaAttributes(
-              isItemVisible(adjustedIndex),
-              adjustedIndex,
-              totalItems
-            )}
-            aria-label={intl.formatMessage(
-              { id: 'store/slider-layout.aria-label' },
-              { slide: currentSlide }
-            )}
+            {...resolveAriaAttributes({
+              visible: isItemVisible(adjustedIndex),
+              index: adjustedIndex,
+              totalItems,
+              intl,
+            })}
             className={`${withModifiers('slide', [
               getFirstOrLastVisible(slidesPerPage, adjustedIndex),
               isItemVisible(adjustedIndex) ? 'visible' : 'hidden',

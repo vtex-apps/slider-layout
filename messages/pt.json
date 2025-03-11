@@ -10,5 +10,5 @@
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Somente desktop",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Sempre",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Nunca",
-  "store/slider-layout.sliderTrack.aria-label": "Slide atual é {slide}"
+  "store/slider-layout.sliderTrack.aria-label": "Slide atual é {slide} de {total}"
 }
