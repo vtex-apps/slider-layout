@@ -49,7 +49,7 @@ function SliderLayout({
   // Force fullWidth mode when centerMode is on
   const resolvedFullWidth = fullWidth || responsiveCenterMode !== 'disabled'
   const intl = useIntl()
-  const state = useSliderState()
+  const { currentSlide } = useSliderState()
 
   return (
     <CssHandlesProvider handles={handles} withModifiers={withModifiers}>
@@ -64,7 +64,7 @@ function SliderLayout({
         <Slider
           aria-label={intl.formatMessage(
             { id: 'store/slider-layout.aria-label' },
-            { slide: state.currentSlide }
+            { slide: currentSlide }
           )}
           centerMode={responsiveCenterMode}
           centerModeSlidesGap={centerModeSlidesGap}
