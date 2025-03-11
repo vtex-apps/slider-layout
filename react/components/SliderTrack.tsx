@@ -1,4 +1,5 @@
 import React, { cloneElement, FC, ReactElement, ReactNode } from 'react'
+import { useIntl } from 'react-intl'
 
 import {
   useSliderState,
@@ -94,6 +95,7 @@ const SliderTrack: FC<Props> = ({
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
+  const intl = useIntl()
   const groupDispatch = useSliderGroupDispatch()
   const { handles, withModifiers } = useContextCssHandles()
 
@@ -214,6 +216,10 @@ const SliderTrack: FC<Props> = ({
               isItemVisible(adjustedIndex),
               adjustedIndex,
               totalItems
+            )}
+            aria-label={intl.formatMessage(
+              { id: 'store/slider-layout.aria-label' },
+              { slide: currentSlide }
             )}
             className={`${withModifiers('slide', [
               getFirstOrLastVisible(slidesPerPage, adjustedIndex),

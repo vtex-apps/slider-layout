@@ -1,5 +1,4 @@
 import React, { FC, useRef, Fragment, ReactNode } from 'react'
-import { useIntl } from 'react-intl'
 import { useDevice } from 'vtex.device-detector'
 
 import { useScreenResize } from '../hooks/useScreenResize'
@@ -53,8 +52,7 @@ const Slider: FC<Props> = ({
 }) => {
   const { handles } = useContextCssHandles()
   const { isMobile } = useDevice()
-  const intl = useIntl()
-  const { label, slidesPerPage, currentSlide } = useSliderState()
+  const { label = 'slider', slidesPerPage } = useSliderState()
   const containerRef = useRef<HTMLDivElement>(null)
   const { onTouchEnd, onTouchStart, onTouchMove } = useTouchHandlers({
     infinite,
@@ -67,7 +65,7 @@ const Slider: FC<Props> = ({
   const shouldBeStaticList = slidesPerPage >= totalItems
 
   const controls = `${label
-    ?.toLowerCase()
+    .toLowerCase()
     .trim()
     .replace(/ /g, '-')}-items-${Math.random()
     .toString(36)
@@ -101,13 +99,7 @@ const Slider: FC<Props> = ({
       onTouchStart={touchStartHandler}
       onTouchEnd={touchEndHandler}
       onTouchMove={touchMoveHandler}
-      aria-label={
-        label ??
-        intl.formatMessage(
-          { id: 'store/slider-layout.aria-label' },
-          { slide: currentSlide }
-        )
-      }
+      aria-label={label}
       id={controls}
       style={{
         WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
