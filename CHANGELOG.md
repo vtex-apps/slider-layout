@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.24.7] - 2025-03-13
+
 ### Added
 
 - aria-label for slider-layout components
