@@ -1,4 +1,5 @@
 import React, { cloneElement, FC, ReactElement, ReactNode } from 'react'
+import { useIntl } from 'react-intl'
 
 import {
   useSliderState,
@@ -26,11 +27,19 @@ interface Props {
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
 }
 
-const resolveAriaAttributes = (
-  visible: boolean,
-  index: number,
+interface ResolveAriaAttributesProps {
+  visible: boolean
+  index: number
   totalItems: number
-) => {
+  intl: any
+}
+
+const resolveAriaAttributes = ({
+  visible,
+  index,
+  totalItems,
+  intl,
+}: ResolveAriaAttributesProps) => {
   if (index < 0 || index >= totalItems) {
     return {
       'aria-hidden': !visible,
@@ -42,7 +51,10 @@ const resolveAriaAttributes = (
     'aria-hidden': !visible,
     role: 'group',
     'aria-roledescription': 'slide',
-    'aria-label': `${index + 1} of ${totalItems}`,
+    'aria-label': `${intl.formatMessage(
+      { id: 'store/slider-layout.sliderTrack.aria-label' },
+      { slide: index + 1, total: totalItems }
+    )}`,
   }
 }
 
@@ -94,6 +106,7 @@ const SliderTrack: FC<Props> = ({
   } = useSliderState()
 
   const dispatch = useSliderDispatch()
+  const intl = useIntl()
   const groupDispatch = useSliderGroupDispatch()
   const { handles, withModifiers } = useContextCssHandles()
 
@@ -210,11 +223,12 @@ const SliderTrack: FC<Props> = ({
         return (
           <div
             key={adjustedIndex}
-            {...resolveAriaAttributes(
-              isItemVisible(adjustedIndex),
-              adjustedIndex,
-              totalItems
-            )}
+            {...resolveAriaAttributes({
+              visible: isItemVisible(adjustedIndex),
+              index: adjustedIndex,
+              totalItems,
+              intl,
+            })}
             className={`${withModifiers('slide', [
               getFirstOrLastVisible(slidesPerPage, adjustedIndex),
               isItemVisible(adjustedIndex) ? 'visible' : 'hidden',

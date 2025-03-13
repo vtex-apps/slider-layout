@@ -374,7 +374,7 @@ describe('Accessibility', () => {
     expect(nonCloneSlides).toHaveLength(TOTAL_ITEMS)
 
     const slidesWithLabels = INDEXES.map(idx =>
-      getByLabelText(`${idx} of ${TOTAL_ITEMS}`)
+      getByLabelText(`Current slide is ${idx} of ${TOTAL_ITEMS}`)
     ).filter(Boolean)
 
     expect(slidesWithLabels).toHaveLength(TOTAL_ITEMS)

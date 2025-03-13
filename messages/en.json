@@ -9,5 +9,6 @@
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyMobileOnly": "Mobile Only",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Desktop Only",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Always",
-  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Never"
+  "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Never",
+  "store/slider-layout.sliderTrack.aria-label": "Current slide is {slide} of {total}"
 }
