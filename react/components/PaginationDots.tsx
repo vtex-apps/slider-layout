@@ -59,7 +59,9 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   ) => {
     if (event) {
       event.stopPropagation()
-      event.preventDefault()
+      if ('key' in event && event.key !== 'Tab') {
+        event.preventDefault()
+      }
     }
 
     // Considering that each pagination dot represents a page, pageDelta
