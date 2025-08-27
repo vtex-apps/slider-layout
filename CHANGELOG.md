@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Allow default behaviour of tab key to prevent keyboard trap in pagination dots
+
 ### Changed
 
 - Update GitHub actions/cache to v4
