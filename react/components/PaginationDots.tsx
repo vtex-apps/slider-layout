@@ -59,8 +59,15 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   ) => {
     if (event) {
       event.stopPropagation()
-      if ('key' in event && event.key !== 'Tab') {
-        event.preventDefault()
+      // Check if it's a keyboard event
+      if ('key' in event) {
+        // Only allow Enter and Space to trigger the click
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault(); // Prevents Space from scrolling the page
+        } else {
+          // If it's any other key (like Tab), exit the function
+          return;
+        }
       }
     }
 
@@ -92,17 +99,18 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
               isActive ? 'isActive' : ''
             )} ${
               isActive ? 'bg-emphasis' : 'bg-muted-3'
-            } grow dib br-100 pa2 mr2 ml2 bw0 pointer outline-0`}
+            } grow dib br-100 pa2 mr2 ml2 bw0 pointer`}
             style={{
               height: `${DOTS_DEFAULT_SIZE}rem`,
               width: `${DOTS_DEFAULT_SIZE}rem`,
             }}
             key={index}
-            tabIndex={isActive ? 0 : -1}
+            tabIndex={0}
             onKeyDown={event => handleDotClick(event, index)}
             onClick={event => handleDotClick(event, index)}
             role="button"
             aria-controls={controls}
+            aria-current={isActive ? 'step' : undefined}
             aria-label={`Dot ${index + 1} of ${slideIndexes.length}`}
             data-testid="paginationDot"
           />
