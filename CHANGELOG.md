@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- Accessibility: Resolved "element with button role not operable via keyboard" warning.
+- Keyboard Support: Added onKeyDown listeners to pagination dots to support Enter and Space activation.
+- Focus Management: Updated tabIndex from -1 to 0 to allow keyboard navigation via the Tab key.
+- ARIA Enhancements: Implemented aria-current="step" to communicate the active slide to screen readers.
+- UX Fix: Added event.preventDefault() on activation keys to prevent accidental page scrolling when using the Space bar.
+
 ## [0.24.8] - 2025-08-27
 
 ### Added
