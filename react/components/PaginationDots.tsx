@@ -67,7 +67,6 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
         
         event.preventDefault();
       }
-      }
     }
 
     // Considering that each pagination dot represents a page, pageDelta
