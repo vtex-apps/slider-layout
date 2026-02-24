@@ -59,15 +59,14 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   ) => {
     if (event) {
       event.stopPropagation()
-      // Check if it's a keyboard event
       if ('key' in event) {
-        // Only allow Enter and Space to trigger the click
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault(); // Prevents Space from scrolling the page
-        } else {
-          // If it's any other key (like Tab), exit the function
+       // Only allow Enter and Space to trigger the click (#125 )
+        if (event.key !== 'Enter' && event.key !== ' ') {
           return;
         }
+        
+        event.preventDefault();
+      }
       }
     }
 
