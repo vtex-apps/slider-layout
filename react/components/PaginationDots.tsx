@@ -64,8 +64,8 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
         if (event.key !== 'Enter' && event.key !== ' ') {
           return
         }
-        event.preventDefault()
 
+        event.preventDefault()
       }
     }
 
