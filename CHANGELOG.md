@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.24.10] - 2026-02-24
+
 ### Fixed
 
 Build failed due extra curly brackets
