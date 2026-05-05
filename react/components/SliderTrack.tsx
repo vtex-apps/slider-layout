@@ -10,11 +10,7 @@ import { useSliderGroupDispatch } from '../SliderLayoutGroup'
 import { useSliderVisibility } from '../hooks/useSliderVisibility'
 import { useContextCssHandles } from '../modules/cssHandles'
 
-export const CSS_HANDLES = [
-  'sliderTrack',
-  'slide',
-  'slideChildrenContainer',
-] as const
+export const CSS_HANDLES = ['sliderTrack', 'slide'] as const
 
 interface Props {
   totalItems: number
@@ -42,7 +38,8 @@ const resolveAriaAttributes = ({
 }: ResolveAriaAttributesProps) => {
   if (index < 0 || index >= totalItems) {
     return {
-      'aria-hidden': !visible,
+      'aria-hidden': true,
+      'data-noindex': true,
       role: 'none presentation',
     }
   }
@@ -140,11 +137,12 @@ const SliderTrack: FC<Props> = ({
       : '100%'
 
   return (
-    <div
+    <ul
       data-testid="slider-track"
+      data-slider-track
       className={`${handles.sliderTrack} flex ${
         centerMode !== 'disabled' ? '' : 'justify-around'
-      } relative pa0 ma0`}
+      } relative pa0 ma0 list`}
       style={{
         transition:
           isOnTouchMove || !useSlidingTransitionEffect
@@ -196,10 +194,8 @@ const SliderTrack: FC<Props> = ({
       aria-live="polite"
     >
       {slides.map((child, index) => {
-        // This is to take into account that there is a clone of the last page
-        // in the left, to enable the infinite loop effect in case infinite
-        // is set to true.
         const adjustedIndex = index - (infinite ? slidesPerPage : 0)
+        const isClone = adjustedIndex < 0 || adjustedIndex >= totalItems
         const slideContainerStyles = {
           width: `${slideWidth}%`,
           marginLeft:
@@ -221,7 +217,7 @@ const SliderTrack: FC<Props> = ({
         }
 
         return (
-          <div
+          <li
             key={adjustedIndex}
             {...resolveAriaAttributes({
               visible: isItemVisible(adjustedIndex),
@@ -234,21 +230,23 @@ const SliderTrack: FC<Props> = ({
               isItemVisible(adjustedIndex) ? 'visible' : 'hidden',
             ])} flex relative`}
             data-index={
-              adjustedIndex >= 0 && adjustedIndex < totalItems
-                ? adjustedIndex + 1
-                : undefined
+              !isClone ? adjustedIndex + 1 : undefined
+            }
+            itemProp={!isClone ? 'itemListElement' : undefined}
+            itemScope={!isClone ? true : undefined}
+            itemType={
+              !isClone ? 'https://schema.org/ListItem' : undefined
             }
             style={slideContainerStyles}
           >
-            <div
-              className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
-            >
-              {!usePagination || shouldRenderItem(adjustedIndex) ? child : null}
-            </div>
-          </div>
+            {!isClone && (
+              <meta itemProp="position" content={String(adjustedIndex + 1)} />
+            )}
+            {!usePagination || shouldRenderItem(adjustedIndex) ? child : null}
+          </li>
         )
       })}
-    </div>
+    </ul>
   )
 }
 

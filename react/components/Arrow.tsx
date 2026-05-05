@@ -19,6 +19,7 @@ export const CSS_HANDLES = [
   'sliderLeftArrow',
   'sliderRightArrow',
   'sliderArrows',
+  'sliderArrows--disabled',
 ] as const
 
 const Arrow: FC<Props> = ({
@@ -66,9 +67,11 @@ const Arrow: FC<Props> = ({
         orientation === 'left'
           ? `${handles.sliderLeftArrow} left-0`
           : `${handles.sliderRightArrow} right-0`
-      } ${
-        handles.sliderArrows
-      } absolute transparent ma2 flex items-center justify-center bn outline-0 pointer`}
+      } ${handles.sliderArrows} ${
+        disabled ? `${handles['sliderArrows--disabled']} o-50` : ''
+      } absolute transparent ma2 flex items-center justify-center bn outline-0 ${
+        disabled ? 'not-allowed' : 'pointer'
+      }`}
       style={{ background: 'transparent' }}
       onClick={handleArrowClick}
       aria-controls={controls}
