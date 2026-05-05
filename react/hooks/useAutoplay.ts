@@ -24,8 +24,17 @@ export const useAutoplay = (
       goForward()
     }, autoplay.timeout)
 
-    shouldStop && clearTimeout(timeout)
+    if (shouldStop) clearTimeout(timeout)
 
-    return () => clearTimeout(timeout)
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') clearTimeout(timeout)
+    }
+
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
+    return () => {
+      clearTimeout(timeout)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+    }
   }, [goForward, shouldStop, autoplay])
 }

@@ -1,4 +1,4 @@
-import React, { FC, useRef, Fragment, ReactNode } from 'react'
+import React, { FC, memo, useRef, Fragment, ReactNode } from 'react'
 import { useDevice } from 'vtex.device-detector'
 
 import { useScreenResize } from '../hooks/useScreenResize'
@@ -101,6 +101,8 @@ const Slider: FC<Props> = ({
       onTouchMove={touchMoveHandler}
       aria-label={label}
       id={controls}
+      itemScope
+      itemType="https://schema.org/ItemList"
       style={{
         WebkitOverflowScrolling: !shouldUsePagination ? 'touch' : undefined,
         paddingLeft: fullWidth ? undefined : arrowSize * 2,
@@ -110,6 +112,7 @@ const Slider: FC<Props> = ({
       className={`w-100 flex items-center relative ${handles.sliderLayoutContainer}`}
     >
       <div
+        data-slider-container
         className={`w-100 ${handles.sliderTrackContainer} ${
           shouldUsePagination ? 'overflow-hidden' : 'overflow-x-scroll'
         }`}
@@ -150,8 +153,15 @@ const Slider: FC<Props> = ({
           infinite={infinite}
         />
       )}
+      <noscript
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html:
+            '<style>[data-slider-container]{overflow-x:scroll!important}[data-slider-track]{transform:none!important;flex-wrap:wrap!important;width:100%!important}</style>',
+        }}
+      />
     </section>
   )
 }
 
-export default Slider
+export default memo(Slider)

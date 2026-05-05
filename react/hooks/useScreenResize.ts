@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { useSliderDispatch, useSliderState } from '../components/SliderContext'
 
 export const useScreenResize = (infinite: boolean, itemsPerPage: number) => {
   const { navigationStep, isPageNavigationStep, totalItems } = useSliderState()
   const dispatch = useSliderDispatch()
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>()
 
   useEffect(() => {
     const newSlidesPerPage =
@@ -25,15 +26,19 @@ export const useScreenResize = (infinite: boolean, itemsPerPage: number) => {
       })
     }
 
-    const onResize = (value?: UIEvent): void => {
-      setNewState(!value || infinite)
+    const onResize = (): void => {
+      clearTimeout(debounceRef.current)
+      debounceRef.current = setTimeout(() => setNewState(infinite), 100)
     }
 
     setNewState(false)
 
     window.addEventListener('resize', onResize)
 
-    return () => window.removeEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+      clearTimeout(debounceRef.current)
+    }
   }, [
     infinite,
     dispatch,
