@@ -1,93 +1,85 @@
-# 🎠 Slider Layout
+<div align="center">
 
-A flexible solution for building block sliders in VTEX Store Framework.
+  <h1>Slider Layout</h1>
 
-O `slider-layout` é um componente robusto e altamente personalizável para criar sliders e carrosséis em lojas VTEX. Com suporte a navegação por setas, paginação, autoplay, modo infinito e muito mais.
+  <p><em>VTEX Slider-Layout</em></p>
 
-## Características
+  <p>
+    <a href="https://github.com/zeluizr/slider-layout/actions"><img alt="CI" src="https://badgen.net/github/checks/zeluizr/slider-layout"></a>
+    <a href="./LICENSE"><img alt="license" src="https://badgen.net/github/license/zeluizr/slider-layout"></a>
+    <a href="https://github.com/zeluizr/slider-layout/stargazers"><img alt="stars" src="https://badgen.net/github/stars/zeluizr/slider-layout"></a>
+    <a href="https://github.com/zeluizr/slider-layout/commits"><img alt="last commit" src="https://badgen.net/github/last-commit/zeluizr/slider-layout"></a>
+    <img alt="PRs" src="https://badgen.net/badge/PRs/welcome/green">
+  </p>
 
-- ✨ Componente totalmente responsivo
-- 🎯 Navegação com setas e pontos de paginação
-- 🔄 Autoplay configurável
-- ♿ Acessibilidade (ARIA labels)
-- 🌍 Suporte a múltiplos idiomas (i18n)
-- 📱 Compatibilidade com toque e gestos (swipe)
-- ⚡ Performance otimizada com lazy loading
-- 🎨 Customizável via CSS Handles e Site Editor
+  <p>
+    <img alt="VTEX" src="https://badgen.net/badge/VTEX/platform/pink">
+    <img alt="TypeScript" src="https://badgen.net/badge/TypeScript/lang/blue">
+    <img alt="Node.js" src="https://badgen.net/badge/Node.js/runtime/green">
+    <img alt="Yarn" src="https://badgen.net/badge/Yarn/pkg/cyan">
+  </p>
 
-## Como Usar
+  <p>
+    <a href="#-acerca-de">Acerca de</a> ·
+    <a href="#-vtex-io">VTEX IO</a> ·
+    <a href="#-empezando">Empezando</a> ·
+    <a href="#-scripts">Scripts</a> ·
+    <a href="#-autor">Autor</a>
+  </p>
 
-### Instalação
-
-```bash
-npm install
-```
-
-### Desenvolvimento
-
-```bash
-# Lint do código
-npm run lint
-
-# Executar testes
-npm test
-
-# Formatar código
-npm run format
-```
-
-### Exemplo de Uso no VTEX Store Framework
-
-```json
-{
-  "slider-layout": {
-    "props": {
-      "itemsPerPage": 3,
-      "showNavigationArrows": "always",
-      "showPaginationDots": "always",
-      "autoplay": {
-        "stopOnHover": true,
-        "interval": 5000
-      }
-    }
-  }
-}
-```
-
-## Componentes Disponíveis
-
-- **SliderLayout**: Componente principal para criar sliders
-- **SliderTrack**: Gerencia o track (trilha) dos slides
-- **SliderLayoutGroup**: Agrupa múltiplos sliders
-- **Pagination**: Controles de navegação por pontos
-- **Navigation Arrows**: Setas para navegação
-
-## CSS Handles
-
-O `slider-layout` fornece diversos CSS Handles para customização de estilo:
-
-- `slider`: Container principal
-- `sliderTrackContainer`: Container da trilha
-- `slide`: Cada slide individual
-- `slide--visible`: Modificador para slide visível
-- `paginationDot`: Ponto de paginação
-- `paginationDot--isActive`: Modificador para ponto ativo
-
-## Contribuindo
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Abra uma issue descrevendo o problema ou sugestão
-2. Faça um fork do repositório
-3. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-4. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-5. Push para a branch (`git push origin feature/AmazingFeature`)
-6. Abra um Pull Request
-
-## Licença
-
-UNLICENSED
+</div>
 
 ---
 
-**Mantido por:** [zeluizr](https://github.com/zeluizr)
+## 📖 Acerca de
+
+VTEX Slider-Layout
+
+Una app de componente React para **VTEX IO**.
+
+## 🔧 VTEX IO
+
+| | |
+| --- | --- |
+| **App** | `vtex.slider-layout@0.24.10` |
+| **Builders** | `react`, `store`, `messages`, `docs` |
+
+```bash
+# vincular en modo dev
+vtex link
+
+# publicar
+vtex publish
+```
+
+## 🚀 Empezando
+
+```bash
+# clona el repositorio
+git clone https://github.com/zeluizr/slider-layout.git
+cd slider-layout
+
+# instala las dependencias
+yarn install
+```
+
+## 📜 Scripts
+
+| Comando | Qué hace |
+| --- | --- |
+| `yarn lint` | `eslint --ext js,jsx,ts,tsx .` |
+| `yarn test` | `cd ./react && yarn test` |
+| `yarn format` | `prettier --write "**/*.{ts,js,json}"` |
+
+## 👤 Autor
+
+**José Luiz Rodrigues**
+
+<a href="https://github.com/zeluizr"><img alt="GitHub" src="https://badgen.net/badge/GitHub/zeluizr/black?icon=github"></a>
+<a href="https://www.npmjs.com/~zeluizr"><img alt="npm" src="https://badgen.net/badge/npm/zeluizr/red?icon=npm"></a>
+
+---
+
+<div align="center">
+  <sub>Hecho con ☕ por <a href="https://github.com/zeluizr">@zeluizr</a></sub>
+</div>
