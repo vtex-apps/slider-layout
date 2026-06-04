@@ -24,6 +24,8 @@
     <a href="#-vtex-io">VTEX IO</a> ·
     <a href="#-empezando">Empezando</a> ·
     <a href="#-scripts">Scripts</a> ·
+    <a href="#-changelog">Changelog</a> ·
+    <a href="#-licencia">Licencia</a> ·
     <a href="#-autor">Autor</a>
   </p>
 
@@ -70,6 +72,14 @@ yarn install
 | `yarn lint` | `eslint --ext js,jsx,ts,tsx .` |
 | `yarn test` | `cd ./react && yarn test` |
 | `yarn format` | `prettier --write "**/*.{ts,js,json}"` |
+
+## 📝 Changelog
+
+Consulta el historial de cambios en [`CHANGELOG.md`](./CHANGELOG.md).
+
+## 📄 Licencia
+
+Distribuido bajo la licencia MIT. Ver [`LICENSE`](./LICENSE).
 
 ## 👤 Autor
 
