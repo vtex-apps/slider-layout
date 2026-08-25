@@ -14,29 +14,46 @@ interface Props {
 
 export const CSS_HANDLES = ['paginationDotsContainer', 'paginationDot'] as const
 
-const getSelectedDot = (
-  passVisibleSlides: boolean,
-  currentSlide: number,
-  slidesToShow: number
+const getDotsCount = (
+  slidesToShow: number,
+  navigationStep: number,
+  totalItems: number,
+  infinite: boolean
 ): number => {
-  const realCurrentSlide = passVisibleSlides
-    ? currentSlide + (slidesToShow - 1)
-    : currentSlide
+  const step = Math.max(1, navigationStep)
 
-  return passVisibleSlides
-    ? Math.floor(realCurrentSlide / slidesToShow)
-    : realCurrentSlide
+  // An infinite slider loops through every slide, so the last reachable
+  // position is the last item. A finite one stops at the last full page.
+  if (infinite) {
+    return Math.ceil(totalItems / step)
+  }
+
+  return Math.ceil(Math.max(totalItems - slidesToShow, 0) / step) + 1
+}
+
+const getSelectedDot = (
+  currentSlide: number,
+  navigationStep: number,
+  dotsCount: number
+): number => {
+  const step = Math.max(1, navigationStep)
+  const selectedDot = Math.floor((currentSlide + step - 1) / step)
+
+  // While the infinite loop is showing a cloned slide, currentSlide is outside
+  // the range of real slides, so it has to be brought back into it.
+  return Math.min(Math.max(selectedDot, 0), dotsCount - 1)
 }
 
 const getSlideIndices = (
   slidesToShow: number,
-  passVisibleSlides: boolean,
-  totalItems: number
+  navigationStep: number,
+  totalItems: number,
+  infinite: boolean
 ): number[] =>
   slidesToShow
     ? [
         ...Array(
-          passVisibleSlides ? Math.ceil(totalItems / slidesToShow) : totalItems
+          getDotsCount(slidesToShow, navigationStep, totalItems, infinite)
         ).keys(),
       ]
     : []
@@ -45,12 +62,18 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
   const { slidesPerPage, currentSlide, navigationStep } = useSliderState()
   const { goBack, goForward } = useSliderControls(infinite)
   const { handles, withModifiers } = useContextCssHandles()
-  const passVisibleSlides = navigationStep === slidesPerPage
 
   const slideIndexes = getSlideIndices(
     slidesPerPage,
-    passVisibleSlides,
-    totalItems
+    navigationStep,
+    totalItems,
+    infinite
+  )
+
+  const selectedDot = getSelectedDot(
+    currentSlide,
+    navigationStep,
+    slideIndexes.length
   )
 
   const handleDotClick = (
@@ -69,10 +92,10 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
       }
     }
 
-    // Considering that each pagination dot represents a page, pageDelta
-    // represents how many pages did the user "skip" by clicking in the dot.
-    const pageDelta =
-      index - getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
+    // Considering that each pagination dot represents a navigation step,
+    // pageDelta represents how many steps did the user "skip" by clicking
+    // in the dot.
+    const pageDelta = index - selectedDot
 
     const slidesToPass = Math.abs(pageDelta) * navigationStep
 
@@ -86,9 +109,7 @@ const PaginationDots: FC<Props> = ({ controls, totalItems, infinite }) => {
       aria-label="Slider pagination dots"
     >
       {slideIndexes.map(index => {
-        const isActive =
-          index ===
-          getSelectedDot(passVisibleSlides, currentSlide, slidesPerPage)
+        const isActive = index === selectedDot
 
         return (
           <div

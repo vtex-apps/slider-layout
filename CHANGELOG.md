@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Update DK Catalog platform-flow-id
 
+### Fixed
+
+- Pagination dots that the slider could never reach when `navigationStep` is different from `itemsPerPage`, and the active dot being lost while the infinite loop shows a cloned slide
+
 ## [0.24.10] - 2026-02-24
 
 ### Fixed
