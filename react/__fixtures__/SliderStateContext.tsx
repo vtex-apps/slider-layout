@@ -54,6 +54,42 @@ export const mockInitialInfiniteSliderState = {
   useSlidingTransitionEffect: false,
 }
 
+/** An infinite slider showing one item per page, sitting on the cloned first
+ * page. Its transformMap holds every key a real slider would have, from
+ * -slidesPerPage to totalItems, and nothing beyond that. */
+export const mockInfiniteSliderStateAtLoopBoundary = {
+  slideWidth: 10,
+  slidesPerPage: 1,
+  currentSlide: 10,
+  transform: -110,
+  transformMap: {
+    '-1': 0,
+    0: -10,
+    1: -20,
+    2: -30,
+    3: -40,
+    4: -50,
+    5: -60,
+    6: -70,
+    7: -80,
+    8: -90,
+    9: -100,
+    10: -110,
+  },
+  navigationStep: 1,
+  slideTransition: {
+    speed: 400,
+    delay: 0,
+    timing: '',
+  },
+  itemsPerPage: 1,
+  label: 'slider',
+  totalItems: 10,
+  isPageNavigationStep: true,
+  isOnTouchMove: false,
+  useSlidingTransitionEffect: false,
+}
+
 export const mockInitialNonInfiniteSliderState = {
   slideWidth: 10,
   slidesPerPage: 5,

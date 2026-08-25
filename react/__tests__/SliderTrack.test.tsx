@@ -7,6 +7,7 @@ import {
   mockInitialSlides,
   mockInitialInfiniteSliderState,
   mockInitialNonInfiniteSliderState,
+  mockInfiniteSliderStateAtLoopBoundary,
 } from '../__fixtures__/SliderStateContext'
 import { useContextCssHandles } from '../modules/cssHandles'
 import { mockedUseContextCssHandlesFn } from '../__fixtures__/CssHandlesHelper'
@@ -330,6 +331,29 @@ describe('Behavior upon interaction', () => {
   })
 
   mockedUseSliderState.mockClear()
+})
+
+describe('Infinite loop boundaries', () => {
+  it('should render a valid transform when `currentSlide` is not in the transform map', () => {
+    mockedUseSliderState.mockImplementation(() => ({
+      ...mockInfiniteSliderStateAtLoopBoundary,
+      currentSlide: 12,
+    }))
+
+    const { getByTestId } = render(
+      <SliderTrack centerMode="disabled" usePagination totalItems={10} infinite>
+        {mockInitialSlides}
+      </SliderTrack>
+    )
+
+    const renderedTrack = getByTestId('slider-track')
+
+    expect(renderedTrack.style.transform).toEqual('translate3d(-110%, 0, 0)')
+
+    mockedUseSliderState.mockImplementation(
+      () => mockInitialInfiniteSliderState
+    )
+  })
 })
 
 describe('Accessibility', () => {

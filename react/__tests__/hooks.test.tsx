@@ -4,6 +4,7 @@ import { useSliderControls } from '../hooks/useSliderControls'
 import {
   mockInitialInfiniteSliderState,
   mockInitialNonInfiniteSliderState,
+  mockInfiniteSliderStateAtLoopBoundary,
 } from '../__fixtures__/SliderStateContext'
 
 const { renderHook, act } = hooks
@@ -90,6 +91,26 @@ describe('useSliderControls', () => {
       })
     })
 
+    it('should prevent SLIDE action to set `currentSlide` before the cloned last page of an infinite slider', async () => {
+      mockSliderInitialState = {
+        ...mockInfiniteSliderStateAtLoopBoundary,
+        currentSlide: 0,
+        navigationStep: 4,
+      }
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goBack()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: -1,
+          transform: mockInfiniteSliderStateAtLoopBoundary.transformMap[-1],
+        },
+      })
+    })
+
     it('should prevent SLIDE action to set `currentSlide` to a negative number if the slider is not an infinite one', async () => {
       mockSliderInitialState = mockInitialNonInfiniteSliderState
       const { result } = renderHook(() => useSliderControls(false))
@@ -138,6 +159,26 @@ describe('useSliderControls', () => {
         },
       })
     })
+    it('should prevent SLIDE action to set `currentSlide` past the cloned first page of an infinite slider', async () => {
+      mockSliderInitialState = { ...mockInfiniteSliderStateAtLoopBoundary }
+      const { result } = renderHook(() => useSliderControls(true))
+
+      await act(() => Promise.resolve())
+      result.current.goForward()
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SLIDE',
+        payload: {
+          currentSlide: 10,
+          transform: mockInfiniteSliderStateAtLoopBoundary.transformMap[10],
+        },
+      })
+
+      const [[{ payload }]] = mockDispatch.mock.calls
+
+      expect(payload.transform).not.toBeUndefined()
+    })
+
     it(`should dispatch SLIDE action to set \`currentSlide\` to the start of the last page if slider is not an infinite one`, async () => {
       mockSliderInitialState = mockInitialNonInfiniteSliderState
       mockSliderInitialState.currentSlide = 7
