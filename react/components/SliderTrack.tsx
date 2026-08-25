@@ -139,6 +139,18 @@ const SliderTrack: FC<Props> = ({
       ? `${(slides.length * 100) / slidesPerPage}%`
       : '100%'
 
+  // SliderLayoutGroup syncs currentSlide between sliders that may hold a
+  // different number of items, so it can point to a slide this slider does
+  // not have. An undefined transform makes the whole declaration invalid,
+  // which freezes the track in place.
+  const boundedSlide = Math.min(
+    Math.max(currentSlide, -slidesPerPage),
+    totalItems
+  )
+
+  const resolvedTransform =
+    transformMap[currentSlide] ?? transformMap[boundedSlide] ?? 0
+
   return (
     <div
       data-testid="slider-track"
@@ -151,7 +163,7 @@ const SliderTrack: FC<Props> = ({
             ? undefined
             : `transform ${speed}ms ${timing} ${delay}ms`,
         transform: `translate3d(${
-          isOnTouchMove ? transform : transformMap[currentSlide]
+          isOnTouchMove ? transform : resolvedTransform
         }%, 0, 0)`,
         width: trackWidth,
       }}

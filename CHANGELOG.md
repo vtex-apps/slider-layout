@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Update DK Catalog platform-flow-id
 
+### Fixed
+
+- Infinite slider getting stuck with blank space when a navigation would move it past its cloned pages
+
 ## [0.24.10] - 2026-02-24
 
 ### Fixed

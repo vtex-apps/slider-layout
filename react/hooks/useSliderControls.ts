@@ -29,8 +29,10 @@ export const useSliderControls = (infinite: boolean) => {
       nextSlide = 0
       nextTransformValue = 0
     } else if (infinite) {
-      /** Have more slides hidden on left */
-      nextSlide = nextMaximumSlides
+      /** Have more slides hidden on left. The cloned page of an infinite
+       * slider is the first entry of transformMap, so going further back
+       * than that would leave the slider without a transform value. */
+      nextSlide = Math.max(nextMaximumSlides, -slidesPerPage)
       nextTransformValue = transformMap[nextSlide]
     }
 
@@ -70,7 +72,10 @@ export const useSliderControls = (infinite: boolean) => {
       nextSlide = totalItems - slidesPerPage
       nextTransformValue = transformMap[nextSlide]
     } else if (infinite) {
-      nextSlide = currentSlide + activeNavigationStep
+      /** The cloned first page is the last entry of transformMap, so going
+       * further forward than that would leave the slider without a transform
+       * value until the loop is corrected on the transition end. */
+      nextSlide = Math.min(currentSlide + activeNavigationStep, totalItems)
       nextTransformValue = transformMap[nextSlide]
     }
 
