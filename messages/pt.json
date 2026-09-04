@@ -10,5 +10,9 @@
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Somente desktop",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Sempre",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Nunca",
-  "store/slider-layout.sliderTrack.aria-label": "Slide atual é {slide} de {total}"
+  "store/slider-layout.sliderTrack.aria-label": "Slide atual é {slide} de {total}",
+  "admin/editor.slider-layout.aspectRatio": "Proporção (aspect ratio)",
+  "admin/editor.slider-layout.aspectRatioDescription": "Reserva espaço para o conteúdo de cada slide usando um aspect-ratio de CSS (ex.: 16/9), evitando deslocamento de layout (CLS) enquanto o conteúdo carrega. Opcional: deixe em branco para manter o comportamento atual. Tem prioridade sobre a Altura mínima quando ambos são definidos.",
+  "admin/editor.slider-layout.minHeight": "Altura mínima (px)",
+  "admin/editor.slider-layout.minHeightDescription": "Reserva uma altura mínima, em pixels, para o conteúdo de cada slide, evitando deslocamento de layout (CLS) enquanto o conteúdo carrega. Opcional: deixe em branco para manter o comportamento atual. É ignorada quando a Proporção é definida."
 }

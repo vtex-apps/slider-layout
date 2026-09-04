@@ -74,6 +74,20 @@ export interface SliderLayoutSiteEditorProps {
   usePagination?: boolean
   fullWidth?: boolean
   arrowSize?: ResponsiveValuesTypes.ResponsiveValue<number>
+  /**
+   * Reserves space for each slide's content using a CSS aspect-ratio
+   * (e.g. "16/9"), preventing layout shift while the content loads.
+   * Takes precedence over `minHeight` when both are set. Opt-in: when
+   * left unset, no CSS is applied and behavior is unchanged.
+   */
+  aspectRatio?: ResponsiveValuesTypes.ResponsiveValue<string>
+  /**
+   * Reserves a minimum height (in pixels) for each slide's content,
+   * preventing layout shift while the content loads. Ignored when
+   * `aspectRatio` is set. Opt-in: when left unset, no CSS is applied
+   * and behavior is unchanged.
+   */
+  minHeight?: ResponsiveValuesTypes.ResponsiveValue<number>
 }
 
 export interface SliderLayoutProps {

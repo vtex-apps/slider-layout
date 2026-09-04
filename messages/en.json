@@ -10,5 +10,9 @@
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyDesktopOnly": "Desktop Only",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyAlways": "Always",
   "admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever": "Never",
-  "store/slider-layout.sliderTrack.aria-label": "Current slide is {slide} of {total}"
+  "store/slider-layout.sliderTrack.aria-label": "Current slide is {slide} of {total}",
+  "admin/editor.slider-layout.aspectRatio": "Aspect ratio",
+  "admin/editor.slider-layout.aspectRatioDescription": "Reserves space for each slide's content using a CSS aspect-ratio (e.g. 16/9), preventing layout shift while the content loads. Optional: leave empty to keep the current behavior. Takes precedence over Min height when both are set.",
+  "admin/editor.slider-layout.minHeight": "Min height (px)",
+  "admin/editor.slider-layout.minHeightDescription": "Reserves a minimum height, in pixels, for each slide's content, preventing layout shift while the content loads. Optional: leave empty to keep the current behavior. Ignored when Aspect ratio is set."
 }

@@ -22,6 +22,10 @@ interface Props {
   usePagination: boolean
   centerMode: SliderLayoutProps['centerMode']
   centerModeSlidesGap?: SliderLayoutProps['centerModeSlidesGap']
+  /** Resolved (non-responsive) aspect-ratio for the slide content, e.g. "16/9". */
+  aspectRatio?: string
+  /** Resolved (non-responsive) minimum height, in pixels, for the slide content. */
+  minHeight?: number
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
@@ -91,6 +95,8 @@ const SliderTrack: FC<Props> = ({
   usePagination,
   centerMode,
   centerModeSlidesGap,
+  aspectRatio,
+  minHeight,
   totalItems,
   children,
 }) => {
@@ -138,6 +144,18 @@ const SliderTrack: FC<Props> = ({
     slidesPerPage <= totalItems
       ? `${(slides.length * 100) / slidesPerPage}%`
       : '100%'
+
+  // Opt-in CLS mitigation: reserves space for the slide content before it
+  // loads. Left unset (both undefined), no CSS is applied and rendering is
+  // unchanged from today's behavior. `aspectRatio` takes precedence over
+  // `minHeight` when both are provided.
+  const slideChildrenContainerStyle: Record<string, string> = {}
+
+  if (aspectRatio) {
+    slideChildrenContainerStyle.aspectRatio = aspectRatio
+  } else if (minHeight) {
+    slideChildrenContainerStyle.minHeight = `${minHeight}px`
+  }
 
   return (
     <div
@@ -242,6 +260,11 @@ const SliderTrack: FC<Props> = ({
           >
             <div
               className={`${handles.slideChildrenContainer} flex justify-center items-center w-100`}
+              style={
+                Object.keys(slideChildrenContainerStyle).length > 0
+                  ? (slideChildrenContainerStyle as React.CSSProperties)
+                  : undefined
+              }
             >
               {!usePagination || shouldRenderItem(adjustedIndex) ? child : null}
             </div>
