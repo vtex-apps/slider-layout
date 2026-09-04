@@ -24,6 +24,10 @@ interface Props extends SliderLayoutSiteEditorProps {
   itemsPerPage: number
   centerMode: SliderLayoutProps['centerMode']
   centerModeSlidesGap?: SliderLayoutProps['centerModeSlidesGap']
+  /** Resolved (non-responsive) aspect-ratio for the slide content, e.g. "16/9". */
+  aspectRatio?: string
+  /** Resolved (non-responsive) minimum height, in pixels, for the slide content. */
+  minHeight?: number
   // This type comes from React itself. It is the return type for
   // React.Children.toArray().
   children?: Array<Exclude<ReactNode, boolean | null | undefined>>
@@ -49,6 +53,8 @@ const Slider: FC<Props> = ({
   itemsPerPage,
   centerMode,
   centerModeSlidesGap,
+  aspectRatio,
+  minHeight,
 }) => {
   const { handles } = useContextCssHandles()
   const { isMobile } = useDevice()
@@ -121,6 +127,8 @@ const Slider: FC<Props> = ({
           infinite={infinite}
           totalItems={totalItems}
           usePagination={shouldUsePagination}
+          aspectRatio={aspectRatio}
+          minHeight={minHeight}
         >
           {children}
         </SliderTrack>

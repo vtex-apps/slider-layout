@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Opt-in `aspectRatio` and `minHeight` props to reserve space for each slide's content and prevent Cumulative Layout Shift (CLS) while it loads. Both are unset by default, so existing implementations are unaffected.
+
 ### Changed
 
 - Update DK Catalog platform-flow-id

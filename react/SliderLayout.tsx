@@ -35,6 +35,8 @@ function SliderLayout({
     tablet: 3,
     phone: 1,
   },
+  aspectRatio,
+  minHeight,
   classes,
   ...contextProps
 }: PropsWithChildren<SliderLayoutProps & SliderLayoutSiteEditorProps & Props>) {
@@ -44,6 +46,8 @@ function SliderLayout({
   const responsiveArrowIconSize = useResponsiveValue(arrowSize)
   const responsiveItemsPerPage = useResponsiveValue(itemsPerPage)
   const responsiveCenterMode = useResponsiveValue(centerMode)
+  const responsiveAspectRatio = useResponsiveValue(aspectRatio)
+  const responsiveMinHeight = useResponsiveValue(minHeight)
   const slides = React.Children.toArray(children).concat(list)
   // Force fullWidth mode when centerMode is on
   const resolvedFullWidth = fullWidth || responsiveCenterMode !== 'disabled'
@@ -69,6 +73,8 @@ function SliderLayout({
           fullWidth={resolvedFullWidth}
           arrowSize={responsiveArrowIconSize}
           itemsPerPage={responsiveItemsPerPage}
+          aspectRatio={responsiveAspectRatio}
+          minHeight={responsiveMinHeight}
         >
           {slides}
         </Slider>
@@ -125,6 +131,22 @@ const messages = defineMessages({
     id: 'admin/editor.slider-layout.sliderNavigationAndPaginationPropertyNever',
     defaultMessage: '',
   },
+  sliderAspectRatio: {
+    id: 'admin/editor.slider-layout.aspectRatio',
+    defaultMessage: '',
+  },
+  sliderAspectRatioDescription: {
+    id: 'admin/editor.slider-layout.aspectRatioDescription',
+    defaultMessage: '',
+  },
+  sliderMinHeight: {
+    id: 'admin/editor.slider-layout.minHeight',
+    defaultMessage: '',
+  },
+  sliderMinHeightDescription: {
+    id: 'admin/editor.slider-layout.minHeightDescription',
+    defaultMessage: '',
+  },
 })
 
 SliderLayout.schema = {
@@ -157,6 +179,40 @@ SliderLayout.schema = {
         },
         phone: {
           default: 1,
+          type: 'number',
+        },
+      },
+    },
+    aspectRatio: {
+      title: messages.sliderAspectRatio.id,
+      description: messages.sliderAspectRatioDescription.id,
+      type: 'object',
+      isLayout: true,
+      properties: {
+        desktop: {
+          type: 'string',
+        },
+        tablet: {
+          type: 'string',
+        },
+        phone: {
+          type: 'string',
+        },
+      },
+    },
+    minHeight: {
+      title: messages.sliderMinHeight.id,
+      description: messages.sliderMinHeightDescription.id,
+      type: 'object',
+      isLayout: true,
+      properties: {
+        desktop: {
+          type: 'number',
+        },
+        tablet: {
+          type: 'number',
+        },
+        phone: {
           type: 'number',
         },
       },
